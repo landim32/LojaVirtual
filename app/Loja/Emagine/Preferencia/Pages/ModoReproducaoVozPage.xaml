@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Radar.ModoReproducaoVozPage">
+<ContentPage.Resources>
+  <ResourceDictionary>
+    <Style x:Key="  " TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="26" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="LabelStyleDescription" TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="StyleStack" TargetType="StackLayout">
+      <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+      <Setter Property="BackgroundColor" Value="#ffffff" />
+      <Setter Property="Orientation" Value="Vertical" />
+    </Style>
+    <Style x:Key="StyleSwitch" TargetType="Switch">
+      <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+      <Setter Property="Margin" Value="0,0,20,0" />
+    </Style>
+    <Style x:Key="StyleFrame" TargetType="Frame">
+      <Setter Property="BackgroundColor" Value="#b2dfdb" />
+      <Setter Property="Margin" Value="10,5,10,5" />
+    </Style>
+  </ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+		      <StackLayout Style="{StaticResource StyleStack}">
+				
+            <Frame Style="{StaticResource StyleFrame}">
+			 <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	           <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                  <Label Text="Habilitar Voz" Style="{StaticResource LabelStyle}"/>
+                  <Switch Style="{StaticResource StyleSwitch}" x:Name="habilitar" Toggled="habilitarToggled"/>
+                </StackLayout>
+                <Label Style="{StaticResource LabelStyleDescription}" Text="Avisa com voz a chegada em algum radar" />
+              </StackLayout>
+            </Frame>
+				
+            <Frame Style="{StaticResource StyleFrame}">
+			 <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	           <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                <Label Text="Padrão do Android" Style="{StaticResource LabelStyle}"/>
+                </StackLayout>
+                <Label Style="{StaticResource LabelStyleDescription}" Text="Toque para escolher outro" />
+              </StackLayout>
+            </Frame>
+				
+            <Frame Style="{StaticResource StyleFrame}">
+			  <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                  <Label Text="Estado" Style="{StaticResource LabelStyle}"/>
+                </StackLayout>
+                <Label Style="{StaticResource LabelStyleDescription}" Text="Disponível" />
+              </StackLayout>
+            </Frame>
+				
+            <Frame Style="{StaticResource StyleFrame}">
+			  <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	            <StackLayout Orientation="Horizontal" Spacing="60" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                  <Label Text="Ao Ligar e Desligar" Style="{StaticResource LabelStyle}"/>
+                  <Switch Style="{StaticResource StyleSwitch}" x:Name="ligarDesligar" Toggled="ligarDesligarToggled"/>
+                </StackLayout>
+                <Label Style="{StaticResource LabelStyleDescription}" Text="Reproduz voz ao iniciar ou delisgar o aplicativo" />
+              </StackLayout>
+            </Frame>
+				
+            <Frame Style="{StaticResource StyleFrame}">
+			  <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                  <Label Text="Encurtar" Style="{StaticResource LabelStyle}"/>
+                  <Switch Style="{StaticResource StyleSwitch}" x:Name="encurtar" Toggled="encurtarToggled"/>
+                </StackLayout>
+                <Label Style="{StaticResource LabelStyleDescription}" Text="Reproduzir frases curtas" />
+              </StackLayout>
+            </Frame>
+				
+            <Frame Style="{StaticResource StyleFrame}">
+			  <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                  <Label Text="Alerta Sonoro" Style="{StaticResource LabelStyle}"/>
+                  <Switch Style="{StaticResource StyleSwitch}" x:Name="alertaSonoro" Toggled="alertaSonoroToggled"/>
+                </StackLayout>
+                <Label Style="{StaticResource LabelStyleDescription}" Text="Além da reprodução de voz, emitir também o alerta sonoro"  />
+              </StackLayout>
+            </Frame>
+				
+            <Frame Style="{StaticResource StyleFrame}">
+              <StackLayout Orientation="Horizontal">
+                <Label Text="Reproduzir Teste" Style="{StaticResource LabelStyle}"/>
+              </StackLayout>
+            </Frame>
+		        
+		      </StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

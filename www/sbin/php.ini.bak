@@ -1,0 +1,210 @@
+[Verisign Payflow Pro]
+pfpro.defaultport = 443
+pfpro.defaulttimeout = 30
+pfpro.defaulthost = "test-payflow.verisign.com"
+
+[ODBC]
+odbc.allow_persistent = On
+odbc.defaultbinmode = 1
+odbc.max_links = -1
+odbc.check_persistent = On
+odbc.defaultlrl = 4096
+odbc.max_persistent = -1
+
+[Assertion]
+
+[mSQL]
+msql.allow_persistent = On
+msql.max_persistent = -1
+msql.max_links = -1
+
+[Sybase]
+sybase.max_links = -1
+sybase.compatability_mode = Off
+sybase.min_error_severity = 10
+sybase.allow_persistent = On
+sybase.min_message_severity = 10
+sybase.max_persistent = -1
+
+[MySQL]
+mysql.default_socket = 
+mysql.max_links = -1
+mysql.default_password = 
+mysql.default_port = 
+mysql.allow_persistent = Off
+mysql.max_persistent = -1
+mysql.default_user = 
+mysql.default_host = 
+mysql.trace_mode = Off
+mysql.connect_timeout = 60
+
+[exif]
+
+[Sybase-CT]
+sybct.allow_persistent = On
+sybct.max_persistent = -1
+sybct.min_client_severity = 10
+sybct.max_links = -1
+sybct.min_server_severity = 10
+
+[Session]
+session.bug_compat_42 = 0
+session.auto_start = 0
+session.cache_limiter = nocache
+session.bug_compat_warn = 1
+url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
+session.name = PHPSESSID
+session.hash_function = 0
+session.entropy_length = 0
+session.serialize_handler = php
+session.cookie_path = /
+session.entropy_file = 
+session.gc_probability = 1
+session.cache_expire = 180
+session.gc_divisor = 1000
+session.cookie_domain = 
+session.gc_maxlifetime = 1440
+session.referer_check = 
+session.save_handler = files
+session.save_path = "/var/lib/php-cgi/session"
+session.cookie_lifetime = 0
+session.use_cookies = 1
+session.use_trans_sid = 0
+session.hash_bits_per_character = 5
+
+[mbstring]
+
+[soap]
+soap.wsdl_cache_ttl = 86400
+soap.wsdl_cache_enabled = 1
+soap.wsdl_cache_dir = /home/storage/9/2d/af/imarketsupermercados/tmp
+
+[mail function]
+sendmail_path = /usr/sbin/sendmail -t -i
+smtp_port = 25
+smtp = localhost
+
+[PostgresSQL]
+pgsql.max_links = -1
+pgsql.allow_persistent = On
+pgsql.log_notice = 0
+pgsql.auto_reset_persistent = Off
+pgsql.ignore_notice = 0
+pgsql.max_persistent = -1
+
+[Ingres II]
+ingres.allow_persistent = On
+ingres.default_password = 
+ingres.default_database = 
+ingres.max_persistent = -1
+ingres.default_user = 
+ingres.max_links = -1
+
+[SQL]
+sql.safe_mode = Off
+
+[bcmath]
+bcmath.scale = 0
+
+[MySQLi]
+mysqli.default_host = 
+mysqli.default_pw = 
+mysqli.reconnect = Off
+mysqli.default_user = 
+mysqli.default_socket = 
+mysqli.max_links = -1
+mysqli.default_port = 3306
+
+[Tidy]
+tidy.clean_output = Off
+
+[Syslog]
+define_syslog_variables = Off
+
+[browscap]
+
+[Informix]
+ifx.max_links = -1
+ifx.byteasvarchar = 0
+ifx.max_persistent = -1
+ifx.default_password = 
+ifx.nullformat = 0
+ifx.textasvarchar = 0
+ifx.charasvarchar = 0
+ifx.allow_persistent = On
+ifx.blobinfile = 0
+ifx.default_host = 
+ifx.default_user = 
+
+[FrontBase]
+
+[PHP]
+;asp_tags = Off
+include_path = ".:/usr/share/pear"
+ignore_repeated_source = Off
+variables_order = "EGPCS"
+track_errors = On
+output_buffering = 4096
+doc_root = 
+log_errors = On
+safe_mode_allowed_env_vars = PHP_
+safe_mode_protected_env_vars = LD_LIBRARY_PATH
+auto_append_file = 
+disable_classes = 
+enable_dl = Off
+display_startup_errors = Off
+user_dir = 
+extension_dir = "/usr/lib64/php7/modules"
+register_argc_argv = On
+display_errors = On
+allow_call_time_pass_reference = Off
+safe_mode_exec_dir = 
+default_socket_timeout = 60
+;register_globals = Off
+unserialize_callback_func = 
+y2k_compliance = On
+magic_quotes_runtime = Off
+expose_php = Off
+log_errors_max_len = 1024
+post_max_size = 50M
+report_memleaks = On
+engine = On
+memory_limit = 128M
+short_open_tag = On
+upload_tmp_dir = /home/storage/9/2d/af/imarketsupermercados/tmp
+max_execution_time = 60
+safe_mode_include_dir = 
+serialize_precision = 100
+precision = 14
+upload_max_filesize = 50M
+;register_long_arrays = Off
+safe_mode = Off
+zend.ze1_compatibility_mode = Off
+zlib.output_compression = Off
+ignore_repeated_errors = Off
+default_mimetype = "text/html"
+disable_functions = 
+file_uploads = On
+magic_quotes_sybase = Off
+max_input_time = 60
+magic_quotes_gpc = Off
+error_reporting = E_ALL & ~E_NOTICE
+safe_mode_gid = Off
+auto_prepend_file = 
+implicit_flush = Off
+allow_url_fopen = Off
+
+[com]
+
+[MSSQL]
+mssql.compatability_mode = Off
+mssql.allow_persistent = Off
+mssql.max_persistent = -1
+mssql.min_error_severity = 10
+mssql.min_message_severity = 10
+mssql.max_links = -1
+mssql.secure_connection = Off
+
+[Extension]
+extension=pdo.so
+extension=pdo_mysql.so

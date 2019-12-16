@@ -1,0 +1,2343 @@
+{
+  "version": 3,
+  "targets": {
+    "Xamarin.iOS,Version=v1.0": {
+      "Acr.Support/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        }
+      },
+      "Acr.UserDialogs/6.5.1": {
+        "type": "package",
+        "dependencies": {
+          "Acr.Support": "[2.1.0, 3.0.0)",
+          "BTProgressHUD": "[1.2.0.5, 2.0.0)",
+          "Splat": "[2.0.0, 3.0.0)"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        }
+      },
+      "BTProgressHUD/1.2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        }
+      },
+      "CarouselView.FormsPlugin/5.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Permissions/2.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        }
+      },
+      "Plugin.Share/7.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        }
+      },
+      "Rg.Plugins.Popup/1.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.3.0.49"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
+      "Splat/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        }
+      },
+      "Xam.FormsPlugin.Iconize/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xamarin.Forms": "2.2.0.31"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Geolocator/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize/1.0.10": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize.FontAwesome/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Media/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        }
+      },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        }
+      },
+      "Xamarin.Forms/2.5.1.444934": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "resource": {
+          "lib/Xamarin.iOS10/ar/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ar"
+          },
+          "lib/Xamarin.iOS10/ca/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/Xamarin.iOS10/cs/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/Xamarin.iOS10/da/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "da"
+          },
+          "lib/Xamarin.iOS10/de/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "de"
+          },
+          "lib/Xamarin.iOS10/el/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "el"
+          },
+          "lib/Xamarin.iOS10/es/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "es"
+          },
+          "lib/Xamarin.iOS10/fi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fi"
+          },
+          "lib/Xamarin.iOS10/fr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/Xamarin.iOS10/he/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "he"
+          },
+          "lib/Xamarin.iOS10/hi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hi"
+          },
+          "lib/Xamarin.iOS10/hr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hr"
+          },
+          "lib/Xamarin.iOS10/hu/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hu"
+          },
+          "lib/Xamarin.iOS10/id/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "id"
+          },
+          "lib/Xamarin.iOS10/it/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "it"
+          },
+          "lib/Xamarin.iOS10/ja/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/Xamarin.iOS10/ko/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/Xamarin.iOS10/ms/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ms"
+          },
+          "lib/Xamarin.iOS10/nb/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/Xamarin.iOS10/nl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/Xamarin.iOS10/pl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/Xamarin.iOS10/pt-BR/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/Xamarin.iOS10/pt/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/Xamarin.iOS10/ro/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ro"
+          },
+          "lib/Xamarin.iOS10/ru/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/Xamarin.iOS10/sk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sk"
+          },
+          "lib/Xamarin.iOS10/sv/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/Xamarin.iOS10/th/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "th"
+          },
+          "lib/Xamarin.iOS10/tr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/Xamarin.iOS10/uk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "uk"
+          },
+          "lib/Xamarin.iOS10/vi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "vi"
+          },
+          "lib/Xamarin.iOS10/zh-HK/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-HK"
+          },
+          "lib/Xamarin.iOS10/zh-Hans/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/Xamarin.iOS10/zh-Hant/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        },
+        "build": {
+          "build/netstandard1.0/Xamarin.Forms.props": {},
+          "build/netstandard1.0/Xamarin.Forms.targets": {}
+        }
+      },
+      "Xamarin.Forms.Extended.InfiniteScrolling/1.0.0-preview2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Xamarin.Forms": "2.4.0.280"
+        },
+        "compile": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        }
+      },
+      "Xamarin.Forms.Maps/2.5.1.444934": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.1.444934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        }
+      },
+      "Xfx.Controls/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.0.0"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        }
+      },
+      "Loja/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Acr.UserDialogs": "6.5.1",
+          "CarouselView.FormsPlugin": "5.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Plugin.Share": "7.1.1",
+          "Rg.Plugins.Popup": "1.0.4",
+          "Xam.FormsPlugin.Iconize": "1.0.10",
+          "Xam.Plugin.Geolocator": "4.2.0",
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xam.Plugin.Media": "3.1.3",
+          "Xam.Plugins.Notifier": "2.1.0",
+          "Xamarin.Forms": "2.5.1.444934",
+          "Xamarin.Forms.Extended.InfiniteScrolling": "1.0.0-preview2",
+          "Xamarin.Forms.Maps": "2.5.1.444934",
+          "Xfx.Controls": "1.1.3"
+        },
+        "compile": {
+          "bin/placeholder/Loja.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Loja.dll": {}
+        }
+      }
+    },
+    "Xamarin.iOS,Version=v1.0/win": {
+      "Acr.Support/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        }
+      },
+      "Acr.UserDialogs/6.5.1": {
+        "type": "package",
+        "dependencies": {
+          "Acr.Support": "[2.1.0, 3.0.0)",
+          "BTProgressHUD": "[1.2.0.5, 2.0.0)",
+          "Splat": "[2.0.0, 3.0.0)"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        }
+      },
+      "BTProgressHUD/1.2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        }
+      },
+      "CarouselView.FormsPlugin/5.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Permissions/2.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        }
+      },
+      "Plugin.Share/7.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        }
+      },
+      "Rg.Plugins.Popup/1.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.3.0.49"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
+      "Splat/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        }
+      },
+      "Xam.FormsPlugin.Iconize/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xamarin.Forms": "2.2.0.31"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Geolocator/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize/1.0.10": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize.FontAwesome/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Media/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        }
+      },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        }
+      },
+      "Xamarin.Forms/2.5.1.444934": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "resource": {
+          "lib/Xamarin.iOS10/ar/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ar"
+          },
+          "lib/Xamarin.iOS10/ca/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/Xamarin.iOS10/cs/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/Xamarin.iOS10/da/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "da"
+          },
+          "lib/Xamarin.iOS10/de/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "de"
+          },
+          "lib/Xamarin.iOS10/el/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "el"
+          },
+          "lib/Xamarin.iOS10/es/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "es"
+          },
+          "lib/Xamarin.iOS10/fi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fi"
+          },
+          "lib/Xamarin.iOS10/fr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/Xamarin.iOS10/he/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "he"
+          },
+          "lib/Xamarin.iOS10/hi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hi"
+          },
+          "lib/Xamarin.iOS10/hr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hr"
+          },
+          "lib/Xamarin.iOS10/hu/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hu"
+          },
+          "lib/Xamarin.iOS10/id/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "id"
+          },
+          "lib/Xamarin.iOS10/it/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "it"
+          },
+          "lib/Xamarin.iOS10/ja/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/Xamarin.iOS10/ko/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/Xamarin.iOS10/ms/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ms"
+          },
+          "lib/Xamarin.iOS10/nb/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/Xamarin.iOS10/nl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/Xamarin.iOS10/pl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/Xamarin.iOS10/pt-BR/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/Xamarin.iOS10/pt/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/Xamarin.iOS10/ro/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ro"
+          },
+          "lib/Xamarin.iOS10/ru/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/Xamarin.iOS10/sk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sk"
+          },
+          "lib/Xamarin.iOS10/sv/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/Xamarin.iOS10/th/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "th"
+          },
+          "lib/Xamarin.iOS10/tr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/Xamarin.iOS10/uk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "uk"
+          },
+          "lib/Xamarin.iOS10/vi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "vi"
+          },
+          "lib/Xamarin.iOS10/zh-HK/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-HK"
+          },
+          "lib/Xamarin.iOS10/zh-Hans/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/Xamarin.iOS10/zh-Hant/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        },
+        "build": {
+          "build/netstandard1.0/Xamarin.Forms.props": {},
+          "build/netstandard1.0/Xamarin.Forms.targets": {}
+        }
+      },
+      "Xamarin.Forms.Extended.InfiniteScrolling/1.0.0-preview2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Xamarin.Forms": "2.4.0.280"
+        },
+        "compile": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        }
+      },
+      "Xamarin.Forms.Maps/2.5.1.444934": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.1.444934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        }
+      },
+      "Xfx.Controls/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.0.0"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        }
+      },
+      "Loja/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Acr.UserDialogs": "6.5.1",
+          "CarouselView.FormsPlugin": "5.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Plugin.Share": "7.1.1",
+          "Rg.Plugins.Popup": "1.0.4",
+          "Xam.FormsPlugin.Iconize": "1.0.10",
+          "Xam.Plugin.Geolocator": "4.2.0",
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xam.Plugin.Media": "3.1.3",
+          "Xam.Plugins.Notifier": "2.1.0",
+          "Xamarin.Forms": "2.5.1.444934",
+          "Xamarin.Forms.Extended.InfiniteScrolling": "1.0.0-preview2",
+          "Xamarin.Forms.Maps": "2.5.1.444934",
+          "Xfx.Controls": "1.1.3"
+        },
+        "compile": {
+          "bin/placeholder/Loja.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Loja.dll": {}
+        }
+      }
+    },
+    "Xamarin.iOS,Version=v1.0/win-x64": {
+      "Acr.Support/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        }
+      },
+      "Acr.UserDialogs/6.5.1": {
+        "type": "package",
+        "dependencies": {
+          "Acr.Support": "[2.1.0, 3.0.0)",
+          "BTProgressHUD": "[1.2.0.5, 2.0.0)",
+          "Splat": "[2.0.0, 3.0.0)"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        }
+      },
+      "BTProgressHUD/1.2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        }
+      },
+      "CarouselView.FormsPlugin/5.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Permissions/2.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        }
+      },
+      "Plugin.Share/7.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        }
+      },
+      "Rg.Plugins.Popup/1.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.3.0.49"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
+      "Splat/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        }
+      },
+      "Xam.FormsPlugin.Iconize/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xamarin.Forms": "2.2.0.31"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Geolocator/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize/1.0.10": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize.FontAwesome/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Media/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        }
+      },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        }
+      },
+      "Xamarin.Forms/2.5.1.444934": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "resource": {
+          "lib/Xamarin.iOS10/ar/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ar"
+          },
+          "lib/Xamarin.iOS10/ca/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/Xamarin.iOS10/cs/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/Xamarin.iOS10/da/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "da"
+          },
+          "lib/Xamarin.iOS10/de/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "de"
+          },
+          "lib/Xamarin.iOS10/el/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "el"
+          },
+          "lib/Xamarin.iOS10/es/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "es"
+          },
+          "lib/Xamarin.iOS10/fi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fi"
+          },
+          "lib/Xamarin.iOS10/fr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/Xamarin.iOS10/he/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "he"
+          },
+          "lib/Xamarin.iOS10/hi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hi"
+          },
+          "lib/Xamarin.iOS10/hr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hr"
+          },
+          "lib/Xamarin.iOS10/hu/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hu"
+          },
+          "lib/Xamarin.iOS10/id/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "id"
+          },
+          "lib/Xamarin.iOS10/it/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "it"
+          },
+          "lib/Xamarin.iOS10/ja/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/Xamarin.iOS10/ko/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/Xamarin.iOS10/ms/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ms"
+          },
+          "lib/Xamarin.iOS10/nb/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/Xamarin.iOS10/nl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/Xamarin.iOS10/pl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/Xamarin.iOS10/pt-BR/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/Xamarin.iOS10/pt/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/Xamarin.iOS10/ro/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ro"
+          },
+          "lib/Xamarin.iOS10/ru/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/Xamarin.iOS10/sk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sk"
+          },
+          "lib/Xamarin.iOS10/sv/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/Xamarin.iOS10/th/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "th"
+          },
+          "lib/Xamarin.iOS10/tr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/Xamarin.iOS10/uk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "uk"
+          },
+          "lib/Xamarin.iOS10/vi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "vi"
+          },
+          "lib/Xamarin.iOS10/zh-HK/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-HK"
+          },
+          "lib/Xamarin.iOS10/zh-Hans/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/Xamarin.iOS10/zh-Hant/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        },
+        "build": {
+          "build/netstandard1.0/Xamarin.Forms.props": {},
+          "build/netstandard1.0/Xamarin.Forms.targets": {}
+        }
+      },
+      "Xamarin.Forms.Extended.InfiniteScrolling/1.0.0-preview2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Xamarin.Forms": "2.4.0.280"
+        },
+        "compile": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        }
+      },
+      "Xamarin.Forms.Maps/2.5.1.444934": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.1.444934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        }
+      },
+      "Xfx.Controls/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.0.0"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        }
+      },
+      "Loja/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Acr.UserDialogs": "6.5.1",
+          "CarouselView.FormsPlugin": "5.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Plugin.Share": "7.1.1",
+          "Rg.Plugins.Popup": "1.0.4",
+          "Xam.FormsPlugin.Iconize": "1.0.10",
+          "Xam.Plugin.Geolocator": "4.2.0",
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xam.Plugin.Media": "3.1.3",
+          "Xam.Plugins.Notifier": "2.1.0",
+          "Xamarin.Forms": "2.5.1.444934",
+          "Xamarin.Forms.Extended.InfiniteScrolling": "1.0.0-preview2",
+          "Xamarin.Forms.Maps": "2.5.1.444934",
+          "Xfx.Controls": "1.1.3"
+        },
+        "compile": {
+          "bin/placeholder/Loja.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Loja.dll": {}
+        }
+      }
+    },
+    "Xamarin.iOS,Version=v1.0/win-x86": {
+      "Acr.Support/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.Support.iOS.dll": {}
+        }
+      },
+      "Acr.UserDialogs/6.5.1": {
+        "type": "package",
+        "dependencies": {
+          "Acr.Support": "[2.1.0, 3.0.0)",
+          "BTProgressHUD": "[1.2.0.5, 2.0.0)",
+          "Splat": "[2.0.0, 3.0.0)"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll": {},
+          "lib/Xamarin.iOS10/Acr.UserDialogs.dll": {}
+        }
+      },
+      "BTProgressHUD/1.2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/BTProgressHUD.dll": {}
+        }
+      },
+      "CarouselView.FormsPlugin/5.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Plugin.Permissions/2.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+        }
+      },
+      "Plugin.Share/7.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Share.dll": {}
+        }
+      },
+      "Rg.Plugins.Popup/1.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.3.0.49"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
+      "Splat/2.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Splat.dll": {}
+        }
+      },
+      "Xam.FormsPlugin.Iconize/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xamarin.Forms": "2.2.0.31"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Geolocator/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Geolocator.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize/1.0.10": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Iconize.FontAwesome/1.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Xam.Plugin.Iconize": "1.0.10"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll": {}
+        }
+      },
+      "Xam.Plugin.Media/3.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Plugin.Permissions": "2.2.1"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.Media.dll": {}
+        }
+      },
+      "Xam.Plugins.Notifier/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll": {},
+          "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll": {}
+        }
+      },
+      "Xamarin.Forms/2.5.1.444934": {
+        "type": "package",
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll": {}
+        },
+        "resource": {
+          "lib/Xamarin.iOS10/ar/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ar"
+          },
+          "lib/Xamarin.iOS10/ca/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/Xamarin.iOS10/cs/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/Xamarin.iOS10/da/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "da"
+          },
+          "lib/Xamarin.iOS10/de/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "de"
+          },
+          "lib/Xamarin.iOS10/el/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "el"
+          },
+          "lib/Xamarin.iOS10/es/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "es"
+          },
+          "lib/Xamarin.iOS10/fi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fi"
+          },
+          "lib/Xamarin.iOS10/fr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/Xamarin.iOS10/he/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "he"
+          },
+          "lib/Xamarin.iOS10/hi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hi"
+          },
+          "lib/Xamarin.iOS10/hr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hr"
+          },
+          "lib/Xamarin.iOS10/hu/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "hu"
+          },
+          "lib/Xamarin.iOS10/id/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "id"
+          },
+          "lib/Xamarin.iOS10/it/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "it"
+          },
+          "lib/Xamarin.iOS10/ja/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/Xamarin.iOS10/ko/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/Xamarin.iOS10/ms/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ms"
+          },
+          "lib/Xamarin.iOS10/nb/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/Xamarin.iOS10/nl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/Xamarin.iOS10/pl/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/Xamarin.iOS10/pt-BR/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/Xamarin.iOS10/pt/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/Xamarin.iOS10/ro/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ro"
+          },
+          "lib/Xamarin.iOS10/ru/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/Xamarin.iOS10/sk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sk"
+          },
+          "lib/Xamarin.iOS10/sv/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/Xamarin.iOS10/th/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "th"
+          },
+          "lib/Xamarin.iOS10/tr/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/Xamarin.iOS10/uk/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "uk"
+          },
+          "lib/Xamarin.iOS10/vi/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "vi"
+          },
+          "lib/Xamarin.iOS10/zh-HK/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-HK"
+          },
+          "lib/Xamarin.iOS10/zh-Hans/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/Xamarin.iOS10/zh-Hant/Xamarin.Forms.Platform.iOS.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        },
+        "build": {
+          "build/netstandard1.0/Xamarin.Forms.props": {},
+          "build/netstandard1.0/Xamarin.Forms.targets": {}
+        }
+      },
+      "Xamarin.Forms.Extended.InfiniteScrolling/1.0.0-preview2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Xamarin.Forms": "2.4.0.280"
+        },
+        "compile": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll": {}
+        }
+      },
+      "Xamarin.Forms.Maps/2.5.1.444934": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.1.444934"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll": {},
+          "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll": {}
+        }
+      },
+      "Xfx.Controls/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.0.0"
+        },
+        "compile": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.iOS10/Xfx.Controls.dll": {},
+          "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll": {}
+        }
+      },
+      "Loja/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Acr.UserDialogs": "6.5.1",
+          "CarouselView.FormsPlugin": "5.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Plugin.Share": "7.1.1",
+          "Rg.Plugins.Popup": "1.0.4",
+          "Xam.FormsPlugin.Iconize": "1.0.10",
+          "Xam.Plugin.Geolocator": "4.2.0",
+          "Xam.Plugin.Iconize": "1.0.10",
+          "Xam.Plugin.Media": "3.1.3",
+          "Xam.Plugins.Notifier": "2.1.0",
+          "Xamarin.Forms": "2.5.1.444934",
+          "Xamarin.Forms.Extended.InfiniteScrolling": "1.0.0-preview2",
+          "Xamarin.Forms.Maps": "2.5.1.444934",
+          "Xfx.Controls": "1.1.3"
+        },
+        "compile": {
+          "bin/placeholder/Loja.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Loja.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Acr.Support/2.1.0": {
+      "sha512": "Kq/+sDIUxyEcDxwIB6ijtaUWzp/KV68rdYVLHQ26au7q3Y+7fqiqE0571VALlbYHlXMtFRd8ap3VeLw4lf/GWQ==",
+      "type": "package",
+      "path": "acr.support/2.1.0",
+      "files": [
+        "acr.support.2.1.0.nupkg.sha512",
+        "acr.support.nuspec",
+        "lib/MonoAndroid10/Acr.Support.Android.dll",
+        "lib/MonoAndroid10/Acr.Support.Android.dll.mdb",
+        "lib/MonoAndroid10/Acr.Support.Android.pdb",
+        "lib/Xamarin.iOS10/Acr.Support.iOS.dll",
+        "lib/Xamarin.tvOS10/Acr.Support.tvOS.dll",
+        "lib/Xamarin.tvOS10/Acr.Support.tvOS.dll.mdb",
+        "lib/Xamarin.tvOS10/Acr.Support.tvOS.pdb"
+      ]
+    },
+    "Acr.UserDialogs/6.5.1": {
+      "sha512": "Y0GGF+TuG+JOMe//LiNlrr2Hf+nD3/Irlie15pjkzspcR59WEi6N1UT4ZZNaQVE7fYrddTTnAsSco9XD6TbvNg==",
+      "type": "package",
+      "path": "acr.userdialogs/6.5.1",
+      "files": [
+        "acr.userdialogs.6.5.1.nupkg.sha512",
+        "acr.userdialogs.nuspec",
+        "lib/MonoAndroid10/Acr.UserDialogs.Interface.dll",
+        "lib/MonoAndroid10/Acr.UserDialogs.Interface.pdb",
+        "lib/MonoAndroid10/Acr.UserDialogs.dll",
+        "lib/MonoAndroid10/Acr.UserDialogs.dll.mdb",
+        "lib/MonoAndroid10/Acr.UserDialogs.pdb",
+        "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.dll",
+        "lib/Xamarin.iOS10/Acr.UserDialogs.Interface.pdb",
+        "lib/Xamarin.iOS10/Acr.UserDialogs.dll",
+        "lib/Xamarin.iOS10/Acr.UserDialogs.pdb",
+        "lib/netstandard1.1/Acr.UserDialogs.Interface.dll",
+        "lib/netstandard1.1/Acr.UserDialogs.Interface.pdb",
+        "lib/netstandard1.1/Acr.UserDialogs.deps.json",
+        "lib/netstandard1.1/Acr.UserDialogs.dll",
+        "lib/netstandard1.1/Acr.UserDialogs.pdb",
+        "lib/uap10.0/Acr.UserDialogs.Interface.dll",
+        "lib/uap10.0/Acr.UserDialogs.Interface.pdb",
+        "lib/uap10.0/Acr.UserDialogs.dll",
+        "lib/uap10.0/Acr.UserDialogs.pdb",
+        "lib/uap10.0/Acr.UserDialogs.pri",
+        "lib/uap10.0/Acr.UserDialogs/Acr.UserDialogs.xr.xml",
+        "lib/uap10.0/Acr.UserDialogs/ActionSheetContentDialog.xaml",
+        "lib/uap10.0/Acr.UserDialogs/DatePickerControl.xaml",
+        "lib/uap10.0/Acr.UserDialogs/LoginContentDialog.xaml",
+        "lib/uap10.0/Acr.UserDialogs/ProgressContentDialog.xaml",
+        "lib/uap10.0/Acr.UserDialogs/Properties/Acr.UserDialogs.rd.xml",
+        "lib/uap10.0/Acr.UserDialogs/TimePickerControl.xaml"
+      ]
+    },
+    "BTProgressHUD/1.2.0.5": {
+      "sha512": "6Kr2TReJWBVZ91zJBYsIu7pIOuWlCvuM/YcuN99X/jdt8B6XJSsBHBy8i/tV390bwPLOcFh3L5CniMil9WJn2A==",
+      "type": "package",
+      "path": "btprogresshud/1.2.0.5",
+      "files": [
+        "btprogresshud.1.2.0.5.nupkg.sha512",
+        "btprogresshud.nuspec",
+        "lib/Xamarin.iOS10/BTProgressHUD.dll"
+      ]
+    },
+    "CarouselView.FormsPlugin/5.2.0": {
+      "sha512": "h849lqz0wvmpyiXqCrN7EW+cCGqK5chcefCfS55CkoGMMQx238QWNknUTOl/CvIdZ4bgs0Oztb7kamYXDlQ5mQ==",
+      "type": "package",
+      "path": "carouselview.formsplugin/5.2.0",
+      "files": [
+        ".nupkg.metadata",
+        "carouselview.formsplugin.5.2.0.nupkg.sha512",
+        "carouselview.formsplugin.nuspec",
+        "lib/MonoAndroid/CarouselView.FormsPlugin.Abstractions.dll",
+        "lib/MonoAndroid/CarouselView.FormsPlugin.Android.dll",
+        "lib/UAP10/CarouselView.FormsPlugin.Abstractions.dll",
+        "lib/UAP10/CarouselView.FormsPlugin.UWP.dll",
+        "lib/UAP10/CarouselView.FormsPlugin.UWP.pri",
+        "lib/UAP10/CarouselView.FormsPlugin.UWP/CarouselView.FormsPlugin.UWP.xr.xml",
+        "lib/UAP10/FlipViewControl.xbf",
+        "lib/Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll",
+        "lib/Xamarin.iOS10/CarouselView.FormsPlugin.iOS.dll",
+        "lib/netstandard2.0/CarouselView.FormsPlugin.Abstractions.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10/CarouselView.FormsPlugin.Abstractions.dll"
+      ]
+    },
+    "Newtonsoft.Json/11.0.2": {
+      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "type": "package",
+      "path": "newtonsoft.json/11.0.2",
+      "files": [
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.11.0.2.nupkg.sha512",
+        "newtonsoft.json.nuspec"
+      ]
+    },
+    "Plugin.Permissions/2.2.1": {
+      "sha512": "ixEdsOBokh6eIofokJmru0u18hZKUODkvJZeest0CsHiiuRcO38yiTr+2Nq6Pg9hm0fhyavFQydhbldfHOp44Q==",
+      "type": "package",
+      "path": "plugin.permissions/2.2.1",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Permissions.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.Permissions.Abstractions.pdb",
+        "lib/MonoAndroid10/Plugin.Permissions.Abstractions.xml",
+        "lib/MonoAndroid10/Plugin.Permissions.XML",
+        "lib/MonoAndroid10/Plugin.Permissions.dll",
+        "lib/MonoAndroid10/Plugin.Permissions.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Permissions.pdb",
+        "lib/UAP10/Plugin.Permissions.Abstractions.dll",
+        "lib/UAP10/Plugin.Permissions.Abstractions.pdb",
+        "lib/UAP10/Plugin.Permissions.Abstractions.xml",
+        "lib/UAP10/Plugin.Permissions.XML",
+        "lib/UAP10/Plugin.Permissions.dll",
+        "lib/UAP10/Plugin.Permissions.pdb",
+        "lib/UAP10/Plugin.Permissions.pri",
+        "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.pdb",
+        "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.xml",
+        "lib/Xamarin.iOS10/Plugin.Permissions.XML",
+        "lib/Xamarin.iOS10/Plugin.Permissions.dll",
+        "lib/netstandard1.0/Plugin.Permissions.Abstractions.dll",
+        "lib/netstandard1.0/Plugin.Permissions.Abstractions.pdb",
+        "lib/netstandard1.0/Plugin.Permissions.Abstractions.xml",
+        "lib/netstandard1.0/Plugin.Permissions.deps.json",
+        "lib/netstandard1.0/Plugin.Permissions.dll",
+        "lib/netstandard1.0/Plugin.Permissions.pdb",
+        "lib/netstandard1.0/Plugin.Permissions.xml",
+        "plugin.permissions.2.2.1.nupkg.sha512",
+        "plugin.permissions.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Plugin.Share/7.1.1": {
+      "sha512": "07mFq3H9eeX2TGNKitmByjDKZl/3KXZrT2jv/27mEEnY7me/lHQSX52mI0B1mVTZquCloNmZm12EcV1t4fFSSA==",
+      "type": "package",
+      "path": "plugin.share/7.1.1",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Share.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.Share.Abstractions.pdb",
+        "lib/MonoAndroid10/Plugin.Share.Abstractions.xml",
+        "lib/MonoAndroid10/Plugin.Share.dll",
+        "lib/MonoAndroid10/Plugin.Share.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Share.pdb",
+        "lib/MonoAndroid10/Plugin.Share.xml",
+        "lib/UAP10/Plugin.Share.Abstractions.dll",
+        "lib/UAP10/Plugin.Share.Abstractions.pdb",
+        "lib/UAP10/Plugin.Share.Abstractions.xml",
+        "lib/UAP10/Plugin.Share.XML",
+        "lib/UAP10/Plugin.Share.dll",
+        "lib/UAP10/Plugin.Share.pdb",
+        "lib/UAP10/Plugin.Share.pri",
+        "lib/Xamarin.iOS10/Plugin.Share.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.Share.Abstractions.pdb",
+        "lib/Xamarin.iOS10/Plugin.Share.Abstractions.xml",
+        "lib/Xamarin.iOS10/Plugin.Share.dll",
+        "lib/Xamarin.iOS10/Plugin.Share.xml",
+        "lib/netstandard1.0/Plugin.Share.Abstractions.dll",
+        "lib/netstandard1.0/Plugin.Share.Abstractions.pdb",
+        "lib/netstandard1.0/Plugin.Share.Abstractions.xml",
+        "lib/netstandard1.0/Plugin.Share.deps.json",
+        "lib/netstandard1.0/Plugin.Share.dll",
+        "lib/netstandard1.0/Plugin.Share.pdb",
+        "lib/netstandard1.0/Plugin.Share.xml",
+        "plugin.share.7.1.1.nupkg.sha512",
+        "plugin.share.nuspec"
+      ]
+    },
+    "Rg.Plugins.Popup/1.0.4": {
+      "sha512": "KTpeQmUT3RgTkCIwtsdGRuNh6gLlrZ78f2kW6gwo9UmTBR2RIHMx/Tc6FZEplFQBVApJ8e7S7EnM/SuZ+9jMCg==",
+      "type": "package",
+      "path": "rg.plugins.popup/1.0.4",
+      "files": [
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Platform.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.IOS.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.Platform.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.Platform.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.dll",
+        "lib/portable-win+net45+wp8+win8+wpa81/Rg.Plugins.Popup.Platform.dll",
+        "lib/portable-win+net45+wp8+win8+wpa81/Rg.Plugins.Popup.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.Platform.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.UWP.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.dll",
+        "lib/wpa81/Rg.Plugins.Popup.Platform.dll",
+        "lib/wpa81/Rg.Plugins.Popup.WinPhone.dll",
+        "lib/wpa81/Rg.Plugins.Popup.dll",
+        "rg.plugins.popup.1.0.4.nupkg.sha512",
+        "rg.plugins.popup.nuspec"
+      ]
+    },
+    "Splat/2.0.0": {
+      "sha512": "nu/hT3AaKHJvMlCTrbR2EG1n6nzOejbJsvx/LWiy7kM4PK7R/GdrtP5KN8VcXfi1x+mbPA3Mqcbe992D7DppyA==",
+      "type": "package",
+      "path": "splat/2.0.0",
+      "files": [
+        "lib/MonoAndroid403/Splat.dll",
+        "lib/Net45/Splat.dll",
+        "lib/Portable-Win81+Wpa81/Splat.dll",
+        "lib/Xamarin.Mac20/Splat.dll",
+        "lib/Xamarin.iOS10/Splat.dll",
+        "lib/netstandard1.1/Splat.dll",
+        "splat.2.0.0.nupkg.sha512",
+        "splat.nuspec",
+        "src/AssemblyFinder.cs",
+        "src/Bitmaps.cs",
+        "src/Logging.cs",
+        "src/MemoizingMRUCache.cs",
+        "src/ModeDetector.cs",
+        "src/PlatformModeDetector.cs",
+        "src/PointExtensions.cs",
+        "src/RectangleExtensions.cs",
+        "src/ReflectionStubs.cs",
+        "src/ServiceLocation.cs",
+        "src/SizeExtensions.cs",
+        "src/TypeForwardedSystemDrawing.cs"
+      ]
+    },
+    "Xam.FormsPlugin.Iconize/1.0.10": {
+      "sha512": "xAhxJjRSjSI/xe1ourNFs/mQBL/5Urtg7LIyUhqCe/gd4gP2ehC3GsY20wzPgPmxwJMF9fjRuj/XRSfOKWN/yQ==",
+      "type": "package",
+      "path": "xam.formsplugin.iconize/1.0.10",
+      "files": [
+        "lib/MonoAndroid10/FormsPlugin.Iconize.Droid.dll",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.Droid.dll.mdb",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.Droid.pdb",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.Droid.xml",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.dll",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.dll.mdb",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.pdb",
+        "lib/MonoAndroid10/FormsPlugin.Iconize.xml",
+        "lib/UAP10/FormsPlugin.Iconize.UWP.dll",
+        "lib/UAP10/FormsPlugin.Iconize.UWP.pdb",
+        "lib/UAP10/FormsPlugin.Iconize.UWP.pri",
+        "lib/UAP10/FormsPlugin.Iconize.UWP.xml",
+        "lib/UAP10/FormsPlugin.Iconize.dll",
+        "lib/UAP10/FormsPlugin.Iconize.pdb",
+        "lib/UAP10/FormsPlugin.Iconize.xml",
+        "lib/Xamarin.iOS10/FormsPlugin.Iconize.dll",
+        "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.dll",
+        "lib/Xamarin.iOS10/FormsPlugin.Iconize.iOS.xml",
+        "lib/Xamarin.iOS10/FormsPlugin.Iconize.xml",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FormsPlugin.Iconize.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FormsPlugin.Iconize.pdb",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FormsPlugin.Iconize.xml",
+        "xam.formsplugin.iconize.1.0.10.nupkg.sha512",
+        "xam.formsplugin.iconize.nuspec"
+      ]
+    },
+    "Xam.Plugin.Geolocator/4.2.0": {
+      "sha512": "Erh2NDbVFSkJkGo09iMKs9Rjtgajra0BpZr1M3G45qTCNiNrxJlMZITU4RM+mJCtWH5m3KNL9v1SzE13FMFFbw==",
+      "type": "package",
+      "path": "xam.plugin.geolocator/4.2.0",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Geolocator.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.Geolocator.Abstractions.pdb",
+        "lib/MonoAndroid10/Plugin.Geolocator.dll",
+        "lib/MonoAndroid10/Plugin.Geolocator.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Geolocator.pdb",
+        "lib/MonoAndroid10/Plugin.Geolocator.xml",
+        "lib/UAP10/Plugin.Geolocator.Abstractions.dll",
+        "lib/UAP10/Plugin.Geolocator.Abstractions.pdb",
+        "lib/UAP10/Plugin.Geolocator.XML",
+        "lib/UAP10/Plugin.Geolocator.dll",
+        "lib/UAP10/Plugin.Geolocator.pdb",
+        "lib/UAP10/Plugin.Geolocator.pri",
+        "lib/Xamarin.Mac20/Plugin.Geolocator.Abstractions.dll",
+        "lib/Xamarin.Mac20/Plugin.Geolocator.Abstractions.pdb",
+        "lib/Xamarin.Mac20/Plugin.Geolocator.dll",
+        "lib/Xamarin.Mac20/Plugin.Geolocator.pdb",
+        "lib/Xamarin.Mac20/Plugin.Geolocator.xml",
+        "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.Geolocator.Abstractions.pdb",
+        "lib/Xamarin.iOS10/Plugin.Geolocator.dll",
+        "lib/Xamarin.iOS10/Plugin.Geolocator.pdb",
+        "lib/Xamarin.iOS10/Plugin.Geolocator.xml",
+        "lib/XamarinTVOS/Plugin.Geolocator.Abstractions.dll",
+        "lib/XamarinTVOS/Plugin.Geolocator.Abstractions.pdb",
+        "lib/XamarinTVOS/Plugin.Geolocator.dll",
+        "lib/XamarinTVOS/Plugin.Geolocator.pdb",
+        "lib/netstandard1.0/Plugin.Geolocator.Abstractions.dll",
+        "lib/netstandard1.0/Plugin.Geolocator.Abstractions.pdb",
+        "lib/netstandard1.0/Plugin.Geolocator.deps.json",
+        "lib/netstandard1.0/Plugin.Geolocator.dll",
+        "lib/netstandard1.0/Plugin.Geolocator.pdb",
+        "lib/netstandard1.0/Plugin.Geolocator.xml",
+        "readme.txt",
+        "xam.plugin.geolocator.4.2.0.nupkg.sha512",
+        "xam.plugin.geolocator.nuspec"
+      ]
+    },
+    "Xam.Plugin.Iconize/1.0.10": {
+      "sha512": "grUbNmardTylqhILe3LuaOv5Vv7IEwFbmcYh8jrqSE3+SXDZM9OHjlNis/3G/zlhasZvNPDAODaI5wnHugo9zQ==",
+      "type": "package",
+      "path": "xam.plugin.iconize/1.0.10",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Iconize.Droid.dll",
+        "lib/MonoAndroid10/Plugin.Iconize.Droid.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Iconize.Droid.pdb",
+        "lib/MonoAndroid10/Plugin.Iconize.Droid.xml",
+        "lib/MonoAndroid10/Plugin.Iconize.dll",
+        "lib/MonoAndroid10/Plugin.Iconize.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Iconize.pdb",
+        "lib/MonoAndroid10/Plugin.Iconize.xml",
+        "lib/UAP10/Plugin.Iconize.UWP.dll",
+        "lib/UAP10/Plugin.Iconize.UWP.pdb",
+        "lib/UAP10/Plugin.Iconize.UWP.pri",
+        "lib/UAP10/Plugin.Iconize.UWP.xml",
+        "lib/UAP10/Plugin.Iconize.dll",
+        "lib/UAP10/Plugin.Iconize.pdb",
+        "lib/UAP10/Plugin.Iconize.xml",
+        "lib/Xamarin.iOS10/Plugin.Iconize.dll",
+        "lib/Xamarin.iOS10/Plugin.Iconize.iOS.dll",
+        "lib/Xamarin.iOS10/Plugin.Iconize.iOS.xml",
+        "lib/Xamarin.iOS10/Plugin.Iconize.xml",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Plugin.Iconize.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Plugin.Iconize.pdb",
+        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Plugin.Iconize.xml",
+        "xam.plugin.iconize.1.0.10.nupkg.sha512",
+        "xam.plugin.iconize.nuspec"
+      ]
+    },
+    "Xam.Plugin.Iconize.FontAwesome/1.0.10": {
+      "sha512": "x/0LubQQI8GqVk8NuTFLeFGSgwFBHw+4SzSJtW0sK8tg0SBdusiYTROvxeR8CI8DYzVdOS/n7u/szNYaS0CbPw==",
+      "type": "package",
+      "path": "xam.plugin.iconize.fontawesome/1.0.10",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Iconize.FontAwesome.Droid.dll",
+        "lib/MonoAndroid10/Plugin.Iconize.FontAwesome.Droid.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Iconize.FontAwesome.Droid.pdb",
+        "lib/MonoAndroid10/Plugin.Iconize.FontAwesome.Droid.xml",
+        "lib/UAP10/Plugin.Iconize.FontAwesome.UWP.dll",
+        "lib/UAP10/Plugin.Iconize.FontAwesome.UWP.pdb",
+        "lib/UAP10/Plugin.Iconize.FontAwesome.UWP.pri",
+        "lib/UAP10/Plugin.Iconize.FontAwesome.UWP.xml",
+        "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.dll",
+        "lib/Xamarin.iOS10/Plugin.Iconize.FontAwesome.iOS.xml",
+        "xam.plugin.iconize.fontawesome.1.0.10.nupkg.sha512",
+        "xam.plugin.iconize.fontawesome.nuspec"
+      ]
+    },
+    "Xam.Plugin.Media/3.1.3": {
+      "sha512": "SI6m6PKeOZSksNp1j5fnl1ePeuLKQWMOkqy56YhCPtspfyA7N2k4lFi+2iU3TJ2YUfjWpIybTQ/1hdLKGTY6Jw==",
+      "type": "package",
+      "path": "xam.plugin.media/3.1.3",
+      "files": [
+        "lib/MonoAndroid10/Plugin.Media.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.Media.Abstractions.pdb",
+        "lib/MonoAndroid10/Plugin.Media.Abstractions.xml",
+        "lib/MonoAndroid10/Plugin.Media.dll",
+        "lib/MonoAndroid10/Plugin.Media.dll.mdb",
+        "lib/MonoAndroid10/Plugin.Media.pdb",
+        "lib/MonoAndroid10/Plugin.Media.xml",
+        "lib/UAP10/Plugin.Media.Abstractions.dll",
+        "lib/UAP10/Plugin.Media.Abstractions.pdb",
+        "lib/UAP10/Plugin.Media.Abstractions.xml",
+        "lib/UAP10/Plugin.Media.XML",
+        "lib/UAP10/Plugin.Media.dll",
+        "lib/UAP10/Plugin.Media.pdb",
+        "lib/UAP10/Plugin.Media.pri",
+        "lib/Xamarin.iOS10/Plugin.Media.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.Media.Abstractions.pdb",
+        "lib/Xamarin.iOS10/Plugin.Media.Abstractions.xml",
+        "lib/Xamarin.iOS10/Plugin.Media.dll",
+        "lib/Xamarin.iOS10/Plugin.Media.xml",
+        "lib/netstandard1.0/Plugin.Media.Abstractions.dll",
+        "lib/netstandard1.0/Plugin.Media.Abstractions.pdb",
+        "lib/netstandard1.0/Plugin.Media.Abstractions.xml",
+        "lib/netstandard1.0/Plugin.Media.deps.json",
+        "lib/netstandard1.0/Plugin.Media.dll",
+        "lib/netstandard1.0/Plugin.Media.pdb",
+        "lib/netstandard1.0/Plugin.Media.xml",
+        "lib/tizen40/Plugin.Media.Abstractions.dll",
+        "lib/tizen40/Plugin.Media.Abstractions.pdb",
+        "lib/tizen40/Plugin.Media.Abstractions.xml",
+        "lib/tizen40/Plugin.Media.deps.json",
+        "lib/tizen40/Plugin.Media.dll",
+        "lib/tizen40/Plugin.Media.pdb",
+        "readme.txt",
+        "xam.plugin.media.3.1.3.nupkg.sha512",
+        "xam.plugin.media.nuspec"
+      ]
+    },
+    "Xam.Plugins.Notifier/2.1.0": {
+      "sha512": "JzwutxVpdXHLp/lAy9ZUop3xjfuCYm0dS5zXnF2M8tY6XF+bKSNOk1W0MvE0lAZSPCfUYFP2/J88BpYDFj10CQ==",
+      "type": "package",
+      "path": "xam.plugins.notifier/2.1.0",
+      "files": [
+        "lib/MonoAndroid10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/MonoAndroid10/Plugin.LocalNotifications.dll",
+        "lib/MonoAndroid10/Plugin.LocalNotifications.xml",
+        "lib/UAP10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/UAP10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/UAP10/Plugin.LocalNotifications.dll",
+        "lib/UAP10/Plugin.LocalNotifications.xml",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.dll",
+        "lib/Xamarin.iOS10/Plugin.LocalNotifications.xml",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.dll",
+        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Plugin.LocalNotifications.xml",
+        "lib/win8/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/win8/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/win8/Plugin.LocalNotifications.dll",
+        "lib/win8/Plugin.LocalNotifications.xml",
+        "lib/wp8/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/wp8/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/wp8/Plugin.LocalNotifications.dll",
+        "lib/wp8/Plugin.LocalNotifications.xml",
+        "lib/wpa81/Plugin.LocalNotifications.Abstractions.dll",
+        "lib/wpa81/Plugin.LocalNotifications.Abstractions.xml",
+        "lib/wpa81/Plugin.LocalNotifications.dll",
+        "lib/wpa81/Plugin.LocalNotifications.xml",
+        "xam.plugins.notifier.2.1.0.nupkg.sha512",
+        "xam.plugins.notifier.nuspec"
+      ]
+    },
+    "Xamarin.Forms/2.5.1.444934": {
+      "sha512": "zDbZeFhh62l6cMG9dXrQ/CSbk+NxKAykeL+JcVxLn//Rx678sCa961F+ib0gqzNHkTmT1K3TPLlJZp5WjvnKVA==",
+      "type": "package",
+      "path": "xamarin.forms/2.5.1.444934",
+      "files": [
+        "build/netstandard1.0/Mono.Cecil.Mdb.dll",
+        "build/netstandard1.0/Mono.Cecil.Pdb.dll",
+        "build/netstandard1.0/Mono.Cecil.Rocks.dll",
+        "build/netstandard1.0/Mono.Cecil.dll",
+        "build/netstandard1.0/Xamarin.Forms.Build.Tasks.dll",
+        "build/netstandard1.0/Xamarin.Forms.Core.dll",
+        "build/netstandard1.0/Xamarin.Forms.DefaultItems.props",
+        "build/netstandard1.0/Xamarin.Forms.DefaultItems.targets",
+        "build/netstandard1.0/Xamarin.Forms.Xaml.dll",
+        "build/netstandard1.0/Xamarin.Forms.props",
+        "build/netstandard1.0/Xamarin.Forms.targets",
+        "build/portable-win+net45+wp80+win81+wpa81/Mono.Cecil.Mdb.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Mono.Cecil.Pdb.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Mono.Cecil.Rocks.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Mono.Cecil.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Build.Tasks.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Core.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.DefaultItems.targets",
+        "build/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Xaml.dll",
+        "build/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.targets",
+        "lib/MonoAndroid10/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/MonoAndroid10/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/MonoAndroid10/FormsViewGroup.dll",
+        "lib/MonoAndroid10/FormsViewGroup.dll.mdb",
+        "lib/MonoAndroid10/FormsViewGroup.pdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Core.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Core.dll.mdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Core.pdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Core.xml",
+        "lib/MonoAndroid10/Xamarin.Forms.Platform.Android.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Platform.Android.dll.mdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Platform.Android.pdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Platform.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Xaml.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Xaml.dll.mdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Xaml.pdb",
+        "lib/MonoAndroid10/Xamarin.Forms.Xaml.xml",
+        "lib/WP80/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/WP80/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/WP80/Xamarin.Forms.Core.dll",
+        "lib/WP80/Xamarin.Forms.Core.pdb",
+        "lib/WP80/Xamarin.Forms.Core.xml",
+        "lib/WP80/Xamarin.Forms.Platform.WP8.dll",
+        "lib/WP80/Xamarin.Forms.Platform.dll",
+        "lib/WP80/Xamarin.Forms.Xaml.dll",
+        "lib/WP80/Xamarin.Forms.Xaml.pdb",
+        "lib/WP80/Xamarin.Forms.Xaml.xml",
+        "lib/Xamarin.Mac/Xamarin.Forms.Core.dll",
+        "lib/Xamarin.Mac/Xamarin.Forms.Platform.dll",
+        "lib/Xamarin.Mac/Xamarin.Forms.Platform.macOS.dll",
+        "lib/Xamarin.Mac/Xamarin.Forms.Xaml.dll",
+        "lib/Xamarin.iOS10/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/Xamarin.iOS10/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll.mdb",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Core.pdb",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Core.xml",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Platform.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Platform.iOS.pdb",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.dll.mdb",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.pdb",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Xaml.xml",
+        "lib/Xamarin.iOS10/ar/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/ca/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/cs/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/da/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/de/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/el/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/es/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/fi/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/fr/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/he/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/hi/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/hr/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/hu/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/id/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/it/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/ja/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/ko/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/ms/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/nb/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/nl/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/pl/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/pt-BR/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/pt/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/ro/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/ru/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/sk/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/sv/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/th/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/tr/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/uk/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/vi/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/zh-HK/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/zh-Hans/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/Xamarin.iOS10/zh-Hant/Xamarin.Forms.Platform.iOS.resources.dll",
+        "lib/netstandard1.0/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/netstandard1.0/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Core.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Core.dll.mdb",
+        "lib/netstandard1.0/Xamarin.Forms.Core.pdb",
+        "lib/netstandard1.0/Xamarin.Forms.Core.xml",
+        "lib/netstandard1.0/Xamarin.Forms.Platform.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Xaml.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Xaml.dll.mdb",
+        "lib/netstandard1.0/Xamarin.Forms.Xaml.pdb",
+        "lib/netstandard1.0/Xamarin.Forms.Xaml.xml",
+        "lib/portable-win+net45+wp80+win81+wpa81/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Core.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Core.dll.mdb",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Core.pdb",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Core.xml",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Platform.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Xaml.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Xaml.dll.mdb",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Xaml.pdb",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Xaml.xml",
+        "lib/uap10.0/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/uap10.0/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/uap10.0/Xamarin.Forms.Core.dll",
+        "lib/uap10.0/Xamarin.Forms.Core.xml",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP.dll",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP.pri",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/AutoSuggestStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/FormsCommandBarStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/FormsEmbeddedPageWrapper.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/FormsProgressBarStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/FormsTextBoxStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/MasterDetailControlStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/PageControlStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/Properties/Xamarin.Forms.Platform.UAP.rd.xml",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/Resources.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/TabbedPageStyle.xbf",
+        "lib/uap10.0/Xamarin.Forms.Platform.UAP/Xamarin.Forms.Platform.UAP.xr.xml",
+        "lib/uap10.0/Xamarin.Forms.Platform.dll",
+        "lib/uap10.0/Xamarin.Forms.Xaml.dll",
+        "lib/uap10.0/Xamarin.Forms.Xaml.xml",
+        "lib/win81/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/win81/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/win81/Xamarin.Forms.Core.dll",
+        "lib/win81/Xamarin.Forms.Core.xml",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet.dll",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet.pri",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet/FormsProgressBarStyle.xbf",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet/FormsTextBoxStyle.xbf",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet/Resources.xbf",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet/TabletResources.xbf",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.Tablet/Xamarin.Forms.Platform.WinRT.Tablet.xr.xml",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.dll",
+        "lib/win81/Xamarin.Forms.Platform.WinRT.pri",
+        "lib/win81/Xamarin.Forms.Platform.WinRT/StepperControl.xbf",
+        "lib/win81/Xamarin.Forms.Platform.WinRT/Xamarin.Forms.Platform.WinRT.xr.xml",
+        "lib/win81/Xamarin.Forms.Platform.dll",
+        "lib/win81/Xamarin.Forms.Xaml.dll",
+        "lib/win81/Xamarin.Forms.Xaml.xml",
+        "lib/wpa81/Design/Xamarin.Forms.Core.Design.dll",
+        "lib/wpa81/Design/Xamarin.Forms.Xaml.Design.dll",
+        "lib/wpa81/Xamarin.Forms.Core.dll",
+        "lib/wpa81/Xamarin.Forms.Core.xml",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone.dll",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone.pri",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone/FormsProgressBarStyle.xbf",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone/FormsTextBoxStyle.xbf",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone/PhoneResources.xbf",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone/Resources.xbf",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone/SearchBox.xbf",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.Phone/Xamarin.Forms.Platform.WinRT.Phone.xr.xml",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.dll",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT.pri",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT/StepperControl.xbf",
+        "lib/wpa81/Xamarin.Forms.Platform.WinRT/Xamarin.Forms.Platform.WinRT.xr.xml",
+        "lib/wpa81/Xamarin.Forms.Platform.dll",
+        "lib/wpa81/Xamarin.Forms.Xaml.dll",
+        "lib/wpa81/Xamarin.Forms.Xaml.xml",
+        "xamarin.forms.2.5.1.444934.nupkg.sha512",
+        "xamarin.forms.nuspec"
+      ]
+    },
+    "Xamarin.Forms.Extended.InfiniteScrolling/1.0.0-preview2": {
+      "sha512": "q3MleY9BqDnVKUiXSvYETV++mg70CVXt7h2jqd3etdq5HHrRTYJdjZUdAEBYg5OozfABV7m5QtISU1XheV83XQ==",
+      "type": "package",
+      "path": "xamarin.forms.extended.infinitescrolling/1.0.0-preview2",
+      "files": [
+        ".nupkg.metadata",
+        "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Extended.InfiniteScrolling.xml",
+        "xamarin.forms.extended.infinitescrolling.1.0.0-preview2.nupkg.sha512",
+        "xamarin.forms.extended.infinitescrolling.nuspec"
+      ]
+    },
+    "Xamarin.Forms.Maps/2.5.1.444934": {
+      "sha512": "N09sJ5ERhwbXaAUiTzlcUZxHoyJq1Q8weOzM2MMaIXKdqq05BJbR1ENaDDMpe9LHgFJES1KB1pUwrAELYeb5Wg==",
+      "type": "package",
+      "path": "xamarin.forms.maps/2.5.1.444934",
+      "files": [
+        "build/win81/ARM/Xamarin.Forms.Maps.WinRT.Tablet.dll",
+        "build/win81/ARM/Xamarin.Forms.Maps.WinRT.Tablet.pri",
+        "build/win81/ARM/Xamarin.Forms.Platform.WinRT.Tablet.dll",
+        "build/win81/ARM/Xamarin.Forms.Platform.WinRT.Tablet.pri",
+        "build/win81/ARM/Xamarin.Forms.Platform.WinRT.Tablet/FormsTextBoxStyle.xbf",
+        "build/win81/ARM/Xamarin.Forms.Platform.WinRT.Tablet/Resources.xbf",
+        "build/win81/ARM/Xamarin.Forms.Platform.WinRT.Tablet/TabletResources.xbf",
+        "build/win81/ARM/Xamarin.Forms.Platform.WinRT.Tablet/Xamarin.Forms.Platform.WinRT.Tablet.xr.xml",
+        "build/win81/Xamarin.Forms.Maps.props",
+        "build/win81/Xamarin.Forms.Maps.targets",
+        "build/win81/x64/Xamarin.Forms.Maps.WinRT.Tablet.dll",
+        "build/win81/x64/Xamarin.Forms.Maps.WinRT.Tablet.pri",
+        "build/win81/x64/Xamarin.Forms.Platform.WinRT.Tablet.dll",
+        "build/win81/x64/Xamarin.Forms.Platform.WinRT.Tablet.pri",
+        "build/win81/x64/Xamarin.Forms.Platform.WinRT.Tablet/FormsTextBoxStyle.xbf",
+        "build/win81/x64/Xamarin.Forms.Platform.WinRT.Tablet/Resources.xbf",
+        "build/win81/x64/Xamarin.Forms.Platform.WinRT.Tablet/TabletResources.xbf",
+        "build/win81/x64/Xamarin.Forms.Platform.WinRT.Tablet/Xamarin.Forms.Platform.WinRT.Tablet.xr.xml",
+        "build/win81/x86/Xamarin.Forms.Maps.WinRT.Tablet.dll",
+        "build/win81/x86/Xamarin.Forms.Maps.WinRT.Tablet.pri",
+        "build/win81/x86/Xamarin.Forms.Platform.WinRT.Tablet.dll",
+        "build/win81/x86/Xamarin.Forms.Platform.WinRT.Tablet.pri",
+        "build/win81/x86/Xamarin.Forms.Platform.WinRT.Tablet/FormsTextBoxStyle.xbf",
+        "build/win81/x86/Xamarin.Forms.Platform.WinRT.Tablet/Resources.xbf",
+        "build/win81/x86/Xamarin.Forms.Platform.WinRT.Tablet/TabletResources.xbf",
+        "build/win81/x86/Xamarin.Forms.Platform.WinRT.Tablet/Xamarin.Forms.Platform.WinRT.Tablet.xr.xml",
+        "lib/MonoAndroid10/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Maps.Android.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Maps.dll",
+        "lib/MonoAndroid10/Xamarin.Forms.Maps.xml",
+        "lib/WP80/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/WP80/Xamarin.Forms.Maps.WP8.dll",
+        "lib/WP80/Xamarin.Forms.Maps.dll",
+        "lib/WP80/Xamarin.Forms.Maps.xml",
+        "lib/Xamarin.Mac/Xamarin.Forms.Maps.dll",
+        "lib/Xamarin.Mac/Xamarin.Forms.Maps.macOS.dll",
+        "lib/Xamarin.Mac/Xamarin.Forms.Maps.xml",
+        "lib/Xamarin.iOS10/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Maps.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Maps.iOS.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Maps.xml",
+        "lib/netstandard1.0/Xamarin.Forms.Maps.Design.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Maps.dll",
+        "lib/netstandard1.0/Xamarin.Forms.Maps.xml",
+        "lib/portable-win+net45+wp80+win81+wpa81/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Maps.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Xamarin.Forms.Maps.xml",
+        "lib/uap10.0/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/uap10.0/Xamarin.Forms.Maps.UWP.dll",
+        "lib/uap10.0/Xamarin.Forms.Maps.UWP.pri",
+        "lib/uap10.0/Xamarin.Forms.Maps.dll",
+        "lib/win81/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/win81/Xamarin.Forms.Maps.dll",
+        "lib/win81/Xamarin.Forms.Maps.xml",
+        "lib/wpa81/Design/Xamarin.Forms.Maps.Design.dll",
+        "lib/wpa81/Xamarin.Forms.Maps.WinRT.Phone.dll",
+        "lib/wpa81/Xamarin.Forms.Maps.WinRT.Phone.pri",
+        "lib/wpa81/Xamarin.Forms.Maps.dll",
+        "xamarin.forms.maps.2.5.1.444934.nupkg.sha512",
+        "xamarin.forms.maps.nuspec"
+      ]
+    },
+    "Xfx.Controls/1.1.3": {
+      "sha512": "Vf66ME0jYWNXr+OZCGsacOncHAX867ugwmu7FIjHFcgPWaz8Af6z057qNbVbP2chsrrfco58slcfvAb8eXViwQ==",
+      "type": "package",
+      "path": "xfx.controls/1.1.3",
+      "files": [
+        "lib/MonoAndroid/Xfx.Controls.Droid.dll",
+        "lib/MonoAndroid/Xfx.Controls.dll",
+        "lib/Xamarin.iOS10/Xfx.Controls.dll",
+        "lib/Xamarin.iOS10/Xfx.Controls.iOS.dll",
+        "lib/netcore45/Xfx.Controls.dll",
+        "lib/netstandard1.3/Xfx.Controls.dll",
+        "lib/portable-net45+win8+wpa81+wp8/Xfx.Controls.dll",
+        "xfx.controls.1.1.3.nupkg.sha512",
+        "xfx.controls.nuspec"
+      ]
+    },
+    "Loja/1.0.0": {
+      "type": "project",
+      "path": "../Loja/Loja.csproj",
+      "msbuildProject": "../Loja/Loja.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "Xamarin.iOS,Version=v1.0": [
+      "Acr.UserDialogs >= 6.5.1",
+      "CarouselView.FormsPlugin >= 5.2.0",
+      "Loja >= 1.0.0",
+      "Newtonsoft.Json >= 11.0.2",
+      "Plugin.Share >= 7.1.1",
+      "Rg.Plugins.Popup >= 1.0.4",
+      "Xam.FormsPlugin.Iconize >= 1.0.10",
+      "Xam.Plugin.Geolocator >= 4.2.0",
+      "Xam.Plugin.Iconize >= 1.0.10",
+      "Xam.Plugin.Iconize.FontAwesome >= 1.0.10",
+      "Xam.Plugin.Media >= 3.1.3",
+      "Xam.Plugins.Notifier >= 2.1.0",
+      "Xamarin.Forms >= 2.5.1.444934",
+      "Xamarin.Forms.Maps >= 2.5.1.444934"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\rodri\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "F:\\Projetos\\EmagineLojaApp\\Loja.iOS\\Loja.iOS.csproj",
+      "projectName": "Loja.iOS",
+      "projectPath": "F:\\Projetos\\EmagineLojaApp\\Loja.iOS\\Loja.iOS.csproj",
+      "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
+      "outputPath": "F:\\Projetos\\EmagineLojaApp\\Loja.iOS\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "configFilePaths": [
+        "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "xamarinios10"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "xamarinios10": {
+          "projectReferences": {
+            "F:\\Projetos\\EmagineLojaApp\\Loja\\Loja.csproj": {
+              "projectPath": "F:\\Projetos\\EmagineLojaApp\\Loja\\Loja.csproj"
+            }
+          }
+        }
+      }
+    },
+    "frameworks": {
+      "xamarinios10": {
+        "dependencies": {
+          "Acr.UserDialogs": {
+            "target": "Package",
+            "version": "[6.5.1, )"
+          },
+          "CarouselView.FormsPlugin": {
+            "target": "Package",
+            "version": "[5.2.0, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[11.0.2, )"
+          },
+          "Plugin.Share": {
+            "target": "Package",
+            "version": "[7.1.1, )"
+          },
+          "Rg.Plugins.Popup": {
+            "target": "Package",
+            "version": "[1.0.4, )"
+          },
+          "Xam.FormsPlugin.Iconize": {
+            "target": "Package",
+            "version": "[1.0.10, )"
+          },
+          "Xam.Plugin.Geolocator": {
+            "target": "Package",
+            "version": "[4.2.0, )"
+          },
+          "Xam.Plugin.Iconize": {
+            "target": "Package",
+            "version": "[1.0.10, )"
+          },
+          "Xam.Plugin.Iconize.FontAwesome": {
+            "target": "Package",
+            "version": "[1.0.10, )"
+          },
+          "Xam.Plugin.Media": {
+            "target": "Package",
+            "version": "[3.1.3, )"
+          },
+          "Xam.Plugins.Notifier": {
+            "target": "Package",
+            "version": "[2.1.0, )"
+          },
+          "Xamarin.Forms": {
+            "target": "Package",
+            "version": "[2.5.1.444934, )"
+          },
+          "Xamarin.Forms.Maps": {
+            "target": "Package",
+            "version": "[2.5.1.444934, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}
