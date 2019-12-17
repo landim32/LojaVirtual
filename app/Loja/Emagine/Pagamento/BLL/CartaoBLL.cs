@@ -69,14 +69,15 @@ namespace Emagine.Pagamento.BLL
 
         public List<string> listarValidadeCartao()
         {
-            var datas = new List<string>();
-            var dataAtual = DateTime.Now;
-            dataAtual = new DateTime(dataAtual.Year, dataAtual.Month, 1);
-            for (var i = 0; i < (12 * 10); i++)
+            var ret = new List<string>();
+            for (var i = DateTime.Now.Year; i <= DateTime.Now.Year + 10; i++)
             {
-                datas.Add(dataAtual.AddMonths(i).ToString("MM/yyyy"));
+                for (var j = DateTime.Now.Month; j <= 12; j++)
+                {
+                    ret.Add(j.ToString("d2") + "/" + i);
+                }
             }
-            return datas;
+            return ret;
         }
 
         public DateTime pegarDataExpiracao(string texto)

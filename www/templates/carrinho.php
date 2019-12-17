@@ -45,14 +45,6 @@ $urlHome = $app->getBaseUrl() . "/" . $loja->getSlug();
                     <th class="text-right" id="valorTotal"></th>
                     <th class="text-center">-</th>
                 </tr>
-                <?php if ($loja->getValorMinimo() > 0) : ?>
-                    <tr>
-                        <th class="hidden-xs">&nbsp;</th>
-                        <th class="text-right">Valor Mínimo da Compra:</th>
-                        <th class="text-right"><?php echo $loja->getValorMinimoStr(); ?></th>
-                        <th class="text-center">-</th>
-                    </tr>
-                <?php endif; ?>
                 </tfoot>
             </table>
             <form method="POST" class="form-horizontal">

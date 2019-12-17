@@ -17,7 +17,7 @@ use Emagine\Produto\Model\LojaInfo;
         <img src="<?php echo $app->getBaseUrl() . "/images/logo.png"; ?>" alt="<?php echo APP_NAME; ?>" class="img-responsive" style="max-height: 120px; margin: 5px auto;" />
     </div>
     <h3 class="text-center">Selecione a loja onde deseja fazer suas compras:</h3>
-    <?php require __DIR__ . "/banner.php"; ?>
+
     <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($lojas as $loja) : ?>
@@ -48,10 +48,10 @@ use Emagine\Produto\Model\LojaInfo;
             ?>
         <?php endforeach; ?>
     </div>
-    <div class="row">
+    <div class="row endereco-atual">
         <div class="col-md-6 col-md-offset-3 text-center">
             <i class="fa fa-map-marker"></i>
-            <span class="completo"><?php echo $endereco->getEnderecoCompleto(true, false); ?></span>
+            <span class="completo"></span>
             <a href="<?php echo $app->getBaseUrl() . "/endereco/seleciona"; ?>"><small>(mudar)</small></a>
         </div>
     </div>

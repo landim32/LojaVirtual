@@ -6,10 +6,6 @@ using Emagine.Frete.Model;
 using Emagine.Frete.Pages;
 using Emagine.Frete.Utils;
 using Emagine.Login.Factory;
-using Emagine.Pagamento.Factory;
-using Emagine.Pagamento.Model;
-using Emagine.Pagamento.Pages;
-using Plugin.LocalNotifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +22,6 @@ namespace Emagine.Frete.Controls
         private Button _abrirRotaButton;
         private Button _avaliarButton;
         private Button _acaoButton;
-        private Button _cancelarButton;
 
         public event EventHandler<FreteInfo> AoAtualizarTela;
 
@@ -92,15 +87,6 @@ namespace Emagine.Frete.Controls
                 Text = "Quero essa viagem"
             };
             _acaoButton.Clicked += acaoClicked;
-
-            _cancelarButton = new Button
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[Estilo.BTN_DANGER],
-                Text = "Cancelar"
-            };
-            _cancelarButton.Clicked += cancelarClicked;
         }
 
         private void acompanharClicked(object sender, EventArgs e)
@@ -113,12 +99,10 @@ namespace Emagine.Frete.Controls
 
             if (motorista != null)
             {
-                var acompanhaPage = CaronaUtils.acompanharComoMotorista(Frete);
-                Navigation.PushAsync(acompanhaPage);
+                CaronaUtils.acompanharComoMotorista(Frete);
             }
             else {
-                var acompanhaPage = CaronaUtils.acompanharComoCliente(Frete);
-                Navigation.PushAsync(acompanhaPage);
+                CaronaUtils.acompanharComoCliente(Frete);
             }
         }
 
@@ -132,27 +116,17 @@ namespace Emagine.Frete.Controls
             switch (frete.Situacao)
             {
                 case FreteSituacaoEnum.ProcurandoMotorista:
-                    if (motorista != null && frete.IdUsuario != motorista.Id) {
+                    if (motorista != null && frete.IdUsuario != motorista.Id)
+                    {
                         _acaoButton.Text = "Quero essa viagem";
                         _acaoButton.Style = Estilo.Current[Estilo.BTN_SUCESSO];
                         _mainLayout.Children.Add(_acaoButton);
                     }
                     break;
-                //case FreteSituacaoEnum.AprovandoMotorista:
-                case FreteSituacaoEnum.AprovandoMotorista:
-                    if (frete.IdUsuario == usuario.Id)
-                    {
-                        _acaoButton.Text = "Aprovar Marinheiro";
-                        _acaoButton.Style = Estilo.Current[Estilo.BTN_SUCESSO];
-                        _mainLayout.Children.Add(_acaoButton);
-                    }
-                    break;
                 case FreteSituacaoEnum.Aguardando:
-                    if (motorista != null && frete.IdUsuario != motorista.Id) {
-                        _acaoButton.Text = "Iniciar";
-                        _acaoButton.Style = Estilo.Current[Estilo.BTN_SUCESSO];
-                        _mainLayout.Children.Add(_acaoButton);
-                    }
+                    _acaoButton.Text = "Iniciar";
+                    _acaoButton.Style = Estilo.Current[Estilo.BTN_SUCESSO];
+                    _mainLayout.Children.Add(_acaoButton);
                     break;
                 case FreteSituacaoEnum.PegandoEncomenda:
                     if (motorista != null && frete.IdMotorista == motorista.Id)
@@ -173,37 +147,12 @@ namespace Emagine.Frete.Controls
                 case FreteSituacaoEnum.Entregue:
                     if (usuario != null && frete.IdUsuario == usuario.Id)
                     {
-                        //_acaoButton.Text = "Confirmar entrega!";
-                        _acaoButton.Text = "Finalizar atendimento!";
+                        _acaoButton.Text = "Confirmar entrega!";
                         _acaoButton.Style = Estilo.Current[Estilo.BTN_SUCESSO];
                         _mainLayout.Children.Add(_acaoButton);
                     }
                     break;
             }
-
-            switch (frete.Situacao)
-            {
-                case FreteSituacaoEnum.ProcurandoMotorista:
-                    if (usuario.Id == frete.IdUsuario)
-                    {
-                        _cancelarButton.Text = "Cancelar";
-                        _mainLayout.Children.Add(_cancelarButton);
-                    }
-                    break;
-                case FreteSituacaoEnum.AprovandoMotorista:
-                    if (motorista != null && frete.IdMotorista == motorista.Id)
-                    {
-                        _cancelarButton.Text = "Desistir";
-                        _mainLayout.Children.Add(_cancelarButton);
-                    }
-                    else if (frete.IdUsuario == usuario.Id)
-                    {
-                        _cancelarButton.Text = "Quero outro marinheiro";
-                        _mainLayout.Children.Add(_cancelarButton);
-                    }
-                    break;
-            }
-
             var situacoes = new List<FreteSituacaoEnum>() {
                 FreteSituacaoEnum.PegandoEncomenda,
                 FreteSituacaoEnum.Entregando
@@ -221,7 +170,7 @@ namespace Emagine.Frete.Controls
             {
                 if (frete.IdUsuario == usuario.Id && !(frete.NotaMotorista > 0))
                 {
-                    _avaliarButton.Text = "Avaliar Marinheiro";
+                    _avaliarButton.Text = "Avaliar Motorista";
                     _mainLayout.Children.Add(_avaliarButton);
                 }
                 else if (frete.IdMotorista == usuario.Id && !(frete.NotaFrete > 0))
@@ -240,78 +189,25 @@ namespace Emagine.Frete.Controls
                 case FreteSituacaoEnum.ProcurandoMotorista:
                     aceitar(frete);
                     break;
-                case FreteSituacaoEnum.AprovandoMotorista:
-                    frete.Situacao = FreteSituacaoEnum.Aguardando;
-                    alterarSituacao(frete);
-                    break;
                 case FreteSituacaoEnum.Aguardando:
-                    var regraMotorista = MotoristaFactory.create();
-                    var motorista = regraMotorista.pegarAtual();
-                    if (motorista != null) {
-                        PagamentoUtils.efetuarPagamento(motorista, frete, (novoFrete) =>
-                        {
-                            novoFrete.Situacao = FreteSituacaoEnum.PegandoEncomenda;
-                            alterarSituacao(novoFrete);
-                        });
-                    }
+                    frete.Situacao = FreteSituacaoEnum.PegandoEncomenda;
+                    alterar(frete);
                     break;
                 case FreteSituacaoEnum.PegandoEncomenda:
                     frete.Situacao = FreteSituacaoEnum.Entregando;
-                    alterarSituacao(frete);
+                    alterar(frete);
                     break;
                 case FreteSituacaoEnum.Entregando:
                     frete.Situacao = FreteSituacaoEnum.Entregue;
-                    alterarSituacao(frete);
+                    alterar(frete);
                     break;
                 case FreteSituacaoEnum.Entregue:
                     frete.Situacao = FreteSituacaoEnum.EntregaConfirmada;
-                    alterarSituacao(frete);
+                    alterar(frete);
                     break;
                 default:
                     string mensagem = string.Format("Nenhuma ação para a situação {0}.", this.Frete.SituacaoStr);
                     UserDialogs.Instance.AlertAsync(mensagem, "Erro", "Entendi");
-                    break;
-            }
-        }
-
-        private async void excluirFrete(int idFrete) {
-            UserDialogs.Instance.ShowLoading("cancelando...");
-            try
-            {
-                var regraFrete = FreteFactory.create();
-                await regraFrete.excluir(idFrete);
-                UserDialogs.Instance.HideLoading();
-                AoAtualizarTela?.Invoke(this, null);
-            }
-            catch (Exception erro)
-            {
-                UserDialogs.Instance.HideLoading();
-                await UserDialogs.Instance.AlertAsync(erro.Message, "Erro", "Entendi");
-            }
-        }
-
-        private void cancelarClicked(object sender, EventArgs e) {
-            var frete = this.Frete;
-
-            var regraUsuario = UsuarioFactory.create();
-            var usuario = regraUsuario.pegarAtual();
-
-            var regraMotorista = MotoristaFactory.create();
-            var motorista = regraMotorista.pegarAtual();
-
-            switch (frete.Situacao)
-            {
-                case FreteSituacaoEnum.ProcurandoMotorista:
-                    if (usuario.Id == frete.IdUsuario) {
-                        excluirFrete(frete.Id);
-                    }
-                    break;
-                case FreteSituacaoEnum.AprovandoMotorista:
-                    if ((motorista != null && frete.IdMotorista == motorista.Id) || frete.IdUsuario == usuario.Id) {
-                        frete.IdMotorista = null;
-                        frete.Situacao = FreteSituacaoEnum.ProcurandoMotorista;
-                        alterar(frete);
-                    }
                     break;
             }
         }
@@ -335,8 +231,7 @@ namespace Emagine.Frete.Controls
             {
                 Descricao = descricao
             };
-            //avaliePage.AoAvaliar += async (s1, nota) =>
-            avaliePage.AoAvaliar += async (s1, avaliacao) =>
+            avaliePage.AoAvaliar += async (s1, nota) =>
             {
                 UserDialogs.Instance.ShowLoading("carregando...");
                 try
@@ -345,13 +240,11 @@ namespace Emagine.Frete.Controls
                     frete = await regraFrete.pegar(this.Frete.Id);
                     if (frete.IdUsuario == usuario.Id)
                     {
-                        //frete.NotaMotorista = nota;
-                        frete.NotaMotorista = avaliacao.Nota;
+                        frete.NotaMotorista = nota;
                     }
                     else if (frete.IdMotorista == usuario.Id)
                     {
-                        //frete.NotaFrete = nota;
-                        frete.NotaFrete = avaliacao.Nota;
+                        frete.NotaFrete = nota;
                     }
                     await regraFrete.alterar(frete);
                     UserDialogs.Instance.HideLoading();
@@ -465,27 +358,10 @@ namespace Emagine.Frete.Controls
             try
             {
                 var regraFrete = FreteFactory.create();
-                await regraFrete.alterar(frete);
-                BindingContext = await regraFrete.pegar(frete.Id);
-                UserDialogs.Instance.HideLoading();
-                AoAtualizarTela?.Invoke(this, frete);
-            }
-            catch (Exception erro)
-            {
-                UserDialogs.Instance.HideLoading();
-                await UserDialogs.Instance.AlertAsync(erro.Message, "Erro", "Entendi");
-            }
-        }
-
-        private async void alterarSituacao(FreteInfo frete)
-        {
-            UserDialogs.Instance.ShowLoading("carregando...");
-            try
-            {
-                var regraFrete = FreteFactory.create();
                 await regraFrete.alterarSituacao(frete.Id, frete.Situacao);
                 BindingContext = await regraFrete.pegar(frete.Id);
                 UserDialogs.Instance.HideLoading();
+                //atualizarTela(this.Frete);
                 AoAtualizarTela?.Invoke(this, frete);
             }
             catch (Exception erro)

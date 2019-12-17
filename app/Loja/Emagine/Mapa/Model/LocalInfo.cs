@@ -6,18 +6,10 @@ namespace Emagine.Mapa.Model
 {
     public class LocalInfo
     {
-        public LocalInfo(double lat, double lng) {
-            this.Latitude = lat;
-            this.Longitude = lng;
-        }
-
-        public LocalInfo() : this(0, 0) {
-        }
-
         [JsonProperty("latitude")]
-        public double Latitude { get; set; } = 0;
+        public double Latitude { get; set; }
 
         [JsonProperty("longitude")]
-        public double Longitude { get; set; } = 0;
+        public double Longitude { get; set; }
     }
 }

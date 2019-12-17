@@ -32,18 +32,12 @@ namespace Emagine.Pedido.Pages
         private Label _ValorFreteLabel;
         private Label _ValorTotalLabel;
         private Label _SituacaoLabel;
-        private Label _diaEntregaLabel;
-        private Label _horarioEntregaLabel;
-        private Label _mensagemRetiradaLabel;
         private Label _ObservacaoLabel;
         private PedidoView _PedidoView;
         private Button _ImprimirButton;
         private Button _AcompanhaButton;
         private Button _AvaliarButton;
-        private Button _horarioButton;
         private Button _CancelarButton;
-        private Label _empresaLabel;
-        private StackLayout _rodapeLayout;
 
         public PedidoInfo Pedido {
             get {
@@ -75,7 +69,6 @@ namespace Emagine.Pedido.Pages
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Start
 			};
-            /*
             Content = new ScrollView
             {
                 Orientation = ScrollOrientation.Vertical,
@@ -83,24 +76,8 @@ namespace Emagine.Pedido.Pages
                 VerticalOptions = LayoutOptions.Fill,
                 Content = _mainLayout
             };
-            */
-            Content = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
-                Children = {
-                    new ScrollView {
-                        Orientation = ScrollOrientation.Vertical,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Fill,
-                        Content = _mainLayout
-                    },
-                    _rodapeLayout
-                }
-            };
             //atualizarTela();
-        }
+		}
 
         private void atualizarTitulo(PedidoInfo pedido) {
             switch (pedido.Situacao)
@@ -124,7 +101,7 @@ namespace Emagine.Pedido.Pages
                 case SituacaoEnum.Pendente:
                     if (pedido.Entrega == EntregaEnum.RetirarNaLoja)
                     {
-                        _TituloLabel.Text = "Seu pedido está aguardando ser retirado na Loja.";
+                        _TituloLabel.Text = "Seu pedido está aguardando ser retirado no Loja.";
                     }
                     else if (pedido.Entrega == EntregaEnum.RetiradaMapeada)
                     {
@@ -219,18 +196,6 @@ namespace Emagine.Pedido.Pages
                 }
             }
 
-            var situacaoHorario = new List<SituacaoEnum>() {
-                SituacaoEnum.Pendente,
-                SituacaoEnum.Preparando
-            };
-            if (
-                pedido.Entrega == EntregaEnum.Entrega &&
-                situacaoHorario.Contains(pedido.Situacao) &&
-                !(pedido.DiaEntrega != DateTime.MinValue && !string.IsNullOrEmpty(pedido.HorarioEntrega))
-                ) {
-                _mainLayout.Children.Add(_horarioButton);
-            }
-
             var formaPgto = new List<FormaPagamentoEnum>()
             {
                 FormaPagamentoEnum.Boleto,
@@ -267,32 +232,6 @@ namespace Emagine.Pedido.Pages
                 });
                 _enderecoView.SetBinding(EnderecoView.BindingContextProperty, new Binding("Loja"));
                 _mainLayout.Children.Add(_enderecoView);
-
-                _mainLayout.Children.Add(new Frame
-                {
-                    CornerRadius = 5,
-                    Padding = new Thickness(4, 3),
-                    Margin = new Thickness(2, 2),
-                    BackgroundColor = Color.White,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    VerticalOptions = LayoutOptions.Start,
-                    Content = new StackLayout
-                    {
-                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                        VerticalOptions = LayoutOptions.Start,
-                        Orientation = StackOrientation.Vertical,
-                        Spacing = 3,
-                        Children = {
-                            new Label {
-                                HorizontalOptions = LayoutOptions.Fill,
-                                VerticalOptions = LayoutOptions.Start,
-                                Style = Estilo.Current[Estilo.LABEL_CONTROL],
-                                Text = "Siga abaixo para retirar suas compras:"
-                            },
-                            _mensagemRetiradaLabel
-                        }
-                    }
-                });
             }
             else {
                 _mainLayout.Children.Add(new Label
@@ -404,43 +343,6 @@ namespace Emagine.Pedido.Pages
                 }
             }, 1, 1);
 
-            if (pedido.Entrega == EntregaEnum.Entrega && pedido.DiaEntrega != DateTime.MinValue) {
-                _gridLayout.Children.Add(new StackLayout {
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Start,
-                    Orientation = StackOrientation.Vertical,
-                    Children = {
-                        new Label {
-                            HorizontalOptions = LayoutOptions.Fill,
-                            VerticalOptions = LayoutOptions.Start,
-                            Style = Estilo.Current[Estilo.LABEL_CONTROL],
-                            Text = "Dia de Entrega:"
-                        },
-                        _diaEntregaLabel
-                    }
-                }, 0, 2);
-
-                if (!string.IsNullOrEmpty(pedido.HorarioEntrega))
-                {
-                    _gridLayout.Children.Add(new StackLayout
-                    {
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Orientation = StackOrientation.Vertical,
-                        Children = {
-                            new Label {
-                                HorizontalOptions = LayoutOptions.Fill,
-                                VerticalOptions = LayoutOptions.Start,
-                                Style = Estilo.Current[Estilo.LABEL_CONTROL],
-                                Text = "Horário de Entrega:"
-                            },
-                            _horarioEntregaLabel
-                        }
-                    }, 1, 2);
-                }
-            }
-
-
             if (!string.IsNullOrEmpty(pedido.Observacao))
             {
                 _mainLayout.Children.Add(new Frame
@@ -479,7 +381,6 @@ namespace Emagine.Pedido.Pages
                 HorizontalOptions = LayoutOptions.Fill,
                 Content = _PedidoView
             });
-            //_mainLayout.Children.Add(_rodapeLayout);
         }
 
         public void inicializarComponente() {
@@ -541,31 +442,6 @@ namespace Emagine.Pedido.Pages
                 Style = Estilo.Current[Estilo.LABEL_CAMPO]
             };
             _SituacaoLabel.SetBinding(Label.TextProperty, new Binding("SituacaoStr"));
-
-            _diaEntregaLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[Estilo.LABEL_CAMPO]
-            };
-            _diaEntregaLabel.SetBinding(Label.TextProperty, new Binding("DiaEntregaStr"));
-
-            _horarioEntregaLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[Estilo.LABEL_CAMPO]
-            };
-            _horarioEntregaLabel.SetBinding(Label.TextProperty, new Binding("HorarioEntrega"));
-
-            _mensagemRetiradaLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[Estilo.LABEL_CAMPO]
-            };
-            _mensagemRetiradaLabel.SetBinding(Label.TextProperty, new Binding("Loja.MensagemRetirada"));
-
             _ObservacaoLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.Fill,
@@ -590,8 +466,7 @@ namespace Emagine.Pedido.Pages
             };
             _ImprimirButton.Clicked += async (sender, e) => {
                 if (Pedido.Pagamento == null && !Pedido.IdPagamento.HasValue) {
-                    //UserDialogs.Instance.Alert("Pedido não possui pagamento vinculado.", "Erro", "Fechar");
-                    await DisplayAlert("Erro", "Pedido não possui pagamento vinculado.", "Entendi");
+                    UserDialogs.Instance.Alert("Pedido não possui pagamento vinculado.", "Erro", "Fechar");
                     return;
                 }
                 if (Pedido.Pagamento == null) {
@@ -606,8 +481,7 @@ namespace Emagine.Pedido.Pages
                     catch (Exception erro)
                     {
                         UserDialogs.Instance.HideLoading();
-                        //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                        await DisplayAlert("Erro", erro.Message, "Entendi");
+                        UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
                     }
                 }
                 var boletoImprimePage = new BoletoImprimePage
@@ -642,45 +516,6 @@ namespace Emagine.Pedido.Pages
                 Text = "Avaliar"
             };
             _AvaliarButton.Clicked += avaliarClicked;
-
-            _horarioButton = new Button
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[Estilo.BTN_SUCESSO],
-                Text = "Definir horário de entrega"
-            };
-            _horarioButton.Clicked += horarioClicked;
-
-            _empresaLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalTextAlignment = TextAlignment.Center,
-                FontAttributes = FontAttributes.Bold,
-                Margin = new Thickness(0, 0, 0, 3),
-                Text = "Smart Tecnologia ®"
-            };
-            _empresaLabel.SetBinding(Label.TextProperty, new Binding("Loja.Nome"));
-
-            _rodapeLayout = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Fill,
-                Margin = new Thickness(5, 0),
-                Spacing = 0,
-                Children = {
-                    new Label {
-                        VerticalOptions = LayoutOptions.Start,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        Text = "Esse pedido foi feito em:",
-                        FontSize = 10
-                    },
-                    _empresaLabel
-                }
-            };
         }
 
         private async void cancelarClicked(object sender, EventArgs e)
@@ -697,8 +532,7 @@ namespace Emagine.Pedido.Pages
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Entendi");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
 
@@ -713,59 +547,17 @@ namespace Emagine.Pedido.Pages
             {
                 Descricao = "Que nota você daria para o seu pedido?"
             };
-            avaliePage.AoAvaliar += async (s2, avaliacao) => {
+            avaliePage.AoAvaliar += async (s2, nota) => {
+                Pedido.Nota = nota;
                 UserDialogs.Instance.ShowLoading("Carregando...");
                 try
                 {
-                    Pedido.Nota = avaliacao.Nota;
-                    Pedido.Comentario = avaliacao.Comentario;
-                    if (Pedido.Situacao == SituacaoEnum.Entregue) {
-                        Pedido.Situacao = SituacaoEnum.Finalizado;
-                    }
-                    var regraPedido = PedidoFactory.create();
-                    await regraPedido.alterar(Pedido);
-
-                    var pedido = await regraPedido.pegar(Pedido.Id);
-                    Pedido = pedido;
-                    atualizarTela(Pedido);
-                    UserDialogs.Instance.HideLoading();
-                }
-                catch (Exception erro)
-                {
-                    UserDialogs.Instance.HideLoading();
-                    //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                    await DisplayAlert("Erro", erro.Message, "Entendi");
-                }
-            };
-            Navigation.PushAsync(avaliePage);
-        }
-
-        private async void horarioClicked(object sender, EventArgs e)
-        {
-            var regraHorario = PedidoHorarioFactory.create();
-            var horarios = await regraHorario.listar(Pedido.IdLoja);
-            var horarioEntregaPage = new HorarioEntregaPage()
-            {
-                Title = "Selecione o horário de entrega",
-                Horarios = horarios
-            };
-            horarioEntregaPage.AoSelecionar += async (s2, horario) =>
-            {
-                UserDialogs.Instance.ShowLoading("Enviando...");
-                try
-                {
-                    Pedido.DiaEntrega = horarioEntregaPage.DiaEntrega;
-                    Pedido.HorarioEntrega = horario;
-                    Pedido.Avisar = false;
-
                     var regraPedido = PedidoFactory.create();
                     await regraPedido.alterar(Pedido);
                     var pedido = await regraPedido.pegar(Pedido.Id);
                     Pedido = pedido;
                     atualizarTela(Pedido);
                     UserDialogs.Instance.HideLoading();
-                    await horarioEntregaPage.Navigation.PopAsync();
-
                 }
                 catch (Exception erro)
                 {
@@ -773,8 +565,7 @@ namespace Emagine.Pedido.Pages
                     UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
                 }
             };
-            UserDialogs.Instance.HideLoading();
-            ((RootPage)App.Current.MainPage).PushAsync(horarioEntregaPage);
+            Navigation.PushAsync(avaliePage);
         }
     }
 }

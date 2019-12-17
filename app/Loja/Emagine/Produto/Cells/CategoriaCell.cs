@@ -8,19 +8,19 @@ using Xamarin.Forms;
 
 namespace Emagine.Produto.Cells
 {
-    public class HorarioEntregaCell: ViewCell
+    public class CategoriaCell: ViewCell
     {
         private Label _NomeLabel;
         private Label _QuantidadeLabel;
 
-        public HorarioEntregaCell() {
+        public CategoriaCell() {
             inicilizarComponente();
             View = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Start,
-                Margin = new Thickness(10, 7),
+                Margin = new Thickness(0, 7),
                 Children = {
                     _NomeLabel,
                     new Frame {

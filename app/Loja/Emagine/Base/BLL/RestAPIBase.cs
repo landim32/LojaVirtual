@@ -17,15 +17,9 @@ namespace Emagine.Base.BLL
             //API_URL = GlobalAplicacao.getURLAplicacao();
         }
 
-        protected HttpClient createClient() {
-            return new HttpClient {
-                Timeout = TimeSpan.FromSeconds(15) 
-            };
-        }
-
         protected async Task<T> queryGet<T>(string url)
         {
-            using (var client = createClient())
+            using (var client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(url);
                 //response.EnsureSuccessStatusCode();
@@ -48,7 +42,7 @@ namespace Emagine.Base.BLL
 
         protected async Task<string> queryGet(string url)
         {
-            using (var client = createClient())
+            using (var client = new HttpClient())
             {
                 try
                 {
@@ -70,17 +64,16 @@ namespace Emagine.Base.BLL
 
         protected async Task<T> queryPut<T>(string url, object[] args)
         {
-            using (var client = createClient())
+            using (var client = new HttpClient())
             {
                 var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
                 var content = new StringContent(strJson);
                 HttpResponseMessage response = await client.PutAsync(url, content);
                 var str = await response.Content.ReadAsStringAsync();
-                if (!response.IsSuccessStatusCode) {
+                if (!response.IsSuccessStatusCode)
+                {
                     throw new Exception(str);
                 }
-                return JsonConvert.DeserializeObject<T>(str);
-                /*
                 try
                 {
                     var retorno = JsonConvert.DeserializeObject<T>(str);
@@ -90,12 +83,11 @@ namespace Emagine.Base.BLL
                 {
                     throw erro;
                 }
-                */
             }
         }
         protected async Task<string> queryPut(string url, object[] args)
         {
-            using (var client = createClient())
+            using (var client = new HttpClient())
             {
                 var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
                 var content = new StringContent(strJson);
@@ -111,7 +103,7 @@ namespace Emagine.Base.BLL
 
         protected async Task execPut(string url, params object[] args)
         {
-            using (var client = createClient())
+            using (var client = new HttpClient())
             {
                 var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
                 var content = new StringContent(strJson);
@@ -121,6 +113,18 @@ namespace Emagine.Base.BLL
                 {
                     throw new Exception(str);
                 }
+                /*
+                if (!string.IsNullOrEmpty(str))
+                {
+                    var xml = JsonConvert.DeserializeXNode(str);
+                    if (xml != null)
+                    {
+                        var element = xml.Element("error");
+                        if (element != null)
+                            throw new Exception(element.Value);
+                    }
+                }
+                */
                 return;
             }
         }
@@ -135,6 +139,20 @@ namespace Emagine.Base.BLL
                 {
                     throw new Exception(str);
                 }
+                /*
+                if (!string.IsNullOrEmpty(str))
+                {
+                    var xml = JsonConvert.DeserializeXNode(str);
+                    if (xml != null)
+                    {
+                        var element = xml.Element("error");
+                        if (element != null)
+                        {
+                            throw new Exception(element.Value);
+                        }
+                    }
+                }
+                */
                 return;
             }
         }

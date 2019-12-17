@@ -2,7 +2,6 @@
 using Emagine.Base.Estilo;
 using Emagine.Frete.Factory;
 using Emagine.Frete.Model;
-using Emagine.Frete.Utils;
 using Emagine.Pagamento.Factory;
 using Emagine.Pagamento.Model;
 using Emagine.Pagamento.Pages;
@@ -24,8 +23,6 @@ namespace Emagine.Frete.Pages
         private Label _totalLabel;
         private Button _aceitaButton;
         private Button _cancelarButton;
-
-        public bool EfetuarPagamento { get; set; } = false;
 
         public FreteInfo Frete
         {
@@ -59,7 +56,7 @@ namespace Emagine.Frete.Pages
                 Spacing = 15,
                 Children = {
                     new Frame {
-                        //Style = Estilo.Current[Estilo.TOTAL_FRAME],
+                        Style = Estilo.Current[Estilo.TOTAL_FRAME],
                         Content = new StackLayout
                         {
                             Orientation = StackOrientation.Horizontal,
@@ -70,7 +67,7 @@ namespace Emagine.Frete.Pages
                                 new Label {
                                     VerticalOptions = LayoutOptions.Center,
                                     HorizontalOptions = LayoutOptions.Start,
-                                    //Style = Estilo.Current[Estilo.TOTAL_LABEL],
+                                    Style = Estilo.Current[Estilo.TOTAL_LABEL],
                                     Text = "15% da primeira hora: "
                                 },
                                 _totalLabel
@@ -82,7 +79,7 @@ namespace Emagine.Frete.Pages
                         VerticalOptions = LayoutOptions.FillAndExpand,
                         HorizontalOptions = LayoutOptions.Start,
                         Text = "Para aceitar esse atendimento será descontado o valor de " +
-                            "15% da primeira hora no seu cartão de crédito assim que iniciar o atendimento."
+                            "15% da primeira hora no seu cartão de crédito."
                     },
                     new Label {
                         VerticalOptions = LayoutOptions.Center,
@@ -103,14 +100,14 @@ namespace Emagine.Frete.Pages
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Start,
-                //Style = Estilo.Current[Estilo.TOTAL_LABEL],
+                Style = Estilo.Current[Estilo.TOTAL_LABEL],
                 Text = "Valor Cobrado: "
             };
             _totalLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start,
-                //Style = Estilo.Current[Estilo.TOTAL_TEXTO],
+                Style = Estilo.Current[Estilo.TOTAL_TEXTO],
                 Text = "R$ 0,00",
             };
             _aceitaButton = new Button
@@ -134,23 +131,106 @@ namespace Emagine.Frete.Pages
             };
         }
 
-        protected void aceitarClicked(object sender, EventArgs e)
+        private PagamentoInfo gerarPagamento(MotoristaInfo motorista, FreteInfo frete, PagamentoCartaoInfo cartao = null)
         {
-            var regraMotorista = MotoristaFactory.create();
-            var motorista = regraMotorista.pegarAtual();
-            if (motorista == null)
+            var pagamento = new PagamentoInfo
             {
-                UserDialogs.Instance.Alert("Você não é um motorista.", "Erro", "Entendi");
-                return;
-            }
-            if (EfetuarPagamento)
+                IdUsuario = motorista.Id,
+                Situacao = SituacaoPagamentoEnum.Aberto,
+                Tipo = TipoPagamentoEnum.Credito,
+                Observacao = "15% da primeira hora"
+            };
+            pagamento.Itens.Add(new PagamentoItemInfo
             {
-                PagamentoUtils.efetuarPagamento(motorista, _frete, (frete) => {
-                    AoAceitar?.Invoke(this, frete);
-                });
+                Descricao = "15% da primeira hora",
+                Quantidade = 1,
+                Valor = frete.Preco * 0.15
+            });
+            if (cartao != null)
+            {
+                pagamento.Bandeira = cartao.Bandeira;
+                pagamento.Token = cartao.Token;
+                pagamento.NomeCartao = cartao.Nome;
+                pagamento.CVV = cartao.CVV;
             }
-            else {
-                AoAceitar?.Invoke(this, _frete);
+            return pagamento;
+        }
+
+        protected async void aceitarClicked(object sender, EventArgs e)
+        {
+            UserDialogs.Instance.ShowLoading("Efetuando pagamento...");
+            try
+            {
+                var regraMotorista = MotoristaFactory.create();
+                var motorista = regraMotorista.pegarAtual();
+                if (motorista == null)
+                {
+                    UserDialogs.Instance.HideLoading();
+                    UserDialogs.Instance.Alert("Você não é um motorista.", "Erro", "Entendi");
+                    return;
+                }
+                var regraCartao = PagamentoCartaoFactory.create();
+                var cartoes = await regraCartao.listar(motorista.Id);
+                if (cartoes != null && cartoes.Count > 0)
+                {
+                    var pagamento = gerarPagamento(motorista, _frete, cartoes[0]);
+                    var regraPagamento = PagamentoFactory.create();
+                    var retorno = await regraPagamento.pagarComToken(pagamento);
+                    if (retorno.Situacao == SituacaoPagamentoEnum.Pago)
+                    {
+                        pagamento = await regraPagamento.pegar(retorno.IdPagamento);
+
+                        var mensagem = "Foram debitados R$ {0} do seu cartão de crédito.";
+                        CrossLocalNotifications.Current.Show("Easy Barcos", string.Format(mensagem, pagamento.ValorTotalStr));
+
+                        var regraFrete = FreteFactory.create();
+                        _frete = await regraFrete.pegar(_frete.Id);
+                        _frete.IdPagamento = pagamento.IdPagamento;
+                        await regraFrete.alterar(_frete);
+                        UserDialogs.Instance.HideLoading();
+                        AoAceitar?.Invoke(this, _frete);
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        await DisplayAlert("Erro", retorno.Mensagem, "Entendi");
+                    }
+                }
+                else
+                {
+                    UserDialogs.Instance.HideLoading();
+                    var cartaoPage = new CartaoPage
+                    {
+                        UsaCredito = true,
+                        UsaDebito = false,
+                        TotalVisivel = true,
+                        Pagamento = gerarPagamento(motorista, _frete)
+                    };
+                    cartaoPage.AoEfetuarPagamento += async (s2, pagamento) =>
+                    {
+                        UserDialogs.Instance.ShowLoading("Atualizando frete...");
+                        try
+                        {
+                            var regraFrete = FreteFactory.create();
+                            _frete = await regraFrete.pegar(_frete.Id);
+                            _frete.IdPagamento = pagamento.IdPagamento;
+                            await regraFrete.alterar(_frete);
+                            UserDialogs.Instance.HideLoading();
+                            AoAceitar?.Invoke(this, _frete);
+                        }
+                        catch (Exception erro)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            await UserDialogs.Instance.AlertAsync(erro.Message, "Erro", "Entendi");
+                        }
+                    };
+                    await Navigation.PushAsync(cartaoPage);
+                }
+            }
+            catch (Exception erro)
+            {
+                UserDialogs.Instance.HideLoading();
+                await UserDialogs.Instance.AlertAsync(erro.Message, "Erro", "Entendi");
             }
         }
     }

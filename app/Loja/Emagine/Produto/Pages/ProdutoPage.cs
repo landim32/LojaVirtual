@@ -32,11 +32,10 @@ namespace Emagine.Produto.Pages
         private AbsoluteLayout _promocaoStack;
         private Label _moedaPromocaoLabel;
         private Label _valorPromocaoLabel;
-        private QuantidadeVControl _quantidadeButton;
+        private QuantidadeControl _quantidadeButton;
         private IconImage _destaqueIcon;
         //private Label _TotalLabel;
         private TotalCarrinhoView _totalView;
-        private Label _empresaLabel;
 
         public ProdutoInfo Produto {
             get {
@@ -104,7 +103,6 @@ namespace Emagine.Produto.Pages
                                                 HorizontalOptions = LayoutOptions.FillAndExpand,
                                                 Spacing = 5,
                                                 Children = {
-                                                    _descricaoLabel,
                                                     new StackLayout {
                                                         Orientation = StackOrientation.Horizontal,
                                                         VerticalOptions = LayoutOptions.Start,
@@ -139,7 +137,7 @@ namespace Emagine.Produto.Pages
                                                                 HorizontalTextAlignment = TextAlignment.End,
                                                                 LineBreakMode = LineBreakMode.TailTruncation,
                                                                 FontSize = TAMANHO_FONTE,
-                                                                Text = "Categoria:"
+                                                                Text = "Departamento:"
                                                             },
                                                             _categoriaLabel
                                                         }
@@ -182,7 +180,6 @@ namespace Emagine.Produto.Pages
                                                         }
                                                     },
                                                     */
-                                                    /*
                                                     new StackLayout {
                                                         Orientation = StackOrientation.Horizontal,
                                                         VerticalOptions = LayoutOptions.Start,
@@ -201,7 +198,24 @@ namespace Emagine.Produto.Pages
                                                             _volumeLabel
                                                         }
                                                     },
-                                                    */
+                                                    new StackLayout {
+                                                        Orientation = StackOrientation.Horizontal,
+                                                        VerticalOptions = LayoutOptions.Start,
+                                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                                        Spacing = 5,
+                                                        Children = {
+                                                            new Label {
+                                                                VerticalOptions = LayoutOptions.CenterAndExpand,
+                                                                HorizontalOptions = LayoutOptions.Start,
+                                                                WidthRequest = LABEL_LARGURA,
+                                                                HorizontalTextAlignment = TextAlignment.End,
+                                                                LineBreakMode = LineBreakMode.TailTruncation,
+                                                                FontSize = TAMANHO_FONTE,
+                                                                Text = "Descrição:"
+                                                            },
+                                                            _descricaoLabel
+                                                        }
+                                                    }
                                                 }
                                             },
                                             _quantidadeButton
@@ -211,24 +225,7 @@ namespace Emagine.Produto.Pages
                             }
                         }
                     },
-                    _totalView,
-                    new StackLayout {
-                        Orientation = StackOrientation.Vertical,
-                        VerticalOptions = LayoutOptions.Start,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        Margin = new Thickness(5, 0),
-                        Spacing = 0,
-                        Children = {
-                            new Label {
-                                VerticalOptions = LayoutOptions.Start,
-                                HorizontalOptions = LayoutOptions.Fill,
-                                HorizontalTextAlignment = TextAlignment.Center,
-                                Text = "Você está comprando em:",
-                                FontSize = 10
-                            },
-                            _empresaLabel
-                        }
-                    }
+                    _totalView
                 }
             };
         }
@@ -237,11 +234,6 @@ namespace Emagine.Produto.Pages
         {
             base.OnAppearing();
             _totalView.vincularComCarrinho();
-            var regraLoja = LojaFactory.create();
-            var loja = regraLoja.pegarAtual();
-            if (loja != null) {
-                _empresaLabel.Text = loja.Nome;
-            }
         }
 
         protected override void OnDisappearing()
@@ -262,14 +254,6 @@ namespace Emagine.Produto.Pages
                 Aspect = Aspect.AspectFit
             };
             _fotoImage.SetBinding(Image.SourceProperty, new Binding("FotoUrl"));
-            _descricaoLabel = new Label
-            {
-                FontAttributes = FontAttributes.Bold,
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.Start,
-                TextColor = Color.FromHex("#777777")
-            };
-            _descricaoLabel.SetBinding(Label.TextProperty, new Binding("Descricao"));
             _categoriaLabel = new Label
             {
                 FontAttributes = FontAttributes.Bold,
@@ -286,6 +270,14 @@ namespace Emagine.Produto.Pages
                 TextColor = Color.FromHex("#777777")
             };
             _codigoLabel.SetBinding(Label.TextProperty, new Binding("Codigo"));
+            _descricaoLabel = new Label
+            {
+                FontAttributes = FontAttributes.Bold,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Start,
+                TextColor = Color.FromHex("#777777")
+            };
+            _descricaoLabel.SetBinding(Label.TextProperty, new Binding("Descricao"));
             _moedaValorLabel = new Label
             {
                 Text = "R$",
@@ -377,7 +369,7 @@ namespace Emagine.Produto.Pages
             };
             _promocaoStack.SetBinding(AbsoluteLayout.IsVisibleProperty, new Binding("EmPromocao"));
 
-            _quantidadeButton = new QuantidadeVControl
+            _quantidadeButton = new QuantidadeControl
             {
                 Margin = new Thickness(0, 5, 5, 0),
                 VerticalOptions = LayoutOptions.CenterAndExpand,
@@ -385,8 +377,8 @@ namespace Emagine.Produto.Pages
                 FontFamily = Estilo.Current.FontDefaultBold,
                 HeightRequest = 120
             };
-            _quantidadeButton.SetBinding(QuantidadeHControl.QuantidadeProperty, new Binding("QuantidadeCarrinho"));
-            _quantidadeButton.SetBinding(QuantidadeHControl.ProdutoProperty, new Binding("."));
+            _quantidadeButton.SetBinding(QuantidadeControl.QuantidadeProperty, new Binding("QuantidadeCarrinho"));
+            _quantidadeButton.SetBinding(QuantidadeControl.ProdutoProperty, new Binding("."));
 
             _destaqueIcon = new IconImage
             {
@@ -404,20 +396,8 @@ namespace Emagine.Produto.Pages
                 ExibeQuantidade = true,
                 ExibeTotal = true
             };
-
-            _empresaLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalTextAlignment = TextAlignment.Center,
-                FontAttributes = FontAttributes.Bold,
-                Margin = new Thickness(0, 0, 0, 3),
-                Text = "Smart Tecnologia ®"
-            };
         }
 
-
-        /*
         protected override void OnBindingContextChanged()
         {
             base.OnBindingContextChanged();
@@ -435,7 +415,6 @@ namespace Emagine.Produto.Pages
                 }
             }
         }
-        */
     }
 
 }

@@ -16,20 +16,17 @@ namespace Emagine.Produto.Pages
 {
     public class ProdutoListaPage : ProdutoBasePage
     {
-        private StackLayout _mainLayout;
-
         public ProdutoListaPage()
         {
-            _mainLayout = new StackLayout
+            Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 Children = {
-                    _produtoListView,
+                    _ProdutoListView,
                     _totalView
                 }
             };
-            Content = _mainLayout;
         }
 
         protected override void inicializarMenu()

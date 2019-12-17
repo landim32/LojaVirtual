@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
-using Emagine.Banner.Utils;
 using Emagine.Base.BLL;
 using Emagine.Base.Estilo;
 using Emagine.Base.Model;
@@ -15,18 +14,14 @@ using Emagine.GPS.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
 using Emagine.Login.Pages;
-using Emagine.Login.Utils;
-using Emagine.Mapa.Model;
 using Emagine.Pedido.Factory;
-using Emagine.Pedido.Model;
-using Emagine.Pedido.Pages;
 using Emagine.Pedido.Utils;
 using Emagine.Produto.Cells;
 using Emagine.Produto.Factory;
-using Emagine.Produto.Model;
 using Emagine.Produto.Pages;
 using Emagine.Produto.Utils;
-using FormsPlugin.Iconize;
+using Loja.Cells;
+using Loja.Pages;
 using Xamarin.Forms;
 
 namespace Emagine
@@ -35,78 +30,46 @@ namespace Emagine
     {
         public App()
         {
-            GlobalUtils.URLAplicacao = "http://emagine.com.br/loja-demo";
+            GlobalUtils.URLAplicacao = "http://imarketsupermercados.com.br";
+            //GlobalUtils.URLAplicacao = "http://emagine.com.br/digital";
+
             UsuarioFactory.Tipo = "Mobile";
             LojaFactory.Tipo = "Mobile";
+
             ProdutoUtils.ListaAbreJanela = true;
-            ProdutoUtils.ListaItemTemplate = typeof(ProdutoCarrinhoCell);
-            ProdutoUtils.CarrinhoItemTemplate = typeof(ProdutoCarrinhoCell);
-            ProdutoListaPageFactory.Tipo = typeof(ProdutoGridPage);
-            //CategoriaPageFactory.Tipo = typeof(CategoriaGridPage);
-            CategoriaPageFactory.Tipo = typeof(CategoriaListaPage);
+            ProdutoUtils.ListaItemTemplate = typeof(CustomProdutoCell);
 
             //GPSUtils.Current.TempoMinimo = 10;
             //GPSUtils.Current.DistanciaMinima = 30;
             GPSUtils.UsaLocalizacao = false;
-            BannerUtils.Ativo = false;
 
             var estilo = criarEstilo();
-            inicilizarApp();
+
+            MainPage = new NavigationPage(new BlankPage());
+            verificarLoja();
         }
 
-        /*
-        private async Task produtoAoCarregar(object sender, ProdutoListaEventArgs args)
-        {
-            var regraProduto = ProdutoFactory.create();
-            var produtos = new List<ProdutoInfo>();
-            int i = 0;
-            foreach (var produto in await regraProduto.listar(15)) {
-                produtos.Add(produto);
-                i++;
-                if (i >= 10) {
-                    break;
-                }
-            }
-            args.Produtos = produtos;
-            return;
-        }
-        */
-
-        private static void inicilizarApp()
-        {
-            var regraLoja = LojaFactory.create();
-            regraLoja.RaioBusca = 10000;
-            var blankPage = new BlankPage();
-            blankPage.Appearing += (sender, e) => {
-                PermissaoUtils.pedirPermissao();
-            };
-            App.Current.MainPage = gerarRootPage(blankPage);
-            LojaUtils.inicializarLojaLista();
-        }
-
-        /*
         private static async void verificarLoja() {
-            var lojaPage = await LojaUtils.gerarLoja();
+            var lojaPage = await LojaUtils.gerarLoja(false);
             lojaPage.Appearing += (sender, e) => {
                 PermissaoUtils.pedirPermissao();
             };
             if (lojaPage is ProdutoListaPage)
             {
-                App.Current.MainPage = gerarRootPage(lojaPage);
+                var listaProdutoPage = (ProdutoListaPage)lojaPage;
+                //listaProdutoPage.AbreJanela = true;
+                //listaProdutoPage.setItemTemplate(typeof(ProdutoBaseCell));
+                App.Current.MainPage = gerarRootPage(listaProdutoPage);
             }
             else {
-                App.Current.MainPage = new NavigationPage(lojaPage) {
-                    BarBackgroundColor = Estilo.Current.BarBackgroundColor,
-                    BarTextColor = Estilo.Current.BarTitleColor
-                };
+                App.Current.MainPage = new NavigationPage(lojaPage);
             }
         }
-        */
 
         public static Page gerarRootPage(Page mainPage) {
             var rootPage = new RootPage
             {
-                NomeApp = "Emagine Loja",
+                NomeApp = "IMarket Supermercados Delivery",
                 PaginaAtual = mainPage,
                 Menus = gerarMenu()
             };
@@ -119,44 +82,33 @@ namespace Emagine
 
         private Estilo criarEstilo() {
             var estilo = Estilo.Current;
-            estilo.PrimaryColor = Color.FromHex("#1da9df");
-            estilo.SuccessColor = Color.FromHex("#5cb85c");
-            estilo.InfoColor = Color.FromHex("#5bc0de");
-            estilo.WarningColor = Color.FromHex("#f0ad4e");
+            estilo.PrimaryColor = Color.FromHex("#d84315");
+            estilo.SuccessColor = Color.FromHex("#00c851");
+            estilo.InfoColor = estilo.PrimaryColor;
+            estilo.WarningColor = Color.FromHex("#f80");
             estilo.DangerColor = Color.FromHex("#d9534f");
-            estilo.DefaultColor = Color.Gray;
-            estilo.BarTitleColor = Color.FromHex("#ffffff");
-            estilo.BarBackgroundColor = Color.FromHex("#197da6");
+            estilo.DefaultColor = Color.FromHex("#33b5e5");
+            estilo.BarTitleColor = Color.White;
+            estilo.BarBackgroundColor = estilo.PrimaryColor;//Color.FromHex("#221f1e");
 
-            switch (Device.RuntimePlatform) {
-                case Device.iOS:
-                    estilo.FontDefaultRegular = "Raleway-Regular.ttf";
-                    estilo.FontDefaultBold = "Raleway-Bold.ttf";
-                    estilo.FontDefaultItalic = "Raleway-Italic.ttf";
-                    break;
-                case Device.Android:
-                    estilo.FontDefaultRegular = "Raleway-Regular.ttf#Raleway-Regular";
-                    estilo.FontDefaultBold = "Raleway-Bold.ttf#Raleway-Bold";
-                    estilo.FontDefaultItalic = "Raleway-Italic.ttf#Raleway-Italic";
-                    break;
-                case Device.WinPhone:
-                    estilo.FontDefaultRegular = "Raleway-Regular.ttf";
-                    estilo.FontDefaultBold = "Raleway-Bold.ttf";
-                    estilo.FontDefaultItalic = "Raleway-Italic.ttf";
-                    break;
-            }
-            estilo.TelaPadrao = new EstiloPage {
+
+            estilo.TelaPadrao = new EstiloPage
+            {
                 BackgroundColor = Color.FromHex("#d9d9d9")
+                //BackgroundImage = "fundo.jpg"
             };
             estilo.TelaEmBranco = new EstiloPage
             {
                 BackgroundColor = Color.White
+                //BackgroundImage = "fundo.jpg"
             };
             estilo.BgPadrao.BackgroundColor = Color.FromHex("#ffffff");
-            estilo.BgRoot = new EstiloStackLayout {
+            estilo.BgRoot = new EstiloStackLayout
+            {
                 BackgroundColor = estilo.TelaPadrao.BackgroundColor
             };
-            estilo.BotaoRoot = new EstiloMenuButton {
+            estilo.BotaoRoot = new EstiloMenuButton
+            {
                 FontFamily = estilo.FontDefaultRegular,
                 BackgroundColor = Color.White,
                 FontSize = 18
@@ -167,24 +119,25 @@ namespace Emagine
             };
             estilo.MenuPagina = new EstiloPage
             {
-                BackgroundColor = estilo.BarBackgroundColor
+                BackgroundColor = estilo.PrimaryColor //estilo.BarBackgroundColor
             };
             estilo.MenuTexto = new EstiloLabel
             {
                 FontFamily = estilo.FontDefaultRegular,
-                //TextColor = Color.FromHex("#ffc500"),
-                TextColor = Color.White,
+                TextColor = Color.White, // estilo.PrimaryColor,
                 FontSize = 18
             };
             estilo.MenuLista = new EstiloListView
             {
                 SeparatorColor = estilo.MenuTexto.TextColor
             };
-            estilo.MenuIcone = new EstiloIcon {
+            estilo.MenuIcone = new EstiloIcon
+            {
                 IconColor = estilo.MenuTexto.TextColor,
                 IconSize = 22
             };
-            estilo.EntryPadrao = new EstiloEntry {
+            estilo.EntryPadrao = new EstiloEntry
+            {
                 FontFamily = estilo.FontDefaultRegular
             };
             estilo.SearchBar = new EstiloSearch
@@ -193,7 +146,8 @@ namespace Emagine
                 FontSize = 18,
                 FontAttributes = FontAttributes.Bold
             };
-            estilo.BotaoPrincipal = new EstiloBotao {
+            estilo.BotaoPrincipal = new EstiloBotao
+            {
                 FontFamily = estilo.FontDefaultBold,
                 BackgroundColor = estilo.PrimaryColor,
                 TextColor = Color.White,
@@ -220,7 +174,8 @@ namespace Emagine
                 TextColor = Color.White,
                 CornerRadius = 10
             };
-            estilo.Titulo1 = new EstiloLabel {
+            estilo.Titulo1 = new EstiloLabel
+            {
                 FontFamily = estilo.FontDefaultBold,
                 TextColor = Color.Black,
                 FontAttributes = FontAttributes.Bold,
@@ -253,20 +208,10 @@ namespace Emagine
                 FontSize = 16,
                 FontAttributes = FontAttributes.Bold
             };
-            estilo.ListaFramePadrao = new EstiloFrame
-            {
-                Margin = new Thickness(4, 0, 4, 6),
-                Padding = new Thickness(6, 4),
-                CornerRadius = 10,
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.White
-            };
             estilo.ListaItem = new EstiloLabel
             {
                 FontFamily = estilo.FontDefaultBold,
-                //FontSize = 24,
-                FontSize = 18,
+                FontSize = 24,
                 FontAttributes = FontAttributes.Bold
             };
             estilo.ListaBadgeTexto = new EstiloLabel
@@ -275,7 +220,8 @@ namespace Emagine
                 FontSize = 11,
                 TextColor = estilo.BarTitleColor
             };
-            estilo.ListaBadgeFundo = new EstiloFrame {
+            estilo.ListaBadgeFundo = new EstiloFrame
+            {
                 WidthRequest = 60,
                 HorizontalOptions = LayoutOptions.End,
                 VerticalOptions = LayoutOptions.Center,
@@ -286,6 +232,28 @@ namespace Emagine
             estilo.IconePadrao = new EstiloIcon
             {
                 IconSize = 20
+            };
+            estilo.TotalFrame = new EstiloFrame
+            {
+                Margin = new Thickness(4, 0, 4, 5),
+                Padding = new Thickness(3, 2),
+                CornerRadius = 10,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                BackgroundColor = estilo.BarBackgroundColor
+            };
+            estilo.TotalLabel = new EstiloLabel
+            {
+                FontFamily = estilo.FontDefaultRegular,
+                FontSize = 11,
+                TextColor = estilo.BarTitleColor
+            };
+            estilo.TotalTexto = new EstiloLabel
+            {
+                FontFamily = estilo.FontDefaultBold,
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 20,
+                TextColor = estilo.BarTitleColor
             };
             estilo.EnderecoItem = new EstiloLabel
             {
@@ -320,299 +288,97 @@ namespace Emagine
                 FontSize = 12
             };
 
-            estilo.Total = new EstiloTotal
-            {
-                Frame = new EstiloFrame
-                {
-                    Margin = new Thickness(4, 0, 4, 5),
-                    Padding = new Thickness(3, 10),
-                    CornerRadius = 15,
-                    VerticalOptions = LayoutOptions.Start,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    BackgroundColor = estilo.SuccessColor
-                    //BackgroundColor = Color.FromHex("#bced8c"),
-                },
-                Label = new EstiloLabel
-                {
-                    FontFamily = estilo.FontDefaultRegular,
-                    FontSize = 12,
-                    //TextColor = estilo.BarTitleColor
-                    //TextColor = estilo.BarTitleColor,
-                    //TextColor = Color.Black,
-                    TextColor = Color.Black,
-                },
-                Texto = new EstiloLabel
-                {
-                    FontFamily = estilo.FontDefaultBold,
-                    FontAttributes = FontAttributes.Bold,
-                    FontSize = 14,
-                    //TextColor = estilo.BarTitleColor
-                    TextColor = Color.Black,
-                }
-            };
-
-            estilo.Produto = new EstiloProduto
-            {
-                Frame = new EstiloFrame
-                {
-                    CornerRadius = 7,
-                    Padding = 2,
-                    //Margin = new Thickness(2, 2),
-                    //BackgroundColor = Color.FromHex("#feecd6")
-                    BackgroundColor = Color.White
-                },
-                Foto = new EstiloImage
-                {
-                    WidthRequest = 80,
-                    HeightRequest = 110,
-                    Aspect = Aspect.AspectFit
-                },
-                Titulo = new EstiloLabel
-                {
-                    FontFamily = Estilo.Current.FontDefaultBold,
-                    //FontSize = 20,
-                    FontSize = 12,
-                    FontAttributes = FontAttributes.Bold,
-                    //LineBreakMode = LineBreakMode.TailTruncation,
-                    //TextColor = Estilo.Current.PrimaryColor
-                    TextColor = estilo.BarBackgroundColor
-                },
-                Descricao = new EstiloLabel
-                {
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromHex("#777777")
-                },
-                Volume = new EstiloLabel
-                {
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromHex("#777777")
-                },
-                Label = new EstiloLabel
-                {
-                    FontAttributes = FontAttributes.None,
-                    FontSize = 9
-                },
-                Quantidade = new EstiloLabel
-                {
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromHex("#ff0000"),
-                    FontSize = 10
-                },
-                PrecoMoeda = new EstiloLabel
-                {
-                    //FontSize = 11
-                    FontSize = 7
-                },
-                PrecoValor = new EstiloLabel
-                {
-                    FontFamily = Estilo.Current.FontDefaultBold,
-                    FontAttributes = FontAttributes.Bold,
-                    FontSize = 12
-                    //FontSize = 24
-                },
-                PromocaoMoeda = new EstiloLabel
-                {
-                    //FontSize = 11
-                    FontSize = 7,
-                    //TextColor = Color.FromHex("#ff0000"),
-                },
-                PromocaoValor = new EstiloLabel
-                {
-                    FontFamily = Estilo.Current.FontDefaultBold,
-                    FontAttributes = FontAttributes.Bold,
-                    FontSize = 12,
-                    //TextColor = Color.FromHex("#ff0000"),
-                    //FontSize = 24
-                },
-                Icone = new EstiloIcon
-                {
-                    IconColor = Color.FromHex("#ffc500"),
-                    IconSize = 22
-                    //IconSize = 24
-                },
-                Carrinho = new EstiloBotao
-                {
-                    FontFamily = estilo.FontDefaultBold,
-                    FontAttributes = FontAttributes.Bold,
-                    BackgroundColor = estilo.SuccessColor,
-                    TextColor = Color.Black,
-                    CornerRadius = 15,
-                    FontSize = 14,
-                    //BorderWidth = 1,
-                    //BorderColor = Color.FromHex("#7a7a7a")
-                }
-            };
-
-            estilo.Loja = new EstiloLoja
-            {
-                Frame = new EstiloFrame
-                {
-                    CornerRadius = 8,
-                    Padding = 3,
-                    Margin = new Thickness(5, 2, 5, 3),
-                    BackgroundColor = Color.White
-                },
-                Foto = new EstiloImage
-                {
-                    Aspect = Aspect.AspectFit,
-                    WidthRequest = 80,
-                    HeightRequest = 80
-                },
-                Titulo = new EstiloLabel {
-                    FontFamily = Estilo.Current.FontDefaultBold,
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Estilo.Current.BarBackgroundColor,
-                    FontSize = 18,
-                },
-                Endereco = new EstiloLabel {
-                    FontFamily = Estilo.Current.FontDefaultItalic,
-                    FontAttributes = FontAttributes.Italic,
-                    TextColor = Color.FromHex("#7c7c7c"),
-                    FontSize = 12,
-                },
-                Distancia = new EstiloLabel
-                {
-                    FontFamily = Estilo.Current.FontDefaultBold,
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = estilo.SuccessColor, //Color.FromHex("#7c7c7c"),
-                    FontSize = 14,
-                },
-                Icone = new EstiloIcon {
-                    IconSize = 20
-                }
-            };
-
-            estilo.Quantidade = new EstiloQuantidade
-            {
-                AdicionarBotao = new EstiloFrame
-                {
-                    BackgroundColor = estilo.SuccessColor,
-                },
-                AdicionarIcone = new EstiloIcon
-                {
-                    IconColor = Color.Black,
-                    IconSize = 20,
-                },
-                RemoverBotao = new EstiloFrame
-                {
-                    BackgroundColor = estilo.DangerColor,
-                },
-                RemoverIcone = new EstiloIcon
-                {
-                    IconColor = Color.Black,
-                    IconSize = 20,
-                },
-                Fundo = new EstiloFrame
-                {
-                    Padding = 5,
-                    BackgroundColor = Color.Silver,
-                },
-                QuantidadeTexto = new EstiloLabel
-                {
-                    FontSize = 16,
-                    FontAttributes = FontAttributes.Bold
-                }
-            };
-
             App.Current.Resources = estilo.gerar();
             return estilo;
         }
 
         public static IList<MenuItemInfo> gerarMenu() {
             var regraUsuario = UsuarioFactory.create();
-            var regraLoja = LojaFactory.create();
-
-            var loja = regraLoja.pegarAtual();
-
             var usuario = regraUsuario.pegarAtual();
             bool estaLogado = usuario != null && usuario.Id > 0;
 
             var menus = new List<MenuItemInfo>();
 
-            //if (regraLoja.podeMudarLoja())
-            //{
-            menus.Add(new MenuItemInfo
-            {
-                IconeFA = "fa-home",
-                Titulo = "Lojas",
-                aoClicar = (sender, e) =>
-                {
-                    LojaUtils.inicializarLojaLista();
-                    //((RootPage)Current.MainPage).PaginaAtual = lojaPage;
-                }
-            });
-            /*
-            menus.Add(new MenuItemInfo
-            {
-                IconeFA = "fa-home",
-                Titulo = "Seguimentos",
-                aoClicar = async (sender, e) =>
-                {
-                    var telaInicialPage = await LojaUtils.gerarTelaInicial();
-                    ((RootPage)Current.MainPage).PaginaAtual = telaInicialPage;
-                }
-            });
-            */
-            //}
-
-            if (loja != null)
+            var regraLoja = LojaFactory.create();
+            if (regraLoja.podeMudarLoja())
             {
                 menus.Add(new MenuItemInfo
                 {
-                    IconeFA = "fa-bars",
-                    Titulo = "Categorias",
+                    IconeFA = "fa-home",
+                    Titulo = "Lojas",
                     aoClicar = (sender, e) =>
                     {
-                        var categoriaPage = CategoriaPageFactory.create();
-                        categoriaPage.BannerVisivel = BannerUtils.Ativo;
-                        categoriaPage.Title = "Categorias";
-                        ((RootPage)Current.MainPage).PaginaAtual = categoriaPage;
-                    }
-                });
-
-                menus.Add(new MenuItemInfo
-                {
-                    IconeFA = "fa-shopping-bag",
-                    Titulo = "Lista de Compras",
-                    aoClicar = (sender, e) =>
-                    {
-                        var listaCompraPage = new ListaCompraPage {
-                            Title = "Lista de Compras"
-                        };
-                        ((RootPage)Current.MainPage).PushAsync(listaCompraPage);
-                    }
-                });
-
-                menus.Add(new MenuItemInfo
-                {
-                    IconeFA = "fa-dollar",
-                    Titulo = "Em promoção",
-                    aoClicar = (sender, e) =>
-                    {
-                        ((RootPage)Current.MainPage).PaginaAtual = ProdutoUtils.gerarProdutoListaPromocao();
-                    }
-                });
-
-                menus.Add(new MenuItemInfo
-                {
-                    IconeFA = "fa-search",
-                    Titulo = "Buscar",
-                    aoClicar = (sender, e) =>
-                    {
-                        ((RootPage)Current.MainPage).PaginaAtual = ProdutoUtils.gerarProdutoBusca();
-                    }
-                });
-
-                menus.Add(new MenuItemInfo
-                {
-                    IconeFA = "fa-shopping-cart",
-                    Titulo = "Meu Carrinho",
-                    aoClicar = (sender, e) =>
-                    {
-                        ((RootPage)Current.MainPage).PushAsync(CarrinhoUtils.gerarCarrinhoParaEntrega());
+                        var lojaPage = LojaUtils.gerarSelecionar();
+                        ((RootPage)Current.MainPage).PaginaAtual = lojaPage;
                     }
                 });
             }
+
+            menus.Add(new MenuItemInfo
+            {
+                IconeFA = "fa-search",
+                Titulo = "Buscar",
+                aoClicar = (sender, e) =>
+                {
+                    var buscaPage = ProdutoUtils.gerarProdutoBusca();
+                    //buscaPage.AbreJanela = true;
+                    //buscaPage.setItemTemplate(typeof(ProdutoBaseCell));
+                    ((RootPage)Current.MainPage).PaginaAtual = buscaPage;
+                }
+            });
+
+            menus.Add(new MenuItemInfo
+            {
+                IconeFA = "fa-bars",
+                Titulo = "Departamentos",
+                aoClicar = (sender, e) =>
+                {
+                    var categoriaPage = new CategoriaListaPage {
+                        Title = "Departamentos"
+                    };
+                    categoriaPage.AoAbrirProdutoLista += (s2, promocaoListaPage) => {
+                        //promocaoListaPage.AbreJanela = true;
+                        //promocaoListaPage.setItemTemplate(typeof(ProdutoBaseCell));
+                        ((Page)s2).Navigation.PushAsync(promocaoListaPage);
+                    };
+                    ((RootPage)Current.MainPage).PaginaAtual = categoriaPage;
+                }
+            });
+
+            /*
+            menus.Add(new MenuItemInfo
+            {
+                IconeFA = "fa-dollar",
+                Titulo = "Em destaque",
+                aoClicar = (sender, e) =>
+                {
+                    ((RootPage)Current.MainPage).PaginaAtual = ProdutoUtils.gerarProdutoListaDestaque();
+                }
+            });
+            */
+
+            menus.Add(new MenuItemInfo
+            {
+                IconeFA = "fa-star",
+                Titulo = "Em promoção",
+                aoClicar = (sender, e) =>
+                {
+                    var promocaoListaPage = ProdutoUtils.gerarProdutoListaPromocao();
+                    //promocaoListaPage.AbreJanela = true;
+                    //promocaoListaPage.setItemTemplate(typeof(ProdutoBaseCell));
+                    ((RootPage)Current.MainPage).PaginaAtual = promocaoListaPage;
+                }
+            });
+
+            menus.Add(new MenuItemInfo
+            {
+                IconeFA = "fa-shopping-cart",
+                Titulo = "Meu Carrinho",
+                aoClicar = (sender, e) =>
+                {
+                    ((RootPage)Current.MainPage).PushAsync(CarrinhoUtils.gerarCarrinhoParaEntrega());
+                }
+            });
 
             if (!estaLogado)
             {
@@ -622,16 +388,7 @@ namespace Emagine
                     Titulo = "Entrar",
                     aoClicar = (sender, e) =>
                     {
-                        var loginPage = new LoginPage
-                        {
-                            Title = "Login"
-                        };
-                        loginPage.AoLogar += (s, u) =>
-                        {
-                            var destaquePage = ProdutoUtils.gerarProdutoListaDestaque();
-                            ((RootPage)Current.MainPage).PaginaAtual = destaquePage;
-                        };
-                        ((RootPage)Current.MainPage).PushAsync(loginPage);
+                        ((RootPage)Current.MainPage).PushAsync(LoginUtils.gerarLogin());
                     }
                 });
                 menus.Add(new MenuItemInfo
@@ -640,10 +397,7 @@ namespace Emagine
                     Titulo = "Criar Conta",
                     aoClicar = (sender, e) =>
                     {
-                        ((RootPage)Current.MainPage).PaginaAtual = LoginUtils.gerarCadastro((u) => {
-                            var destaquePage = ProdutoUtils.gerarProdutoListaDestaque();
-                            ((RootPage)Current.MainPage).PaginaAtual = destaquePage;
-                        });
+                        ((RootPage)Current.MainPage).PaginaAtual = LoginUtils.gerarCadastro();
                     }
                 });
             }
@@ -654,13 +408,13 @@ namespace Emagine
                     Titulo = "Alterar Conta",
                     aoClicar = (sender, e) =>
                     {
-                        ((RootPage)Current.MainPage).PaginaAtual = new PedidoUsuarioGerenciaPage();
+                        ((RootPage)Current.MainPage).PaginaAtual = new UsuarioGerenciaPage();
                     }
                 });
 
                 menus.Add(new MenuItemInfo
                 {
-                    IconeFA = "fa-shopping-basket",
+                    IconeFA = "fa-shopping-bag",
                     Titulo = "Meus Pedidos",
                     aoClicar = async (sender, e) =>
                     {
@@ -671,31 +425,26 @@ namespace Emagine
 
             menus.Add(new MenuItemInfo
             {
-                IconeFA = "fa-map-marker",
-                Titulo = "Raio de Busca",
-                aoClicar = (sender, e) =>
-                {
-                    var raioBuscaPage = new RaioBuscaPage
-                    {
-                        Title = "Mudar Raio de Busca",
-                        BotaoTexto = "Gravar"
-                    };
-                    raioBuscaPage.AoAvancar += (s2, e2) => {
-                        raioBuscaPage.DisplayAlert("Sucesso", "Raio alterado com sucesso.", "Entendi");
-                    };
-                    ((RootPage)Current.MainPage).PushAsync(raioBuscaPage);
-                }
-            });
-
-            menus.Add(new MenuItemInfo
-            {
                 IconeFA = "fa-comment",
                 Titulo = "Fale Conosco",
                 aoClicar = (sender, e) =>
                 {
-                    Device.OpenUri(new Uri("mailto:rodrigo@emagine.com.br"));
+                    //Device.OpenUri(new Uri("mailto:rodrigo@emagine.com.br"));
+                    Device.OpenUri(new Uri("mailto:contato@imarketsupermercados.com.br"));
                 }
             });
+
+            /*
+            menus.Add(new MenuItemInfo
+            {
+                IconeFA = "fa-question",
+                Titulo = "Sobre o App",
+                aoClicar = (sender, e) =>
+                {
+
+                }
+            });
+            */
 
             menus.Add(new MenuItemInfo
             {
@@ -708,8 +457,7 @@ namespace Emagine
                     var regraLogin = UsuarioFactory.create();
                     await LojaFactory.create().limparAtual();
                     await regraLogin.limparAtual();
-                    App.inicilizarApp();
-                    //App.verificarSeguimento();
+                    App.verificarLoja();
                     //Current.MainPage = new NavigationPage(App.gerarBuscaCep());
                 }
             });

@@ -1,13 +1,11 @@
 ﻿using Acr.UserDialogs;
 using Emagine.Base.Estilo;
-using Emagine.Base.Pages;
 using Emagine.Endereco.Model;
 using Emagine.Endereco.Pages;
 using Emagine.Endereco.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
 using Emagine.Login.Pages;
-using Emagine.Login.Utils;
 using Emagine.Pagamento.Factory;
 using Emagine.Pagamento.Pages;
 using FormsPlugin.Iconize;
@@ -15,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace Emagine.Login.Pages
@@ -59,46 +57,17 @@ namespace Emagine.Login.Pages
             Children.Add(_cartaoListaPage);
         }
 
-        protected virtual void inicializarComponente() {
+        private void inicializarComponente() {
             _usuarioPage = UsuarioFormPageFactory.create();
             _usuarioPage.Title = "Dados";
             _usuarioPage.Gravar = true;
             _usuarioPage.AoCadastrar += (sender, e) => {
-                //UserDialogs.Instance.Alert("Dados alterados com sucesso.", "Aviso", "Fechar");
-                _usuarioPage.DisplayAlert("Aviso", "Dados alterados com sucesso.", "Fechar");
+                UserDialogs.Instance.Alert("Dados alterados com sucesso.", "Aviso", "Fechar");
             };
             _enderecoListaPage = EnderecoUtils.gerarEnderecoLista(null);
             _cartaoListaPage = new CartaoListaPage {
                 Title = "Meus cartões"
             };
-        }
-
-        protected async virtual Task atualizandoDado() {
-            var regraUsuario = UsuarioFactory.create();
-            var usuarioAtual = regraUsuario.pegarAtual();
-            if (usuarioAtual == null) {
-                UserDialogs.Instance.HideLoading();
-                UserDialogs.Instance.Alert("Não está logado.", "Erro", "Fechar");
-                return;
-            }
-            var usuario = await regraUsuario.pegar(usuarioAtual.Id);
-            regraUsuario.gravarAtual(usuario);
-            if (App.Current.MainPage is RootPage)
-            {
-                ((RootPage)App.Current.MainPage).atualizarMenu();
-            }
-            _usuarioPage.Usuario = usuario;
-            var enderecos = new List<EnderecoInfo>();
-            foreach (var endereco in usuario.Enderecos)
-            {
-                enderecos.Add(endereco);
-            }
-            _enderecoListaPage.Enderecos = enderecos;
-
-            var regraCartao = CartaoFactory.create();
-            var cartoes = await regraCartao.listar(usuario.Id);
-            _cartaoListaPage.Cartoes = cartoes;
-            return;
         }
 
         protected async override void OnAppearing()
@@ -111,14 +80,34 @@ namespace Emagine.Login.Pages
             UserDialogs.Instance.ShowLoading("Carregando...");
             try
             {
-                await atualizandoDado();
+                var regraUsuario = UsuarioFactory.create();
+                var usuarioAtual = regraUsuario.pegarAtual();
+                if (usuarioAtual == null)
+                {
+                    UserDialogs.Instance.HideLoading();
+                    UserDialogs.Instance.Alert("Não está logado.", "Erro", "Fechar");
+                    return;
+                }
+                var usuario = await regraUsuario.pegar(usuarioAtual.Id);
+                regraUsuario.gravarAtual(usuario);
+                _usuarioPage.Usuario = usuario;
+                var enderecos = new List<EnderecoInfo>();
+                foreach (var endereco in usuario.Enderecos)
+                {
+                    enderecos.Add(endereco);
+                }
+                _enderecoListaPage.Enderecos = enderecos;
+
+                var regraCartao = CartaoFactory.create();
+                var cartoes = await regraCartao.listar(usuario.Id);
+                _cartaoListaPage.Cartoes = cartoes;
                 _carregado = true;
                 UserDialogs.Instance.HideLoading();
             }
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                UserDialogs.Instance.Alert(erro.Message, "Erro", "Entendi");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Acr.UserDialogs;
-using Emagine.Banner.Factory;
 using Emagine.Base.Estilo;
 using Emagine.Produto.Factory;
 using Emagine.Produto.Model;
@@ -10,55 +9,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace Emagine.Produto.Pages
 {
-    public class ProdutoBuscaPage : ProdutoGridPage
+    public class ProdutoBuscaPage : ProdutoBasePage
     {
         private SearchBar _palavraChaveSearchBar;
 
         public ProdutoBuscaPage()
         {
-            _mainLayout = new StackLayout
+            Content = new StackLayout
             {
+                //Margin = new Thickness(3, 3),
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 Children = {
                     _palavraChaveSearchBar,
-                    _produtoListView,
-                    new StackLayout {
-                        Orientation = StackOrientation.Horizontal,
-                        VerticalOptions = LayoutOptions.Start,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        Margin = new Thickness(5, 0),
-                        Children = {
-                            _totalView,
-                            _carrinhoButton
-                        }
-                    },
-                    new StackLayout {
-                        Orientation = StackOrientation.Vertical,
-                        VerticalOptions = LayoutOptions.Start,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        Margin = new Thickness(5, 0),
-                        Spacing = 0,
-                        Children = {
-                            new Label {
-                                VerticalOptions = LayoutOptions.Start,
-                                HorizontalOptions = LayoutOptions.Fill,
-                                HorizontalTextAlignment = TextAlignment.Center,
-                                Text = "Você está comprando em:",
-                                FontSize = 10
-                            },
-                            _empresaLabel
-                        }
-                    }
+                    _ProdutoListView,
+                    _totalView
                 }
             };
-            _totalView.QuantidadeTitulo = "Qtde:";
-            Content = _mainLayout;
         }
 
         protected override void inicializarComponente() {
@@ -74,15 +46,6 @@ namespace Emagine.Produto.Pages
             };
         }
 
-        protected override Task carregarProduto() {
-            var regraLoja = LojaFactory.create();
-            var loja = regraLoja.pegarAtual();
-            if (loja != null) {
-                _empresaLabel.Text = loja.Nome;
-            }
-            return (new TaskFactory()).StartNew(() => { });
-        }
-
         private async void executarBusca(string palavraChave)
         {
             try {
@@ -90,22 +53,13 @@ namespace Emagine.Produto.Pages
                 var regraProduto = ProdutoFactory.create();
                 var regraLoja = LojaFactory.create();
                 var loja = regraLoja.pegarAtual();
-
-                Filtro.PalavraChave = palavraChave;
-                Items = criarListaInfinita();
-                _produtoListView.ItemsSource = null;
-                _produtoListView.ItemsSource = Items;
-                _buscando = true;
-                await Items.LoadMoreAsync();
-
-                //_produtoListView.ItemsSource = await regraProduto.buscar(loja.Id, palavraChave);
+                _ProdutoListView.ItemsSource = await regraProduto.buscar(loja.Id, palavraChave);
                 UserDialogs.Instance.HideLoading();
             }
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Entendi");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
     }

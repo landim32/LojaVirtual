@@ -1,7 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Emagine.Base.BLL;
 using Emagine.Base.Estilo;
-using Emagine.Base.Pages;
 using Emagine.Base.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
@@ -155,9 +154,6 @@ namespace Emagine.Login.Pages
             var usuario = await regraUsuario.pegar(id_usuario);
             if (usuario != null) {
                 regraUsuario.gravarAtual(usuario);
-                if (App.Current.MainPage is RootPage) {
-                    ((RootPage)App.Current.MainPage).atualizarMenu();
-                }
                 executarEventoLogar(usuario);
             }
             else {
@@ -181,8 +177,7 @@ namespace Emagine.Login.Pages
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Fechar");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
     }

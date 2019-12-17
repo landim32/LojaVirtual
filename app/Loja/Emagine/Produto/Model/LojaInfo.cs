@@ -12,12 +12,6 @@ namespace Emagine.Produto.Model
         [JsonProperty("id_loja")]
         public int Id { get; set; }
 
-        [JsonProperty("id_seguimento")]
-        public int? IdSeguimento { get; set; }
-
-        [JsonProperty("seguimento")]
-        public SeguimentoInfo Seguimento { get; set; }
-
         [JsonProperty("slug")]
         public string Slug { get; set; }
 
@@ -35,9 +29,6 @@ namespace Emagine.Produto.Model
 
         [JsonProperty("descricao")]
         public string Descricao { get; set; }
-
-        [JsonProperty("mensagem_retirada")]
-        public string MensagemRetirada { get; set; }
 
         [JsonProperty("cep")]
         public string Cep { get; set; }
@@ -90,12 +81,6 @@ namespace Emagine.Produto.Model
         [JsonProperty("controle_estoque")]
         public bool ControleEstoque { get; set; }
 
-        [JsonProperty("estoque_minimo")]
-        public int EstoqueMinimo { get; set; }
-
-        [JsonProperty("valor_minimo")]
-        public double ValorMinimo { get; set; }
-
         [JsonProperty("usa_gateway")]
         public bool UsaGateway { get; set; }
 
@@ -113,9 +98,6 @@ namespace Emagine.Produto.Model
 
         [JsonProperty("aceita_cartao_offline")]
         public bool AceitaCartaoOffline { get; set; }
-
-        [JsonProperty("nota")]
-        public int Nota { get; set; }
 
         [JsonProperty("cod_situacao")]
         public int CodSituacao { get; set; }

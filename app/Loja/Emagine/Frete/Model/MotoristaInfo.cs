@@ -54,7 +54,7 @@ namespace Emagine.Frete.Model
         [JsonProperty("foto_cpf_url")]
         public string FotoCpfUrl { get; set; }
 
-        [JsonProperty("foto_carteira_base64")]
+        [JsonProperty("foto_carteira_baase64")]
         public string FotoCarteiraBase64 { get; set; }
 
         [JsonProperty("foto_veiculo_base64")]
@@ -78,6 +78,9 @@ namespace Emagine.Frete.Model
         [JsonProperty("veiculo")]
         public string Veiculo { get; set; }
 
+        [JsonProperty("antt")]
+        public string ANTT { get; set; }
+
         [JsonProperty("latitude")]
         public float? Latitude { get; set; }
 
@@ -85,10 +88,7 @@ namespace Emagine.Frete.Model
         public float? Longitude { get; set; }
 
         [JsonProperty("direcao")]
-        public float? Direcao { get; set; }
-
-        [JsonProperty("valor_hora")]
-        public double ValorHora { get; set; }
+        public float Direcao { get; set; }
 
         [JsonIgnore]
         public MotoristaSituacaoEnum Situacao { get; set; }

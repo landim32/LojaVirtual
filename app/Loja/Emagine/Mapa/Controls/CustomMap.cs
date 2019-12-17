@@ -47,11 +47,6 @@ namespace Emagine.Mapa.Controls
             aoZoomPolyline?.Invoke(this, _polyline, animated);
         }
 
-        public void resetarPolyline() {
-            _polyline = new List<Position>();
-            aoResetarPolyline?.Invoke(this, _polyline);
-        }
-
         public void inicializarMapa() {
             aoInicializarMapa?.Invoke(this, new EventArgs());
         }

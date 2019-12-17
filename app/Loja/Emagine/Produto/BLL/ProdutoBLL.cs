@@ -23,7 +23,6 @@ namespace Emagine.Produto.BLL
             }
         }
 
-        [Obsolete]
         public async Task<IList<ProdutoInfo>> buscar(int idLoja, string palavraChave)
         {
             string url = GlobalUtils.URLAplicacao + "/api/produto/buscar/" + idLoja.ToString();
@@ -36,16 +35,6 @@ namespace Emagine.Produto.BLL
             return produtos;
         }
 
-        public async Task<ProdutoRetornoInfo> buscar(ProdutoFiltroInfo filtro)
-        {
-            string url = GlobalUtils.URLAplicacao + "/api/produto/buscar";
-            var args = new List<object>() { filtro };
-            var produtos = await queryPut<ProdutoRetornoInfo>(url, args.ToArray());
-            atualizarDoCarrinho(produtos.Produtos);
-            return produtos;
-        }
-
-        [Obsolete]
         public async Task<IList<ProdutoInfo>> listar(int idLoja, int idCategoria = 0) {
             string url = GlobalUtils.URLAplicacao + "/api/produto/listar/" + idLoja.ToString();
             if (idCategoria > 0) {
@@ -56,7 +45,6 @@ namespace Emagine.Produto.BLL
             return produtos;
         }
 
-        [Obsolete]
         public async Task<IList<ProdutoInfo>> listarPorFiltro(ProdutoFiltroInfo filtro)
         {
             string url = GlobalUtils.URLAplicacao + "/api/produto/listar-por-filtro";
@@ -66,7 +54,6 @@ namespace Emagine.Produto.BLL
             return produtos;
         }
 
-        [Obsolete]
         public async Task<IList<ProdutoInfo>> listarDestaque(int idLoja)
         {
             var produtos = await queryGet<IList<ProdutoInfo>>(GlobalUtils.URLAplicacao + "/api/produto/listar-destaque/" + idLoja.ToString());

@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace Emagine.IBLL
+namespace Radar
 {
     public interface ISQLite
     {

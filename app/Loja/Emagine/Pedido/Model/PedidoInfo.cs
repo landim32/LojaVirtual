@@ -3,7 +3,6 @@ using Emagine.Produto.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -148,42 +147,10 @@ namespace Emagine.Pedido.Model
         [JsonProperty("longitude")]
         public double? Longitude { get; set; }
 
-        [JsonProperty("dia_entrega")]
-        public string _DiaEntrega {
-            get {
-                return DiaEntrega.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            set {
-                DateTime data = DateTime.MinValue;
-                if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", new CultureInfo("pt-BR"), DateTimeStyles.None, out data)) {
-                    DiaEntrega = data;
-                }
-            }
-        }
-
-        [JsonIgnore]
-        public DateTime DiaEntrega { get; set; }
-
-        [JsonIgnore]
-        public string DiaEntregaStr {
-            get {
-                return DiaEntrega.ToString("d/M/y");
-            }
-        }
-
-        [JsonProperty("horario_entrega")]
-        public string HorarioEntrega { get; set; }
-
         [JsonProperty("observacao")]
         public string Observacao { get; set; }
 
-        [JsonProperty("comentario")]
-        public string Comentario { get; set; }
-
         [JsonProperty("itens")]
         public IList<PedidoItemInfo> Itens { get; set; }
-
-        [JsonProperty("avisar")]
-        public bool Avisar { get; set; } = true;
     }
 }

@@ -8,59 +8,18 @@ use Emagine\Login\BLL\UsuarioBLL;
 use Emagine\Login\Model\UsuarioEnderecoInfo;
 use Emagine\Login\Model\UsuarioInfo;
 use Emagine\Produto\BLL\LojaBLL;
-use Psr\Container\ContainerInterface;
-use Slim\Http\Environment;
-use Slim\Http\Uri;
 use Slim\Views\PhpRenderer;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Http\Body;
 use Exception;
-use Slim\Views\Twig;
-use Slim\Views\TwigExtension;
 
 /**
  * @var EmagineApp $app;
  */
 
-/*
-$container = $app->getContainer();
-$container['view'] = function ($container) {
-    #@var ContainerInterface $container
-    //$basePath = $this->getBasePath();
-    $view = new Twig(dirname(__DIR__) . '/templates/exemplo_twig', [
-        'cache' => dirname(__DIR__) . '/cache/'
-    ]);
-    $router = $container->get('router');
-    $uri = Uri::createFromEnvironment(new Environment($_SERVER));
-    $view->addExtension(new TwigExtension($router, $uri));
-
-    return $view;
-};
-*/
-
-/*
-$app->add(function (Request $request, Response $response, $next) {
-    $response->getBody()->write('BEFORE');
-    $response = $next($request, $response);
-    $response->getBody()->write('AFTER');
-
-    return $response;
-});
-*/
-/*
-$container['baseView'] = function ($container) {
-    $basePath = $this->getBasePath();
-    return new Twig($basePath . '/templates/', [
-        'cache' => $basePath . '/cache/'
-    ]);
-};
-*/
-
 $app->addJavascriptUrl($app->getBaseUrl() . "/js/carrinho.js");
 $app->addJavascriptUrl($app->getBaseUrl() . "/js/endereco.js");
-//$app->addJavascriptUrl($app->getBaseUrl() . "/js/raio.js");
-
 
 /**
  * @throws Exception
@@ -234,7 +193,6 @@ function gravarLogin(EmagineApp $app, Request $request, Response $response, $arg
  * @param string $href
  * @param string $classe
  */
-/*
 function startLinkEndereco(UsuarioEnderecoInfo $endereco, $href, $classe = "endereco") {
     echo "<a href=\"" . $href . "\"";
     if (!isNullOrEmpty($classe)) {
@@ -276,4 +234,3 @@ function startLinkEndereco(UsuarioEnderecoInfo $endereco, $href, $classe = "ende
 function endLinkEndereco() {
     echo "</a>";
 }
-*/

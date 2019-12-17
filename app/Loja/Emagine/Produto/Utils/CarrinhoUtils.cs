@@ -6,7 +6,6 @@ using Emagine.Endereco.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
 using Emagine.Login.Pages;
-using Emagine.Login.Utils;
 using Emagine.Pagamento.Model;
 using Emagine.Pagamento.Pages;
 using Emagine.Pagamento.Utils;
@@ -69,10 +68,12 @@ namespace Emagine.Produto.Utils
                     {
                         usuario = new UsuarioInfo();
                     }
-                    var usuarioCadastroPage = UsuarioFormPageFactory.create();
-                    usuarioCadastroPage.Title = "Cadastre-se";
-                    usuarioCadastroPage.Gravar = true;
-                    usuarioCadastroPage.Usuario = usuario;
+                    var usuarioCadastroPage = new UsuarioFormPage
+                    {
+                        Title = "Cadastre-se",
+                        Gravar = true,
+                        Usuario = usuario
+                    };
                     usuarioCadastroPage.AoCadastrar += (s2, usuario2) =>
                     {
                         var cepPage = EnderecoUtils.gerarBuscaPorCep((endereco) =>
@@ -118,129 +119,80 @@ namespace Emagine.Produto.Utils
             carrinhoPage.AoFinalizar += (s1, produtos) =>
             {
                 LoginUtils.carregarUsuario((usuario) => {
-                    var metodoEntregaPage = PedidoUtils.gerarEntregaMetodo(async (pedido) => {
-                        if (await UserDialogs.Instance.ConfirmAsync("Deseja fechar o pedido?", "Aviso", "Sim", "Não", null)) {
-                            var pagamentoMetodoPage = PagamentoUtils.gerarPagamento(async (pagamento) => {
-                                UserDialogs.Instance.ShowLoading("Enviando...");
-                                try
+                    var metodoEntregaPage = PedidoUtils.gerarEntregaMetodo((pedido) => {
+                        var pagamentoMetodoPage = PagamentoUtils.gerarPagamento(async (pagamento) => {
+                            UserDialogs.Instance.ShowLoading("Enviando...");
+                            try
+                            {
+                                pedido.IdPagamento = pagamento.IdPagamento;
+                                switch (pagamento.Tipo)
                                 {
-                                    pedido.IdPagamento = pagamento.IdPagamento;
-                                    switch (pagamento.Tipo)
-                                    {
-                                        case TipoPagamentoEnum.CreditoOnline:
-                                            pedido.FormaPagamento = FormaPagamentoEnum.CreditoOnline;
-                                            break;
-                                        case TipoPagamentoEnum.DebitoOnline:
-                                            pedido.FormaPagamento = FormaPagamentoEnum.DebitoOnline;
-                                            break;
-                                        case TipoPagamentoEnum.Boleto:
-                                            pedido.FormaPagamento = FormaPagamentoEnum.Boleto;
-                                            break;
-                                        case TipoPagamentoEnum.Dinheiro:
-                                            pedido.FormaPagamento = FormaPagamentoEnum.Dinheiro;
-                                            pedido.TrocoPara = pagamento.TrocoPara;
-                                            break;
-                                        case TipoPagamentoEnum.CartaoOffline:
-                                            pedido.FormaPagamento = FormaPagamentoEnum.CartaoOffline;
-                                            break;
-                                    }
-                                    switch (pagamento.Situacao)
-                                    {
-                                        case SituacaoPagamentoEnum.Pago:
-                                            pedido.Situacao = Pedido.Model.SituacaoEnum.Preparando;
-                                            break;
-                                        case SituacaoPagamentoEnum.AguardandoPagamento:
-                                            pedido.Situacao = Pedido.Model.SituacaoEnum.AguardandoPagamento;
-                                            break;
-                                        default:
-                                            pedido.Situacao = Pedido.Model.SituacaoEnum.Pendente;
-                                            break;
-                                    }
-                                    var regraPedido = PedidoFactory.create();
-                                    int idPedido = pedido.Id;
-                                    if (idPedido > 0)
-                                    {
-                                        await regraPedido.alterar(pedido);
-                                    }
-                                    else
-                                    {
-                                        idPedido = await regraPedido.inserir(pedido);
-                                    }
-                                    var pedidoFechado = await regraPedido.pegar(idPedido);
-                                    var regraCarrinho = CarrinhoFactory.create();
-                                    regraCarrinho.limpar();
-
-                                    if (pedidoFechado.Entrega == EntregaEnum.RetiradaMapeada) {
-                                        AcompanhamentoUtils.iniciarAcompanhamento(pedidoFechado);
-                                    }
-
-                                    if (pedidoFechado.Entrega == EntregaEnum.Entrega && pedido.Situacao != Pedido.Model.SituacaoEnum.AguardandoPagamento) {
-                                        var regraHorario = PedidoHorarioFactory.create();
-                                        var horarios = await regraHorario.listar(pedidoFechado.IdLoja);
-                                        if (horarios.Count > 1)
-                                        {
-                                            var horarioEntregaPage = new HorarioEntregaPage()
-                                            {
-                                                Title = "Horário de Entrega",
-                                                //Pedido = pedidoFechado,
-                                                Horarios = horarios
-                                            };
-                                            horarioEntregaPage.AoSelecionar += async (s2, horario) =>
-                                            {
-                                                UserDialogs.Instance.ShowLoading("Enviando...");
-                                                try
-                                                {
-                                                    pedidoFechado.DiaEntrega = horarioEntregaPage.DiaEntrega;
-                                                    pedidoFechado.HorarioEntrega = horario;
-                                                    pedidoFechado.Avisar = false;
-
-                                                    await regraPedido.alterar(pedidoFechado);
-                                                    ((RootPage)App.Current.MainPage).PaginaAtual = new PedidoPage
-                                                    {
-                                                        Pedido = pedidoFechado
-                                                    };
-                                                    UserDialogs.Instance.HideLoading();
-                                                }
-                                                catch (Exception erro)
-                                                {
-                                                    UserDialogs.Instance.HideLoading();
-                                                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                                                }
-                                            };
-                                            UserDialogs.Instance.HideLoading();
-                                            ((RootPage)App.Current.MainPage).PushAsync(horarioEntregaPage);
-                                        }
-                                        else
-                                        {
-                                            UserDialogs.Instance.HideLoading();
-                                            ((RootPage)App.Current.MainPage).PaginaAtual = new PedidoPage {
-                                                Pedido = pedidoFechado
-                                            };
-                                        }
-                                    }
-                                    else {
-                                        UserDialogs.Instance.HideLoading();
-                                        ((RootPage)App.Current.MainPage).PaginaAtual = new PedidoPage {
-                                            Pedido = pedidoFechado
-                                        };
-                                    }
+                                    case TipoPagamentoEnum.CreditoOnline:
+                                        pedido.FormaPagamento = FormaPagamentoEnum.CreditoOnline;
+                                        break;
+                                    case TipoPagamentoEnum.DebitoOnline:
+                                        pedido.FormaPagamento = FormaPagamentoEnum.DebitoOnline;
+                                        break;
+                                    case TipoPagamentoEnum.Boleto:
+                                        pedido.FormaPagamento = FormaPagamentoEnum.Boleto;
+                                        break;
+                                    case TipoPagamentoEnum.Dinheiro:
+                                        pedido.FormaPagamento = FormaPagamentoEnum.Dinheiro;
+                                        pedido.TrocoPara = pagamento.TrocoPara;
+                                        break;
+                                    case TipoPagamentoEnum.CartaoOffline:
+                                        pedido.FormaPagamento = FormaPagamentoEnum.CartaoOffline;
+                                        break;
                                 }
-                                catch (Exception erro)
+                                switch (pagamento.Situacao)
                                 {
-                                    UserDialogs.Instance.HideLoading();
-                                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
+                                    case SituacaoPagamentoEnum.Pago:
+                                        pedido.Situacao = Pedido.Model.SituacaoEnum.Preparando;
+                                        break;
+                                    case SituacaoPagamentoEnum.AguardandoPagamento:
+                                        pedido.Situacao = Pedido.Model.SituacaoEnum.AguardandoPagamento;
+                                        break;
+                                    default:
+                                        pedido.Situacao = Pedido.Model.SituacaoEnum.Pendente;
+                                        break;
                                 }
-                            });
-                            var regraLoja = LojaFactory.create();
-                            var loja = regraLoja.pegarAtual();
-                            pagamentoMetodoPage.UsaCredito = loja.AceitaCreditoOnline;
-                            pagamentoMetodoPage.UsaDebito = loja.AceitaDebitoOnline;
-                            pagamentoMetodoPage.UsaDinheiro = loja.AceitaDinheiro;
-                            pagamentoMetodoPage.UsaBoleto = loja.AceitaBoleto;
-                            pagamentoMetodoPage.Pagamento = PagamentoUtils.gerar(pedido);
+                                var regraPedido = PedidoFactory.create();
+                                int idPedido = pedido.Id;
+                                if (idPedido > 0)
+                                {
+                                    await regraPedido.alterar(pedido);
+                                }
+                                else
+                                {
+                                    idPedido = await regraPedido.inserir(pedido);
+                                }
+                                var pedidoFechado = await regraPedido.pegar(idPedido);
+                                if (pedidoFechado.Entrega == EntregaEnum.RetiradaMapeada)
+                                {
+                                    AcompanhamentoUtils.iniciarAcompanhamento(pedidoFechado);
+                                }
+                                UserDialogs.Instance.HideLoading();
+                                var pedidoPage = new PedidoPage
+                                {
+                                    Pedido = pedidoFechado
+                                };
+                                ((RootPage)App.Current.MainPage).PushAsync(pedidoPage);
+                            }
+                            catch (Exception erro)
+                            {
+                                UserDialogs.Instance.HideLoading();
+                                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
+                            }
+                        });
+                        var regraLoja = LojaFactory.create();
+                        var loja = regraLoja.pegarAtual();
+                        pagamentoMetodoPage.UsaCredito = loja.AceitaCreditoOnline;
+                        pagamentoMetodoPage.UsaDebito = loja.AceitaDebitoOnline;
+                        pagamentoMetodoPage.UsaDinheiro = loja.AceitaDinheiro;
+                        pagamentoMetodoPage.UsaBoleto = loja.AceitaBoleto;
+                        pagamentoMetodoPage.Pagamento = PagamentoUtils.gerar(pedido);
 
-                            ((RootPage)App.Current.MainPage).PushAsync(pagamentoMetodoPage);
-                        }
+                        ((RootPage)App.Current.MainPage).PushAsync(pagamentoMetodoPage);
                     });
                     metodoEntregaPage.Pedido = PedidoUtils.gerar(produtos);
                     ((RootPage)App.Current.MainPage).PushAsync(metodoEntregaPage);

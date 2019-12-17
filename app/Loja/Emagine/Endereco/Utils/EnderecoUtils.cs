@@ -1,11 +1,9 @@
 ﻿using Acr.UserDialogs;
-using Emagine.Base.Pages;
 using Emagine.Endereco.Model;
 using Emagine.Endereco.Pages;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
-using Emagine.Login.Pages;
-using Emagine.Login.Utils;
+using Emagine.Produto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,35 +15,65 @@ namespace Emagine.Endereco.Utils
 {
     public static class EnderecoUtils
     {
+        public static EnderecoListaPage gerarEnderecoLista(Action<EnderecoInfo> aoSelecionar) {
+            var enderecoListaPage = new EnderecoListaPage
+            {
+                Title = "Endereços"
+            };
+            enderecoListaPage.AoAtualizar += async (sender, enderecos) => {
+                UserDialogs.Instance.ShowLoading("Carregando...");
+                try
+                {
+                    var regraUsuario = UsuarioFactory.create();
+                    var usuario = regraUsuario.pegarAtual();
+                    usuario.Enderecos.Clear();
+                    foreach (var endereco in enderecos)
+                    {
+                        usuario.Enderecos.Add(UsuarioEnderecoInfo.clonar(endereco));
+                    }
+                    int idUsuario = usuario.Id;
+                    if (idUsuario > 0)
+                    {
+                        await regraUsuario.alterar(usuario);
+                    }
+                    else
+                    {
+                        idUsuario = await regraUsuario.inserir(usuario);
+                    }
+                    var usuarioRemoto = await regraUsuario.pegar(idUsuario);
+                    regraUsuario.gravarAtual(usuarioRemoto);
+
+                    var usuarioEnderecos = new List<EnderecoInfo>();
+                    foreach (var endereco in usuarioRemoto.Enderecos)
+                    {
+                        usuarioEnderecos.Add(endereco);
+                    }
+                    ((EnderecoListaPage)sender).Enderecos = usuarioEnderecos;
+
+                    UserDialogs.Instance.HideLoading();
+                }
+                catch (Exception erro)
+                {
+                    UserDialogs.Instance.HideLoading();
+                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
+                }
+            };
+            if (aoSelecionar != null) {
+                enderecoListaPage.AoSelecionar += (sender, endereco) => {
+                    aoSelecionar(endereco);
+                };
+            }
+            return enderecoListaPage;
+        }
+
         public static Page gerarBuscaPorCep(Action<EnderecoInfo> aoSelecionar, bool usaLogin = true) {
-            var cepPage = new CepPage {
+            var cepPage = new CepPage
+            {
                 Title = "Entre com seu CEP",
                 UsaBotaoLogin = usaLogin
             };
             cepPage.AoLogar += (sender, e) => {
-                var loginPage = new LoginPage {
-                    Title = "Login"
-                };
-                loginPage.AoLogar += (s2, usuario) => {
-                    if (usuario.Enderecos.Count() == 1)
-                    {
-                        aoSelecionar?.Invoke(usuario.Enderecos[0]);
-                    }
-                    else if (usuario.Enderecos.Count() > 1)
-                    {
-                        ((Page)s2).Navigation.PushAsync(EnderecoUtils.gerarEnderecoLista((endereco) => {
-                            aoSelecionar?.Invoke(endereco);
-                        }));
-                    }
-                    else
-                    {
-                        ((Page)s2).Navigation.PushAsync(EnderecoUtils.gerarEnderecoLista((endereco) => {
-                            aoSelecionar?.Invoke(endereco);
-                        }), false);
-                    }
-                };
-                ((Page)sender).Navigation.PushAsync(loginPage);
-                //((Page)sender).Navigation.PushAsync(LoginUtils.gerarLogin((usuario) => {}));
+                ((Page)sender).Navigation.PushAsync(LoginUtils.gerarLogin());
             };
             cepPage.AoSelecionar += (s1, endereco) =>
             {
@@ -114,218 +142,6 @@ namespace Emagine.Endereco.Utils
                 ((Page)s0).Navigation.PushAsync(ufLista);
             };
             return cepPage;
-        }
-
-        public static EnderecoListaPage gerarEnderecoLista(Action<EnderecoInfo> aoSelecionar)
-        {
-            var enderecoListaPage = new EnderecoListaPage
-            {
-                Title = "Endereços"
-            };
-            enderecoListaPage.AoAtualizar += async (sender, enderecos) => {
-                UserDialogs.Instance.ShowLoading("Carregando...");
-                try
-                {
-                    var regraUsuario = UsuarioFactory.create();
-                    var usuario = regraUsuario.pegarAtual();
-                    usuario.Enderecos.Clear();
-                    foreach (var endereco in enderecos)
-                    {
-                        usuario.Enderecos.Add(UsuarioEnderecoInfo.clonar(endereco));
-                    }
-                    int idUsuario = usuario.Id;
-                    if (idUsuario > 0)
-                    {
-                        await regraUsuario.alterar(usuario);
-                    }
-                    else
-                    {
-                        idUsuario = await regraUsuario.inserir(usuario);
-                    }
-                    var usuarioRemoto = await regraUsuario.pegar(idUsuario);
-                    regraUsuario.gravarAtual(usuarioRemoto);
-
-                    var usuarioEnderecos = new List<EnderecoInfo>();
-                    foreach (var endereco in usuarioRemoto.Enderecos)
-                    {
-                        usuarioEnderecos.Add(endereco);
-                    }
-                    ((EnderecoListaPage)sender).Enderecos = usuarioEnderecos;
-
-                    UserDialogs.Instance.HideLoading();
-                }
-                catch (Exception erro)
-                {
-                    UserDialogs.Instance.HideLoading();
-                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                }
-            };
-            if (aoSelecionar != null)
-            {
-                enderecoListaPage.AoSelecionar += (sender, endereco) => {
-                    aoSelecionar(endereco);
-                };
-            }
-            return enderecoListaPage;
-        }
-
-        /*
-
-        public static void selecionarEndereco(Action<EnderecoInfo> aoSelecionar)
-        {
-            var regraUsuario = UsuarioFactory.create();
-            var usuario = regraUsuario.pegarAtual();
-            if (usuario != null)
-            {
-                if (usuario.Enderecos.Count == 1)
-                {
-                    aoSelecionar?.Invoke(usuario.Enderecos[0]);
-                }
-                else if (usuario.Enderecos.Count > 1)
-                {
-                    var enderecoListaPage = EnderecoUtils.gerarEnderecoLista((endereco) => {
-                        aoSelecionar?.Invoke(endereco);
-                    });
-                    var enderecos = new List<EnderecoInfo>();
-                    foreach (var endereco in usuario.Enderecos)
-                    {
-                        enderecos.Add(endereco);
-                    }
-                    enderecoListaPage.Enderecos = enderecos;
-                    if (App.Current.MainPage is RootPage)
-                    {
-                        ((RootPage)App.Current.MainPage).PushAsync(enderecoListaPage);
-                    }
-                    else
-                    {
-                        App.Current.MainPage = App.gerarRootPage(enderecoListaPage);
-                    }
-                }
-                else
-                {
-                    var cepPage = EnderecoUtils.gerarBuscaPorCep((endereco) => {
-                        //var regraUsuario = UsuarioFactory.create();
-                        var usuarioCep = regraUsuario.pegarAtual();
-                        if (usuarioCep == null)
-                        {
-                            usuarioCep = new UsuarioInfo();
-                        }
-                        usuarioCep.Enderecos.Add(UsuarioEnderecoInfo.clonar(endereco));
-                        regraUsuario.gravarAtual(usuarioCep);
-
-                        aoSelecionar?.Invoke(endereco);
-                    });
-                    if (App.Current.MainPage is RootPage)
-                    {
-                        ((RootPage)App.Current.MainPage).PushAsync(cepPage);
-                    }
-                    else
-                    {
-                        App.Current.MainPage = App.gerarRootPage(cepPage);
-                    }
-                }
-            }
-            else
-            {
-                var cepPage = EnderecoUtils.gerarBuscaPorCep((endereco) => {
-                    var usuarioCep = regraUsuario.pegarAtual();
-                    if (usuarioCep == null)
-                    {
-                        usuarioCep = new UsuarioInfo();
-                    }
-                    usuarioCep.Enderecos.Add(UsuarioEnderecoInfo.clonar(endereco));
-                    regraUsuario.gravarAtual(usuarioCep);
-
-                    aoSelecionar?.Invoke(endereco);
-                });
-                if (App.Current.MainPage is RootPage)
-                {
-                    ((RootPage)App.Current.MainPage).PushAsync(cepPage);
-                }
-                else
-                {
-                    App.Current.MainPage = App.gerarRootPage(cepPage);
-                }
-            }
-        }
-         */
-
-        public static void selecionarEndereco(Action<EnderecoInfo> aoSelecionar)
-        {
-            var regraUsuario = UsuarioFactory.create();
-            var usuario = regraUsuario.pegarAtual();
-            if (usuario != null)
-            {
-                if (usuario.Enderecos.Count == 1)
-                {
-                    aoSelecionar?.Invoke(usuario.Enderecos[0]);
-                }
-                else if (usuario.Enderecos.Count > 1)
-                {
-                    var enderecoListaPage = EnderecoUtils.gerarEnderecoLista((endereco) => {
-                        aoSelecionar?.Invoke(endereco);
-                    });
-                    var enderecos = new List<EnderecoInfo>();
-                    foreach (var endereco in usuario.Enderecos)
-                    {
-                        enderecos.Add(endereco);
-                    }
-                    enderecoListaPage.Enderecos = enderecos;
-                    if (App.Current.MainPage is RootPage)
-                    {
-                        ((RootPage)App.Current.MainPage).PushAsync(enderecoListaPage);
-                    }
-                    else
-                    {
-                        App.Current.MainPage = App.gerarRootPage(enderecoListaPage);
-                    }
-                }
-                else
-                {
-                    var cepPage = EnderecoUtils.gerarBuscaPorCep((endereco) => {
-                        //var regraUsuario = UsuarioFactory.create();
-                        var usuarioCep = regraUsuario.pegarAtual();
-                        if (usuarioCep == null)
-                        {
-                            usuarioCep = new UsuarioInfo();
-                        }
-                        usuarioCep.Enderecos.Add(UsuarioEnderecoInfo.clonar(endereco));
-                        regraUsuario.gravarAtual(usuarioCep);
-
-                        aoSelecionar?.Invoke(endereco);
-                    });
-                    if (App.Current.MainPage is RootPage)
-                    {
-                        ((RootPage)App.Current.MainPage).PushAsync(cepPage);
-                    }
-                    else
-                    {
-                        App.Current.MainPage = App.gerarRootPage(cepPage);
-                    }
-                }
-            }
-            else
-            {
-                var cepPage = EnderecoUtils.gerarBuscaPorCep((endereco) => {
-                    var usuarioCep = regraUsuario.pegarAtual();
-                    if (usuarioCep == null)
-                    {
-                        usuarioCep = new UsuarioInfo();
-                    }
-                    usuarioCep.Enderecos.Add(UsuarioEnderecoInfo.clonar(endereco));
-                    regraUsuario.gravarAtual(usuarioCep);
-
-                    aoSelecionar?.Invoke(endereco);
-                });
-                if (App.Current.MainPage is RootPage)
-                {
-                    ((RootPage)App.Current.MainPage).PushAsync(cepPage);
-                }
-                else
-                {
-                    App.Current.MainPage = App.gerarRootPage(cepPage);
-                }
-            }
         }
     }
 }

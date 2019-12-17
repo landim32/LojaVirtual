@@ -1,5 +1,7 @@
-php_flag display_errors on
-php_value error_reporting 6143
+AddHandler php7-script .php
+suPHP_ConfigPath /home/imarketsupermercados/
+#php_flag display_errors on
+#php_value error_reporting 6143
 <IfModule mod_rewrite.c>
 RewriteEngine on
 #RewriteBase /emagine-loja
@@ -11,8 +13,6 @@ RewriteRule ^usuarios/(.*)x(.*)/(.*) timthumb.php?src=usuario/$3&h=$2&w=$1&c=1
 RewriteRule ^categoria/(.*)x(.*)/(.*) timthumb.php?src=categoria/$3&h=$2&w=$1&c=1
 RewriteRule ^loja/(.*)x(.*)/(.*) timthumb.php?src=loja/$3&h=$2&w=$1&zc=3
 RewriteRule ^produto/(.*)x(.*)/(.*) timthumb.php?src=produto/$3&h=$2&w=$1&zc=2
-RewriteRule ^seguimento/([0-9]+)x([0-9]+)/(.*) timthumb.php?src=seguimento/$3&h=$2&w=$1&zc=2
-RewriteRule ^ad/([0-9]+)x([0-9]+)/(.*) timthumb.php?src=banner/$3&h=$2&w=$1&zc=2
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

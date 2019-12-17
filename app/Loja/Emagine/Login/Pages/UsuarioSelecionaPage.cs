@@ -1,5 +1,4 @@
 ﻿using Emagine.Base.Estilo;
-using Emagine.Login.Factory;
 using Emagine.Login.Model;
 using System;
 using System.Collections.Generic;
@@ -58,10 +57,12 @@ namespace Emagine.Login.Pages
                 Style = Estilo.Current[Estilo.BTN_PRINCIPAL]
             };
             _CadastroButton.Clicked += (sender, e) => {
-                var cadastroPage = UsuarioFormPageFactory.create();
-                cadastroPage.Title = "Cria sua conta";
-                cadastroPage.Usuario = Usuario;
-                cadastroPage.Gravar = true;
+                var cadastroPage = new UsuarioFormPage
+                {
+                    Title = "Cria sua conta",
+                    Usuario = Usuario,
+                    Gravar = true
+                };
                 cadastroPage.AoCadastrar += (s2, usuario) =>
                 {
                     AoSelecionar?.Invoke(this, usuario);

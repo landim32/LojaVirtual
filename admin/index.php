@@ -1,6 +1,6 @@
 <?php
 
-namespace Emagine\ERP;
+namespace Emagine\Pedido;
 
 use Emagine\Base\EmagineApp;
 use Landim32\BtMenu\BtMainMenu;
@@ -14,8 +14,6 @@ $loader->addPsr4('Landim32\\GoogleDirectionApi\\', __DIR__ . '/vendor/landim32/g
 $loader->addPsr4('Emagine\\Base\\', __DIR__ . '/vendor/landim32/emagine-base/src');
 $loader->addPsr4('Emagine\\Endereco\\', __DIR__ . '/vendor/landim32/emagine-endereco/src');
 $loader->addPsr4('Emagine\\Login\\', __DIR__ . '/vendor/landim32/emagine-login/src');
-$loader->addPsr4('Emagine\\Social\\', __DIR__ . '/vendor/landim32/emagine-social/src');
-$loader->addPsr4('Emagine\\Banner\\', __DIR__ . '/vendor/landim32/emagine-banner/src');
 $loader->addPsr4('Emagine\\Produto\\', __DIR__ . '/vendor/landim32/emagine-produto/src');
 $loader->addPsr4('Emagine\\Pedido\\', __DIR__ . '/vendor/landim32/emagine-pedido/src');
 $loader->addPsr4('Emagine\\Pagamento\\', __DIR__ . '/vendor/landim32/emagine-pagamento/src');
@@ -27,8 +25,6 @@ $config = EmagineApp::getConfig(__DIR__);
 $app = new EmagineApp($config);
 $app->includeModule(__DIR__ . "/vendor/landim32/emagine-endereco/src", "/vendor/landim32/emagine-endereco/src");
 $app->includeModule(__DIR__ . "/vendor/landim32/emagine-login/src", "/vendor/landim32/emagine-login/src");
-$app->includeModule(__DIR__ . "/vendor/landim32/emagine-social/src", "/vendor/landim32/emagine-social/src");
-$app->includeModule(__DIR__ . "/vendor/landim32/emagine-banner/src", "/vendor/landim32/emagine-banner/src");
 $app->includeModule(__DIR__ . "/vendor/landim32/emagine-produto/src", "/vendor/landim32/emagine-produto/src");
 $app->includeModule(__DIR__ . "/vendor/landim32/emagine-pedido/src", "/vendor/landim32/emagine-pedido/src");
 $app->includeModule(__DIR__ . "/vendor/landim32/emagine-pagamento/src", "/vendor/landim32/emagine-pagamento/src");

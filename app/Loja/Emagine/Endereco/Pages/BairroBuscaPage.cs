@@ -79,8 +79,7 @@ namespace Emagine.Endereco.Pages
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Fechar");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
     }

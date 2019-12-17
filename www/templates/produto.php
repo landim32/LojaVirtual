@@ -56,7 +56,6 @@ $categorias = array_reverse($categorias);
                 <div class="caption text-center">
                     <div class="btn-adicionar"
                          data-id="<?php echo $produto->getId(); ?>"
-                         data-loja="<?php echo $produto->getIdLoja(); ?>"
                          data-foto="<?php echo $produto->getFoto(); ?>"
                          data-nome="<?php echo $produto->getNome(); ?>"
                          data-valor="<?php echo number_format( $produto->getValor(), 2, ".", ""); ?>"

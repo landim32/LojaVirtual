@@ -70,15 +70,13 @@ namespace Emagine.Login.Pages
                     if (await UsuarioFactory.create().recuperarSenha(new UsuarioNovaSenhaInfo { Email = _Email.Text }))
                     {
                         UserDialogs.Instance.HideLoading();
-                        //await UserDialogs.Instance.AlertAsync("A senha foi enviada para o seu email", "Sucesso !", "Ok");
-                        await DisplayAlert("Sucesso", "A senha foi enviada para o seu email", "Entendi");
-                        await Navigation.PopToRootAsync();
+                        await UserDialogs.Instance.AlertAsync("A senha foi enviada para o seu email", "Sucesso !", "Ok");
+                        Navigation.PopToRootAsync();
                     }
                     else
                     {
                         UserDialogs.Instance.HideLoading();
-                        //UserDialogs.Instance.Alert("Ocorreu uma falha ao enviar a senha. Verifique se o email informado está correto.", "Falha", "Ok");
-                        await DisplayAlert("Erro", "Ocorreu uma falha ao enviar a senha. Verifique se o email informado está correto.", "Entendi");
+                        UserDialogs.Instance.Alert("Ocorreu uma falha ao enviar a senha. Verifique se o email informado está correto.", "Falha", "Ok");
                     }
                 }
             };

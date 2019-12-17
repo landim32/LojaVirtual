@@ -13,7 +13,7 @@ use Emagine\Produto\Model\ProdutoInfo;
  */
 $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
 ?>
-<div class="container margin-top-10px">
+<div class="container">
     <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($produtos as $produto) : ?>
@@ -35,7 +35,6 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                         </p>
                         <div class="btn-adicionar"
                              data-id="<?php echo $produto->getId(); ?>"
-                             data-loja="<?php echo $produto->getIdLoja(); ?>"
                              data-foto="<?php echo $produto->getFoto(); ?>"
                              data-nome="<?php echo $produto->getNome(); ?>"
                              data-valor="<?php echo number_format( $produto->getValor(), 2, ".", ""); ?>"

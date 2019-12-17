@@ -61,21 +61,21 @@ namespace Emagine.Frete.Pages
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Start,
                 Children = {
-                    new IconImage {
-                        Icon = "fa-calendar",
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Center,
-                        Style = Estilo.Current[Estilo.ICONE_PADRAO]
-                    },
-                    _DataEntrega,
-                    new IconImage {
-                        Icon = "fa-clock-o",
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Center,
-                        Style = Estilo.Current[Estilo.ICONE_PADRAO]
-                    },
-                    _HoraEntrega
-                }
+                                new IconImage {
+                                    Icon = "fa-calendar",
+                                    HorizontalOptions = LayoutOptions.Start,
+                                    VerticalOptions = LayoutOptions.Center,
+                                    Style = Estilo.Current[Estilo.ICONE_PADRAO]
+                                },
+                                _DataEntrega,
+                                new IconImage {
+                                    Icon = "fa-clock-o",
+                                    HorizontalOptions = LayoutOptions.Start,
+                                    VerticalOptions = LayoutOptions.Center,
+                                    Style = Estilo.Current[Estilo.ICONE_PADRAO]
+                                },
+                                _HoraEntrega
+                            }
             };
             _ContainerDataEntregaAux = new StackLayout
             {
@@ -307,7 +307,7 @@ namespace Emagine.Frete.Pages
                             Latitude = local.Latitude??0,
                             Longitude = local.Longitude??0,
                             Logradouro = local.Logradouro,
-                            Tipo = frete.TemSaida() ? FreteLocalTipoEnum.Parada : FreteLocalTipoEnum.Origem,
+                            Tipo = frete.TemSaida() ? FreteLocalTipoEnum.Parada : FreteLocalTipoEnum.Saida,
                             Ordem = i
                         });
                         i++;
@@ -376,7 +376,7 @@ namespace Emagine.Frete.Pages
                 if (value.Locais != null) {
                     foreach (var local in value.Locais)
                     {
-                        if (local.Tipo == FreteLocalTipoEnum.Origem) {
+                        if (local.Tipo == FreteLocalTipoEnum.Saida) {
                             var vw = getEnderecoRetirada();
                             vw.Value = new EnderecoInfo
                             {

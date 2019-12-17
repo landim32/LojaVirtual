@@ -4,14 +4,14 @@ using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Emagine.Mapa.Controls;
-using Loja.Droid;
+using Frete.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
-namespace Loja.Droid
+namespace Frete.Droid
 {
     public class CustomMapRenderer : MapRenderer
     {
@@ -135,7 +135,8 @@ namespace Loja.Droid
                 {
                     _map.AnimateCamera(cameraUpdate);
                 }
-                else {
+                else
+                {
                     _map.MoveCamera(cameraUpdate);
                 }
             }

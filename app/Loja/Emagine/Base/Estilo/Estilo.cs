@@ -44,14 +44,14 @@ namespace Emagine.Base.Estilo
         public const string SEARCH_BAR = "search-bar";
         public const string ICONE_PADRAO = "icone-padrao";
         public const string HR = "hr";
+        public const string TOTAL_FRAME = "total-frame";
+        public const string TOTAL_LABEL = "total-label";
+        public const string TOTAL_TEXTO = "total-texto";
         public const string ENDERECO_ITEM = "endereco-item";
         public const string ENDERECO_FRAME = "endereco-frame";
         public const string ENDERECO_TITULO = "endereco-titulo";
         public const string ENDERECO_CAMPO = "endereco-campo";
         public const string ENDERECO_LABEL = "endereco-label";
-        public const string FRAME_DANGER = "frame-danger";
-        public const string FRAME_DANGER_ICON = "frame-danger-icon";
-        public const string FRAME_DANGER_TEXT = "frame-danger-text";
 
         private ResourceDictionary _resources = null;
         private Color _primaryColor;
@@ -96,6 +96,9 @@ namespace Emagine.Base.Estilo
         private EstiloSearch _searchBar = null;
         private EstiloIcon _iconePadrao = null;
         private EstiloBoxView _hr = null;
+        private EstiloFrame _totalFrame = null;
+        private EstiloLabel _totalLabel = null;
+        private EstiloLabel _totalTexto = null;
         private EstiloLabel _enderecoItem = null;
         private EstiloFrame _enderecoFrame = null;
         private EstiloLabel _enderecoTitulo = null;
@@ -103,9 +106,6 @@ namespace Emagine.Base.Estilo
         private EstiloLabel _enderecoLabel = null;
         private EstiloListView _listaPadrao = null;
         private EstiloFrame _listaFramePadrao = null;
-        private EstiloFrame _frameDanger = null;
-        private EstiloIcon _frameDangerIcon = null;
-        private EstiloLabel _frameDangerLabel = null;
 
         public Estilo() {
             _resources = new ResourceDictionary();
@@ -142,6 +142,9 @@ namespace Emagine.Base.Estilo
             _searchBar = new EstiloSearch();
             _iconePadrao = new EstiloIcon();
             _hr = new EstiloBoxView();
+            _totalFrame = new EstiloFrame();
+            _totalLabel = new EstiloLabel();
+            _totalTexto = new EstiloLabel();
             _enderecoItem = new EstiloLabel();
             _enderecoFrame = new EstiloFrame();
             _enderecoTitulo = new EstiloLabel();
@@ -149,10 +152,7 @@ namespace Emagine.Base.Estilo
             _enderecoLabel = new EstiloLabel();
             _listaPadrao = new EstiloListView();
             _listaFramePadrao = new EstiloFrame();
-            _frameDanger = new EstiloFrame();
-            _frameDangerIcon = new EstiloIcon();
-            _frameDangerLabel = new EstiloLabel();
-        }
+    }
 
         public Color PrimaryColor {
             get {
@@ -582,6 +582,33 @@ namespace Emagine.Base.Estilo
             }
         }
 
+        public EstiloFrame TotalFrame {
+            get {
+                return _totalFrame;
+            }
+            set {
+                _totalFrame = value;
+            }
+        }
+
+        public EstiloLabel TotalLabel {
+            get {
+                return _totalLabel;
+            }
+            set {
+                _totalLabel = value;
+            }
+        }
+
+        public EstiloLabel TotalTexto {
+            get {
+                return _totalTexto;
+            }
+            set {
+                _totalTexto = value;
+            }
+        }
+
         public EstiloLabel EnderecoItem {
             get {
                 return _enderecoItem;
@@ -626,11 +653,6 @@ namespace Emagine.Base.Estilo
                 _enderecoLabel = value;
             }
         }
-
-        public EstiloProduto Produto { get; set; } = new EstiloProduto();
-        public EstiloLoja Loja { get; set; } = new EstiloLoja();
-        public EstiloTotal Total { get; set; } = new EstiloTotal();
-        public EstiloQuantidade Quantidade { get; set; } = new EstiloQuantidade();
 
         public Style this[string index]
         {
@@ -692,43 +714,15 @@ namespace Emagine.Base.Estilo
             gravarEstilo(ENTRY_TEMPO, _entryTempo.gerar());
             gravarEstilo(SEARCH_BAR, _searchBar.gerar());
             gravarEstilo(ICONE_PADRAO, _iconePadrao.gerar());
-            gravarEstilo(EstiloTotal.TOTAL_FRAME, Total.Frame.gerar());
-            gravarEstilo(EstiloTotal.TOTAL_LABEL, Total.Label.gerar());
-            gravarEstilo(EstiloTotal.TOTAL_TEXTO, Total.Texto.gerar());
+            gravarEstilo(TOTAL_FRAME, _totalFrame.gerar());
+            gravarEstilo(TOTAL_LABEL, _totalLabel.gerar());
+            gravarEstilo(TOTAL_TEXTO, _totalTexto.gerar());
             gravarEstilo(HR, _hr.gerar());
             gravarEstilo(ENDERECO_ITEM, _enderecoItem.gerar());
             gravarEstilo(ENDERECO_FRAME, _enderecoFrame.gerar());
             gravarEstilo(ENDERECO_TITULO, _enderecoTitulo.gerar());
             gravarEstilo(ENDERECO_CAMPO, _enderecoCampo.gerar());
             gravarEstilo(ENDERECO_LABEL, _enderecoLabel.gerar());
-
-            gravarEstilo(EstiloProduto.PRODUTO_FRAME, Produto.Frame.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_FOTO, Produto.Foto.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_TITULO, Produto.Titulo.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_ICONE, Produto.Icone.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_LABEL, Produto.Label.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_VOLUME, Produto.Volume.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_QUANTIDADE, Produto.Quantidade.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_DESCRICAO, Produto.Descricao.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_PRECO_MOEDA, Produto.PrecoMoeda.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_PRECO_VALOR, Produto.PrecoValor.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_PROMOCAO_MOEDA, Produto.PromocaoMoeda.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_PROMOCAO_VALOR, Produto.PromocaoValor.gerar());
-            gravarEstilo(EstiloProduto.PRODUTO_CARRINHO_BOTAO, Produto.Carrinho.gerar());
-
-            gravarEstilo(EstiloLoja.LOJA_FRAME, Loja.Frame.gerar());
-            gravarEstilo(EstiloLoja.LOJA_FOTO, Loja.Foto.gerar());
-            gravarEstilo(EstiloLoja.LOJA_TITULO, Loja.Titulo.gerar());
-            gravarEstilo(EstiloLoja.LOJA_ICONE, Loja.Icone.gerar());
-            gravarEstilo(EstiloLoja.LOJA_ENDERECO, Loja.Endereco.gerar());
-            gravarEstilo(EstiloLoja.LOJA_DISTANCIA, Loja.Distancia.gerar());
-
-            gravarEstilo(EstiloQuantidade.QUANTIDADE_FUNDO, Quantidade.Fundo.gerar());
-            gravarEstilo(EstiloQuantidade.QUANTIDADE_TEXTO, Quantidade.QuantidadeTexto.gerar());
-            gravarEstilo(EstiloQuantidade.QUANTIDADE_REMOVER_BOTAO, Quantidade.RemoverBotao.gerar());
-            gravarEstilo(EstiloQuantidade.QUANTIDADE_REMOVER_ICONE, Quantidade.RemoverIcone.gerar());
-            gravarEstilo(EstiloQuantidade.QUANTIDADE_ADICIONAR_BOTAO, Quantidade.AdicionarBotao.gerar());
-            gravarEstilo(EstiloQuantidade.QUANTIDADE_ADICIONAR_ICONE, Quantidade.AdicionarIcone.gerar());
             return _resources;
         }
 

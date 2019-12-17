@@ -10,7 +10,6 @@ using Emagine;
 using Acr.UserDialogs;
 using Plugin.Permissions;
 using Xfx;
-using CarouselView.FormsPlugin.Android;
 
 [assembly: UsesFeature("android.hardware.location", Required = false)]
 [assembly: UsesFeature("android.hardware.location.gps", Required = false)]
@@ -18,7 +17,7 @@ using CarouselView.FormsPlugin.Android;
 
 namespace Loja.Droid
 {
-    [Activity(Label = "Emagine Loja", Icon = "@drawable/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "IMarket Supermercados Delivery", Icon = "@drawable/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -28,14 +27,12 @@ namespace Loja.Droid
 
             base.OnCreate(bundle);
 
+            UserDialogs.Init(this);
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
 
             XfxControls.Init();
-            UserDialogs.Init(this);
-            //UserDialogs.Init(() => (Activity)this.ApplicationContext);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
-            CarouselViewRenderer.Init();
 
             FormsPlugin.Iconize.Droid.IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 

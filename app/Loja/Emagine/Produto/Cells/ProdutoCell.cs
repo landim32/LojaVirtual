@@ -16,13 +16,19 @@ namespace Emagine.Produto.Cells
 {
     public class ProdutoCell: ProdutoBaseCell
     {
+        protected QuantidadeControl _quantidadeButton;
+        protected IconImage _compartilharButton;
+
         public ProdutoCell() {
-            //inicializarComponente();
+            inicializarComponente();
             View = new Frame
             {
+                CornerRadius = 5,
+                Padding = 2,
+                Margin = new Thickness(2,2),
+                BackgroundColor = Color.White,
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
-                Style = Estilo.Current[EstiloProduto.PRODUTO_FRAME],
                 Content = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
@@ -55,14 +61,12 @@ namespace Emagine.Produto.Cells
                                         new Label {
                                             VerticalOptions = LayoutOptions.Start,
                                             HorizontalOptions = LayoutOptions.Start,
-                                            Style = Estilo.Current[EstiloProduto.PRODUTO_LABEL],
                                             Text = "Quantidade:"
                                         },
                                         _quantidadeLabel,
                                         new Label {
                                             VerticalOptions = LayoutOptions.Start,
                                             HorizontalOptions = LayoutOptions.Start,
-                                            Style = Estilo.Current[EstiloProduto.PRODUTO_LABEL],
                                             Text = ", "
                                         },
                                         _volumeLabel
@@ -76,7 +80,7 @@ namespace Emagine.Produto.Cells
                                     Margin = new Thickness(0, 0, 0, 3),
                                     Children = {
                                         _moedaValorLabel,
-                                        _valorLabel,
+                                        _valorFinalLabel,
                                         _promocaoStack
                                     }
                                 },
@@ -86,6 +90,52 @@ namespace Emagine.Produto.Cells
                     }
                 }
             };
+        }
+
+        protected override void inicializarComponente() {
+            base.inicializarComponente();
+
+            _quantidadeButton = new QuantidadeControl {
+                Margin = new Thickness(0, 5, 5, 0),
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.End,
+                FontFamily = Estilo.Current.FontDefaultBold,
+                WidthRequest = 40,
+                HeightRequest = 120
+            };
+            _quantidadeButton.SetBinding(QuantidadeControl.QuantidadeProperty, new Binding("QuantidadeCarrinho"));
+            _quantidadeButton.SetBinding(QuantidadeControl.ProdutoProperty, new Binding("."));
+
+            _compartilharButton = new IconImage
+            {
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.End,
+                Icon = "fa-share-alt",
+                IconColor = Estilo.Current.PrimaryColor,
+                IconSize = 24,
+                Margin = new Thickness(0, 2)
+            };
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (sender, e) =>
+            {
+                if (!CrossShare.IsSupported)
+                    return;
+
+                var produto = (ProdutoInfo)BindingContext;
+                if (produto == null) {
+                    return;
+                }
+
+                CrossShare.Current.Share(new ShareMessage
+                {
+                    //Title = produto.Nome,
+                    //Text = "R$ " + produto.ValorFinal.ToString("N2"),
+                    //Url = "http://smartappcompras.com.br/site/" + produto.Slug
+                    Url = produto.Url
+                });
+            };
+            _compartilharButton.GestureRecognizers.Add(tapGestureRecognizer);
+
         }
     }
 }

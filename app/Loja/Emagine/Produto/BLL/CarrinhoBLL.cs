@@ -12,7 +12,6 @@ namespace Emagine.Produto.BLL
     {
         private Dictionary<int, ProdutoInfo> _produtos;
 
-        public LojaInfo Loja { get; set; }
         public event CarrinhoEventHandler AoAtualizar;
 
         public CarrinhoBLL() {
@@ -55,14 +54,7 @@ namespace Emagine.Produto.BLL
             return null;
         }
 
-        public bool temProdutoDeOutraLoja(int idLoja) {
-            return ((from p in _produtos where (p.Value.IdLoja != idLoja) select p).Count() > 0);
-        }
-
         public int adicionar(ProdutoInfo produto) {
-            if (temProdutoDeOutraLoja(produto.IdLoja)) {
-                throw new Exception("Já existem produtos no carrinho de outra loja.");
-            }
             var regraLoja = LojaFactory.create();
             var loja = regraLoja.pegarAtual();
             if (!_produtos.ContainsKey(produto.Id)) {
@@ -78,7 +70,6 @@ namespace Emagine.Produto.BLL
             else {
                 produto.QuantidadeCarrinho++;
             }
-            this.Loja = loja;
             AoAtualizar?.Invoke(this, new CarrinhoEventArgs( getQuantidade(), getTotal()));
             return produto.QuantidadeCarrinho;
         }
@@ -91,26 +82,8 @@ namespace Emagine.Produto.BLL
                     _produtos.Remove(produto.Id);
                 }
             }
-            if (_produtos.Count == 0) {
-                this.Loja = null;
-            }
             AoAtualizar?.Invoke(this, new CarrinhoEventArgs(getQuantidade(), getTotal()));
             return produto.QuantidadeCarrinho;
-        }
-
-        public int excluir(ProdutoInfo produto)
-        {
-            if (_produtos.ContainsKey(produto.Id))
-            {
-                produto.QuantidadeCarrinho = 0;
-                _produtos.Remove(produto.Id);
-            }
-            if (_produtos.Count == 0)
-            {
-                this.Loja = null;
-            }
-            AoAtualizar?.Invoke(this, new CarrinhoEventArgs(getQuantidade(), getTotal()));
-            return 0;
         }
 
         public void limpar() {

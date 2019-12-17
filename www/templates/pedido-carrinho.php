@@ -63,14 +63,6 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                     <th class="text-right" id="valorTotal"></th>
                     <th class="text-center">-</th>
                 </tr>
-                <?php if ($loja->getValorMinimo() > 0) : ?>
-                <tr>
-                    <th class="hidden-xs">&nbsp;</th>
-                    <th class="text-right">Valor mínimo de compra:</th>
-                    <th class="text-right"><?php echo number_format($loja->getValorMinimo(), 2, ",", "."); ?></th>
-                    <th class="text-center">-</th>
-                </tr>
-                <?php endif; ?>
                 </tfoot>
             </table>
             <hr />
@@ -78,7 +70,7 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                 <a href="<?php echo $urlBase; ?>" class="btn btn-lg btn-default">
                     <i class="fa fa-chevron-left"></i> Continuar comprando
                 </a>
-                <a href="<?php echo $urlBase . "/pedido/entrega"; ?>" class="btn btn-lg btn-primary btn-entrega">
+                <a href="<?php echo $urlBase . "/pedido/entrega"; ?>" class="btn btn-lg btn-primary">
                     Método de Entrega <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

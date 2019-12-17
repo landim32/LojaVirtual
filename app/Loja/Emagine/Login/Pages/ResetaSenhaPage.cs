@@ -99,15 +99,13 @@ namespace Emagine.Login.Pages
                     if (await UsuarioFactory.create().resetarSenha(new UsuarioNovaSenhaInfo { Email = _Email, Senha = _NovaSenha.Text, SenhaAntiga = _SenhaAntiga.Text }))
                     {
                         UserDialogs.Instance.HideLoading();
-                        //await UserDialogs.Instance.AlertAsync("Sua senha foi resetada", "Sucesso !", "Ok");
-                        await DisplayAlert("Sucesso", "Sua senha foi resetada", "Fechar");
-                        await Navigation.PopToRootAsync();
+                        await UserDialogs.Instance.AlertAsync("Sua senha foi resetada", "Sucesso !", "Ok");
+                        Navigation.PopToRootAsync();
                     }
                     else
                     {
                         UserDialogs.Instance.HideLoading();
-                        //UserDialogs.Instance.Alert("Ocorreu uma falha ao resetar a senha. Tente novamente mais tarde.", "Falha", "Ok");
-                        await DisplayAlert("Erro", "Ocorreu uma falha ao resetar a senha. Tente novamente mais tarde.", "Entendi");
+                        UserDialogs.Instance.Alert("Ocorreu uma falha ao resetar a senha. Tente novamente mais tarde.", "Falha", "Ok");
                     }
                 }
             };

@@ -1,7 +1,5 @@
 ﻿using System;
-using Acr.UserDialogs;
 using Emagine.Base.Estilo;
-using Emagine.Base.Model;
 using FormsPlugin.Iconize;
 using Xamarin.Forms;
 
@@ -12,13 +10,12 @@ namespace Emagine.Base.Pages
         private int _Avaliacao = 0;
 
         private Label _descricaoLabel;
-        private IconImage _estrela1Icon;
-        private IconImage _estrela2Icon;
-        private IconImage _estrela3Icon;
-        private IconImage _estrela4Icon;
-        private IconImage _estrela5Icon;
-        private Editor _comentarioEditor;
-        private Button _confirmarButton;
+        private IconImage _Estrela1Icon;
+        private IconImage _Estrela2Icon;
+        private IconImage _Estrela3Icon;
+        private IconImage _Estrela4Icon;
+        private IconImage _Estrela5Icon;
+        private Button _ConfirmarButton;
 
         public string Descricao {
             get {
@@ -28,7 +25,7 @@ namespace Emagine.Base.Pages
                 _descricaoLabel.Text = value;
             }
         }
-        public event EventHandler<AvaliacaoInfo> AoAvaliar;
+        public event EventHandler<int> AoAvaliar;
 
         public AvaliePage()
         {
@@ -45,24 +42,16 @@ namespace Emagine.Base.Pages
                         Orientation = StackOrientation.Horizontal,
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Start,
-                        Margin = new Thickness(0, 10, 0, 10),
+                        Margin = new Thickness(0, 10, 0, 0),
                         Children = {
-                            _estrela1Icon,
-                            _estrela2Icon,
-                            _estrela3Icon,
-                            _estrela4Icon,
-                            _estrela5Icon
+                            _Estrela1Icon,
+                            _Estrela2Icon,
+                            _Estrela3Icon,
+                            _Estrela4Icon,
+                            _Estrela5Icon
                         }
                     },
-                    new Label {
-                        Style = Estilo.Estilo.Current[Estilo.Estilo.LABEL_CONTROL],
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Text = "Comente como foi sua experiência (opcional):",
-                        FontSize = 10
-                    },
-                    _comentarioEditor,
-                    _confirmarButton
+                    _ConfirmarButton
                 }
             };
         }
@@ -72,7 +61,7 @@ namespace Emagine.Base.Pages
             {
                 Icon = "fa-star-o",
                 IconColor = Color.Gold,
-                IconSize = 42
+                IconSize = 28
             };
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += aoClicar;
@@ -89,74 +78,62 @@ namespace Emagine.Base.Pages
                 HorizontalTextAlignment = TextAlignment.Center
             };
 
-            _estrela1Icon = criarEstrela((sender, e) => {
+            _Estrela1Icon = criarEstrela((sender, e) => {
                 _Avaliacao = 1;
-                _estrela1Icon.Icon = "fa-star";
-                _estrela2Icon.Icon = "fa-star-o";
-                _estrela3Icon.Icon = "fa-star-o";
-                _estrela4Icon.Icon = "fa-star-o";
-                _estrela5Icon.Icon = "fa-star-o";
+                _Estrela1Icon.Icon = "fa-star";
+                _Estrela2Icon.Icon = "fa-star-o";
+                _Estrela3Icon.Icon = "fa-star-o";
+                _Estrela4Icon.Icon = "fa-star-o";
+                _Estrela5Icon.Icon = "fa-star-o";
             });
 
-            _estrela2Icon = criarEstrela((sender, e) => {
+            _Estrela2Icon = criarEstrela((sender, e) => {
                 _Avaliacao = 2;
-                _estrela1Icon.Icon = "fa-star";
-                _estrela2Icon.Icon = "fa-star";
-                _estrela3Icon.Icon = "fa-star-o";
-                _estrela4Icon.Icon = "fa-star-o";
-                _estrela5Icon.Icon = "fa-star-o";
+                _Estrela1Icon.Icon = "fa-star";
+                _Estrela2Icon.Icon = "fa-star";
+                _Estrela3Icon.Icon = "fa-star-o";
+                _Estrela4Icon.Icon = "fa-star-o";
+                _Estrela5Icon.Icon = "fa-star-o";
             });
 
-            _estrela3Icon = criarEstrela((sender, e) => {
+            _Estrela3Icon = criarEstrela((sender, e) => {
                 _Avaliacao = 3;
-                _estrela1Icon.Icon = "fa-star";
-                _estrela2Icon.Icon = "fa-star";
-                _estrela3Icon.Icon = "fa-star";
-                _estrela4Icon.Icon = "fa-star-o";
-                _estrela5Icon.Icon = "fa-star-o";
+                _Estrela1Icon.Icon = "fa-star";
+                _Estrela2Icon.Icon = "fa-star";
+                _Estrela3Icon.Icon = "fa-star";
+                _Estrela4Icon.Icon = "fa-star-o";
+                _Estrela5Icon.Icon = "fa-star-o";
             });
 
-            _estrela4Icon = criarEstrela((sender, e) => {
+            _Estrela4Icon = criarEstrela((sender, e) => {
                 _Avaliacao = 4;
-                _estrela1Icon.Icon = "fa-star";
-                _estrela2Icon.Icon = "fa-star";
-                _estrela3Icon.Icon = "fa-star";
-                _estrela4Icon.Icon = "fa-star";
-                _estrela5Icon.Icon = "fa-star-o";
+                _Estrela1Icon.Icon = "fa-star";
+                _Estrela2Icon.Icon = "fa-star";
+                _Estrela3Icon.Icon = "fa-star";
+                _Estrela4Icon.Icon = "fa-star";
+                _Estrela5Icon.Icon = "fa-star-o";
             });
 
-            _estrela5Icon = criarEstrela((sender, e) => {
+            _Estrela5Icon = criarEstrela((sender, e) => {
                 _Avaliacao = 5;
-                _estrela1Icon.Icon = "fa-star";
-                _estrela2Icon.Icon = "fa-star";
-                _estrela3Icon.Icon = "fa-star";
-                _estrela4Icon.Icon = "fa-star";
-                _estrela5Icon.Icon = "fa-star";
+                _Estrela1Icon.Icon = "fa-star";
+                _Estrela2Icon.Icon = "fa-star";
+                _Estrela3Icon.Icon = "fa-star";
+                _Estrela4Icon.Icon = "fa-star";
+                _Estrela5Icon.Icon = "fa-star";
             });
 
-            _comentarioEditor = new Editor {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                HeightRequest = 100
-            };
-
-            _confirmarButton = new Button()
+            _ConfirmarButton = new Button()
             {
                 Text = "Confirmar",
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Start,
                 Style = Estilo.Estilo.Current[Estilo.Estilo.BTN_SUCESSO]
             };
-            _confirmarButton.Clicked += (sender, e) =>
+            _ConfirmarButton.Clicked += (sender, e) =>
             {
-                if (_Avaliacao > 0)
-                {
-                    AoAvaliar?.Invoke(this, new AvaliacaoInfo(_Avaliacao, _comentarioEditor.Text));
-                    Navigation.PopAsync();
-                }
-                else {
-                    UserDialogs.Instance.AlertAsync("Marque pelomenos uma estrela.", "Aviso", "Entendi");
-                }
+                AoAvaliar?.Invoke(this, _Avaliacao);
+                Navigation.PopAsync();
             };
 
         }

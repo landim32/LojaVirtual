@@ -1,10 +1,11 @@
 <?php
+
 namespace Emagine\Loja;
 
 use Emagine\Base\EmagineApp;
 use Emagine\Endereco\Model\EnderecoInfo;
 use Emagine\Login\Model\UsuarioEnderecoInfo;
-use Emagine\Pedido\Model\PedidoHorarioInfo;
+use Emagine\Pedido\BLL\PedidoBLL;
 use Emagine\Produto\Model\LojaInfo;
 use Emagine\Produto\Model\ProdutoInfo;
 
@@ -12,7 +13,6 @@ use Emagine\Produto\Model\ProdutoInfo;
  * @var EmagineApp $app
  * @var LojaInfo $loja
  * @var ProdutoInfo[] $produtos
- * @var PedidoHorarioInfo[] $horarios
  * @var EnderecoInfo $endereco
  * @var UsuarioEnderecoInfo[] $enderecos
  * @var double $valorFrete
@@ -71,29 +71,9 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                             </strong><br />
                         </div>
                     </div>
-                    <?php if (count($horarios) > 1) : ?>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <i class="fa fa-clock-o"></i> Horário de Entrega
-                            </h4>
-                        </div>
-                        <div class="panel-body">
-                            <?php foreach ($horarios as $horario) : ?>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="horario" id="horario" value="<?php echo $horario->getId(); ?>">
-                                        <?php echo $horario->getHorario(); ?>
-                                    </label>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
                 </div>
                 <div class="col-md-9">
                     <h2>Método de Entrega</h2>
-                    <hr />
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-6 text-right">
                             <a href="<?php echo $urlBase . "/pedido/entrega"; ?>" class="btn btn-lg btn-primary">
@@ -107,33 +87,21 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                         </div>
                     </div>
                     <hr />
-                    <h2 id="endereco">Endereço de Entrega</h2>
-                    <hr />
-                    <?php //var_dump($endereco); ?>
+                    <h2>Endereço de Entrega</h2>
                     <div class="row">
-                        <?php foreach ($enderecos as $end) : ?>
-                            <?php
-                            if ($end->getLatitude() == $endereco->getLatitude() && $end->getLongitude() == $endereco->getLongitude()) {
-                                $classe = "panel panel-primary";
-                            }
-                            else {
-                                $classe = "panel panel-default";
-                            }
-                            ?>
+                        <?php foreach ($enderecos as $endereco) : ?>
                             <div class="col-md-4">
-                                <div class="<?php echo $classe; ?>">
+                                <div id="<?php echo "endereco-" . $endereco->getId(); ?>" class="panel panel-default panel-endereco">
                                     <div class="panel-body">
-                                        <h4>
-                                            <?php echo $end->getLogradouro(); ?>
-                                        </h4>
+                                        <h4><?php echo $endereco->getLogradouro(); ?></h4>
                                         <p>
-                                            <?php echo $end->getEnderecoCompleto(); ?>
+                                            <?php echo $endereco->getEnderecoCompleto(); ?>
                                         </p>
                                     </div>
                                     <div class="panel-footer text-right">
-                                        <a href="<?php echo $urlBase . "/pedido/entrega/" . $end->getId() . "#endereco"; ?>" class="btn btn-sm btn-primary">
-                                            <i class="fa fa-map-marker"></i> Entregar aqui
-                                        </a>
+                                        <?php startLinkEndereco($endereco, "#", "endereco-mudar btn btn-sm btn-primary"); ?>
+                                        <i class="fa fa-map-marker"></i> Entregar aqui
+                                        <?php endLinkEndereco(); ?>
                                     </div>
                                 </div>
                             </div>

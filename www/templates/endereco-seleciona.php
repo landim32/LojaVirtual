@@ -28,9 +28,9 @@ use Emagine\Produto\Model\LojaInfo;
                     <?php foreach ($usuario->listarEndereco() as $endereco) : ?>
                         <?php $url = $app->getBaseUrl() . "/endereco/busca/" . $endereco->getId(); ?>
                         <h3>
-                            <?php //startLinkEndereco($endereco, $url); ?>
-                            <a href="<?php echo $url; ?>"><?php echo $endereco->getLogradouro(); ?></a>
-                            <?php //endLinkEndereco(); ?>
+                            <?php startLinkEndereco($endereco, $url); ?>
+                            <?php echo $endereco->getLogradouro(); ?>
+                            <?php endLinkEndereco(); ?>
                         </h3>
                         <p><?php echo $endereco->getEnderecoCompleto(); ?></p>
                         <hr />

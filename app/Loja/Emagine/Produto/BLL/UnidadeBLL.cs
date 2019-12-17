@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Emagine.Produto.BLL
+namespace Loja.Emagine.Produto.BLL
 {
     public class UnidadeBLL : RestAPIBase
     {
