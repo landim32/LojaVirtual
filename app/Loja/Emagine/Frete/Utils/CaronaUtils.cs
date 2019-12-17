@@ -1,20 +1,15 @@
 ﻿using Acr.UserDialogs;
 using Emagine;
 using Emagine.Base.Pages;
-using Emagine.Frete.Cells;
 using Emagine.Frete.Factory;
 using Emagine.Frete.Model;
 using Emagine.Frete.Pages;
 using Emagine.GPS.Model;
 using Emagine.GPS.Utils;
 using Emagine.Login.Factory;
-using Emagine.Login.Pages;
 using Emagine.Mapa.Model;
 using Emagine.Mapa.Pages;
 using Emagine.Mapa.Utils;
-using Emagine.Pagamento.Model;
-using Emagine.Pagamento.Pages;
-using FormsPlugin.Iconize;
 using Frete.Pages;
 using System;
 using System.Collections.Generic;
@@ -31,149 +26,7 @@ namespace Emagine.Frete.Utils
         public static MapaAcompanhaPage AcompanhaPageAtual { get; set; }
         public static bool Acompanhando { get; set; } = false;
 
-        public async static void inicializarFrete() {
-            UserDialogs.Instance.ShowLoading("carregando...");
-            try
-            {
-                var regraVeiculo = TipoVeiculoFactory.create();
-                var veiculos = await regraVeiculo.listar();
-                UserDialogs.Instance.HideLoading();
-                if (veiculos.Count > 1)
-                {
-                    var veiculoPage = new TipoVeiculoSelecionaPage
-                    {
-                        Title = "Selecione o tipo de veículo",
-                        Veiculos = veiculos
-                    };
-                    veiculoPage.AoSelecionar += (sender, tipo) => {
-                        var rotaPage = gerarRotaSeleciona(tipo);
-                        veiculoPage.Navigation.PushAsync(rotaPage);
-                    };
-                    if (App.Current.MainPage is RootPage) {
-                        ((RootPage)App.Current.MainPage).PaginaAtual = veiculoPage;
-                    }
-                    else {
-                        App.Current.MainPage = new IconNavigationPage(veiculoPage);
-                    }
-                }
-                else if (veiculos.Count == 1) {
-                    var rotaPage = gerarRotaSeleciona(veiculos.FirstOrDefault());
-                    if (App.Current.MainPage is RootPage) {
-                        ((RootPage)App.Current.MainPage).PaginaAtual = rotaPage;
-                    }
-                    else {
-                        App.Current.MainPage = new IconNavigationPage(rotaPage);
-                    }
-                }
-                else {
-                    await UserDialogs.Instance.AlertAsync("Nenhum tipo de veículo cadastrado.", "Erro", "Entendi");
-                }
-            }
-            catch (Exception e)
-            {
-                UserDialogs.Instance.HideLoading();
-                await UserDialogs.Instance.AlertAsync(e.Message, "Erro", "Entendi");
-            }
-
-        }
-
-        public static Page gerarRotaSeleciona(TipoVeiculoInfo veiculo) {
-            var frete = new FreteInfo();
-            frete.Veiculos.Add(veiculo);
-            var rotaPage = new RotaSelecionaPage
-            {
-                Title = "Selecione a rota",
-                IniciarEmPosicaoAtual = true,
-                Frete = frete
-            };
-            rotaPage.AoSolicitar += (sender, f2) => {
-                processarFrete(f2, async (f3) => {
-                    var fretePage = new FretePage
-                    {
-                        Title = "Carona",
-                        Frete = f3
-                    };
-                    UserDialogs.Instance.HideLoading();
-                    await rotaPage.Navigation.PushAsync(fretePage);
-                });
-            };
-            rotaPage.AoAgendar += (sender, f2) => {
-                var agendaPage = gerarAgendaFrete(f2);
-                rotaPage.Navigation.PushAsync(agendaPage);
-            };
-            return rotaPage;
-        }
-
-        public static Page gerarAgendaFrete(FreteInfo frete) {
-            var agendaPage = new FreteAgendaPage
-            {
-                Title = "Agenda carrona",
-                Frete = frete
-            };
-            agendaPage.AoAgendar += (sender, f2) =>
-            {
-                processarFrete(f2, async (f3) => {
-                    var fretePage = new FretePage
-                    {
-                        Title = "Carona",
-                        Frete = f3
-                    };
-                    UserDialogs.Instance.HideLoading();
-                    await agendaPage.Navigation.PushAsync(fretePage);
-                });
-            };
-            return agendaPage;
-        }
-
-        public static void processarFrete(FreteInfo frete, Action<FreteInfo> aoProcessar) {
-            Login.Utils.LoginUtils.carregarUsuario((usuario) =>
-            {
-                string descricaoPgto = string.Format("Viagem entre {0} e {1}", frete.EnderecoOrigem, frete.EnderecoDestino);
-                var pagamento = new PagamentoInfo {
-                    IdUsuario = usuario.Id,
-                    Situacao = SituacaoPagamentoEnum.Aberto
-                };
-                pagamento.Itens.Add(new PagamentoItemInfo {
-                    Descricao = descricaoPgto,
-                    Quantidade = 1,
-                    Valor = frete.Preco
-                });
-                var pagamentoMetodoPage = new PagamentoMetodoPage
-                {
-                    Title = "Forma de Pagamento",
-                    Pagamento = pagamento,
-                    UsaDebito = false
-                };
-                pagamentoMetodoPage.AoEfetuarPagamento += async (sender, pgtoEfetuado) =>
-                {
-                    frete.IdPagamento = pgtoEfetuado.IdPagamento;
-                    UserDialogs.Instance.ShowLoading("Solicitando carona...");
-                    try
-                    {
-                        frete.IdUsuario = usuario.Id;
-                        var regraFrete = FreteFactory.create();
-                        var id_frete = await regraFrete.inserir(frete);
-                        var freteAtualizado = await regraFrete.pegar(id_frete);
-                        UserDialogs.Instance.HideLoading();
-                        aoProcessar?.Invoke(freteAtualizado);
-                    }
-                    catch (Exception e)
-                    {
-                        UserDialogs.Instance.HideLoading();
-                        await UserDialogs.Instance.AlertAsync(e.Message, "Erro", "Entendi");
-                    }
-                };
-                if (App.Current.MainPage is RootPage) {
-                    ((RootPage)App.Current.MainPage).PushAsync(pagamentoMetodoPage);
-                }
-                else {
-                    App.Current.MainPage = new IconNavigationPage(pagamentoMetodoPage);
-                }
-            });
-        }
-
-        [Obsolete("Use inicializar")]
-        public async static void inicializarOld() {
+        public async static void inicializar() {
             var regraUsuario = UsuarioFactory.create();
             var usuario = regraUsuario.pegarAtual();
             if (usuario == null) {
@@ -210,28 +63,31 @@ namespace Emagine.Frete.Utils
                 var regraMotorista = MotoristaFactory.create();
                 var motorista = regraMotorista.pegarAtual();
                 var freteInfo = regraFrete.pegarAtual();
-                if (motorista != null) {
-                    if (motorista.Situacao == MotoristaSituacaoEnum.AguardandoAprovacao) {
+                if (motorista != null)
+                {
+                    if (motorista.Situacao == MotoristaSituacaoEnum.AguardandoAprovacao)
+                    {
                         UserDialogs.Instance.Alert("Conta de motorista aguardando aprovação!", "Aviso", "Entendi");
                     }
                     else {
-                        if (freteInfo != null) {
-                            var acompanhaPage = CaronaUtils.acompanharComoMotorista(freteInfo);
-                            ((RootPage)App.Current.MainPage).PaginaAtual = acompanhaPage;
+                        if (freteInfo != null)
+                        {
+                            CaronaUtils.acompanharComoMotorista(freteInfo);
                         }
-                        else {
+                        else
+                        {
                             CaronaUtils.buscarFreteComoMotorista(false);
                         }
                     }
                 }
                 else {
-                    if (freteInfo != null) {
-                        var acompanhaPage = CaronaUtils.acompanharComoCliente(freteInfo);
-                        ((RootPage)App.Current.MainPage).PaginaAtual = acompanhaPage;
+                    if (freteInfo != null)
+                    {
+                        CaronaUtils.acompanharComoCliente(freteInfo);
                     }
-                    else {
-                        var mapaPage = CaronaUtils.criar();
-                        ((RootPage)App.Current.MainPage).PaginaAtual = mapaPage;
+                    else
+                    {
+                        CaronaUtils.criar();
                     }
                 }
                 UserDialogs.Instance.HideLoading();
@@ -243,7 +99,7 @@ namespace Emagine.Frete.Utils
             }
         }
 
-        public static MapaAcompanhaPage acompanharComoMotorista(FreteInfo frete) {
+        public static void acompanharComoMotorista(FreteInfo frete) {
             var regraFrete = FreteFactory.create();
             regraFrete.gravarAtual(frete);
 
@@ -263,12 +119,10 @@ namespace Emagine.Frete.Utils
             acompanhaPage.Disappearing += (sender, e) => {
                 CaronaUtils.AcompanhaPageAtual = null;
             };
-            //((RootPage)App.Current.MainPage).PushAsync(acompanhaPage);
-            //((RootPage)App.Current.MainPage).PaginaAtual = acompanhaPage;
-            return acompanhaPage;
+            ((RootPage)App.Current.MainPage).PushAsync(acompanhaPage);
         }
 
-        public static MapaAcompanhaPage acompanharComoCliente(FreteInfo frete)
+        public static void acompanharComoCliente(FreteInfo frete)
         {
             var regraFrete = FreteFactory.create();
             regraFrete.gravarAtual(frete);
@@ -288,9 +142,7 @@ namespace Emagine.Frete.Utils
             acompanhaPage.Disappearing += (sender, e) => {
                 CaronaUtils.Acompanhando = false;
             };
-            //((RootPage)App.Current.MainPage).PushAsync(acompanhaPage);
-            //((RootPage)App.Current.MainPage).PaginaAtual = acompanhaPage;
-            return acompanhaPage;
+            ((RootPage)App.Current.MainPage).PushAsync(acompanhaPage);
         }
 
         private static async void atualizarMapa(MapaAcompanhaPage acompanhaPage, FreteInfo frete) {
@@ -317,7 +169,7 @@ namespace Emagine.Frete.Utils
                     if (string.IsNullOrEmpty(retorno.Polyline)) {
                         mapaRota.Polyline = new List<Position>();
                         foreach (var local in frete.Locais) {
-                            mapaRota.Polyline.Add(new Position(local.Latitude.GetValueOrDefault(), local.Longitude.GetValueOrDefault()));
+                            mapaRota.Polyline.Add(new Position(local.Latitude, local.Longitude));
                         }
                     }
                     acompanhaPage.atualizarMapa(mapaRota);
@@ -387,7 +239,7 @@ namespace Emagine.Frete.Utils
                             mapaRota.Polyline = new List<Position>();
                             foreach (var freteLocal in frete.Locais)
                             {
-                                mapaRota.Polyline.Add(new Position(freteLocal.Latitude.GetValueOrDefault(), freteLocal.Longitude.GetValueOrDefault()));
+                                mapaRota.Polyline.Add(new Position(freteLocal.Latitude, freteLocal.Longitude));
                             }
                         }
                         if (AcompanhaPageAtual != null)
@@ -403,7 +255,7 @@ namespace Emagine.Frete.Utils
             }
         }
 
-        public static MapaRotaPage criar() {
+        public static void criar() {
             var mapaPage = new MapaRotaPage
             {
                 Title = "Selecione a rota",
@@ -422,23 +274,19 @@ namespace Emagine.Frete.Utils
                 }
                 var caronaPage = new CaronaFormPage
                 {
-                    Title = "Novo Atendimento",
-                    AgendamentoObrigatorio = true,
-                    TipoVeiculoExtra = false,
-                    PrecoVisivel = false,
+                    Title = "Nova carona",
                     Frete = frete
                 };
                 caronaPage.AoCadastrar += async (s2, f) => {
-                    await ((Page)s2).Navigation.PushAsync(new FretePage
+                    await ((Page)sender).Navigation.PushAsync(new FretePage
                     {
                         Title = frete.SituacaoStr,
                         Frete = f
                     });
                 };
-                ((Page)sender).Navigation.PushAsync(caronaPage);
+                ((RootPage)App.Current.MainPage).PushAsync(caronaPage);
             };
-            //((RootPage)App.Current.MainPage).PushAsync(mapaPage);
-            return mapaPage;
+            ((RootPage)App.Current.MainPage).PushAsync(mapaPage);
         }
 
         public static async void listarMeuFreteComoCliente() {
@@ -457,8 +305,7 @@ namespace Emagine.Frete.Utils
                     NovoBotao = false
                 };
                 UserDialogs.Instance.HideLoading();
-                //((RootPage)App.Current.MainPage).PushAsync(freteListaPage);
-                ((RootPage)App.Current.MainPage).PaginaAtual = freteListaPage;
+                ((RootPage)App.Current.MainPage).PushAsync(freteListaPage);
             }
             catch (Exception e) {
                 UserDialogs.Instance.HideLoading();
@@ -483,10 +330,8 @@ namespace Emagine.Frete.Utils
                     FiltroBotao = false,
                     NovoBotao = false
                 };
-                freteListaPage.setItemTemplate(typeof(FreteMotoristaCell));
                 UserDialogs.Instance.HideLoading();
-                //((RootPage)App.Current.MainPage).PushAsync(freteListaPage);
-                ((RootPage)App.Current.MainPage).PaginaAtual = freteListaPage;
+                ((RootPage)App.Current.MainPage).PushAsync(freteListaPage);
             }
             catch (Exception e)
             {
@@ -506,7 +351,6 @@ namespace Emagine.Frete.Utils
                 var motorista = regraMotorista.pegarAtual();
                 var regraFrete = FreteFactory.create();
                 var fretes = await regraFrete.listar(0, 0, FreteSituacaoEnum.ProcurandoMotorista);
-                regraFrete.atualizarPreco(fretes);
                 var freteListaPage = new FreteListaPage
                 {
                     Title = "Buscar atendimentos",
@@ -517,8 +361,7 @@ namespace Emagine.Frete.Utils
                 if (carregando) {
                     UserDialogs.Instance.HideLoading();
                 }
-                //((RootPage)App.Current.MainPage).PushAsync(freteListaPage);
-                ((RootPage)App.Current.MainPage).PaginaAtual = freteListaPage;
+                ((RootPage)App.Current.MainPage).PushAsync(freteListaPage);
             }
             catch (Exception e)
             {
@@ -526,68 +369,6 @@ namespace Emagine.Frete.Utils
                     UserDialogs.Instance.HideLoading();
                 }
                 await UserDialogs.Instance.AlertAsync(e.Message, "Erro", "Entendi");
-            }
-        }
-
-        public static LoginPage gerarLogin(Action aoLogar)
-        {
-            var loginPage = new LoginPage
-            {
-                Title = "Entrar"
-            };
-            loginPage.AoLogar += async (sender, usuario) => {
-                if (usuario == null)
-                {
-
-                    await ((Page)sender).DisplayAlert("Erro", "Usuário não informado.", "Fechar");
-                    return;
-                }
-                var regraMotorista = MotoristaFactory.create();
-                var motorista = await regraMotorista.pegar(usuario.Id);
-                if (motorista != null)
-                {
-                    regraMotorista.gravarAtual(motorista);
-                }
-                aoLogar?.Invoke();
-                //App.Current.MainPage = App.gerarRootPage(new PrincipalPage());
-            };
-            return loginPage;
-        }
-
-        public static void criarUsuario(Action aoCriar)
-        {
-            var cadastroPage = UsuarioFormPageFactory.create();
-            if (!(cadastroPage is FreteUsuarioFormPage))
-            {
-                throw new Exception("A página de cadastro precisa ser do tipo FreteUsuarioFormPage.");
-            }
-            ((FreteUsuarioFormPage)cadastroPage).AoCadastrarMotorista += (s1, m1) => {
-                var motoristaPage = CadastroMotoristaPageFactory.create();
-                motoristaPage.Usuario = m1;
-                motoristaPage.AoCompletar += (s2, motorista) =>
-                {
-                    aoCriar?.Invoke();
-                };
-                ((Page)s1).Navigation.PushAsync(motoristaPage);
-            };
-            ((FreteUsuarioFormPage)cadastroPage).AoCadastrarEmpresa += (s2, u2) =>
-            {
-                /*
-                var empresaPage = new CadastroEmpresaPage(u2);
-                empresaPage.AoCompletar += (s3, usuario) =>
-                {
-                    aoCriar?.Invoke();
-                };
-                ((Page)s2).Navigation.PushAsync(empresaPage);
-                */
-                aoCriar?.Invoke();
-            };
-            if (App.Current.MainPage is RootPage)
-            {
-                ((RootPage)App.Current.MainPage).PushAsync(cadastroPage);
-            }
-            else {
-                App.Current.MainPage = new IconNavigationPage(cadastroPage);
             }
         }
     }

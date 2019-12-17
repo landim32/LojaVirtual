@@ -1,4 +1,5 @@
-﻿using Emagine.Base.Estilo;
+﻿using Acr.UserDialogs;
+using Emagine.Base.Estilo;
 using Emagine.Base.Utils;
 using Emagine.Pagamento.Model;
 using Emagine.Pagamento.Pages;
@@ -17,6 +18,7 @@ namespace Emagine.Pagamento.Cells
         private IconImage _IconeImage;
         private Label _BandeiraLabel;
         private Label _NumeroLabel;
+        private IconImage _removerButtom;
 
         public CartaoCell()
         {
@@ -30,43 +32,52 @@ namespace Emagine.Pagamento.Cells
                 Margin = new Thickness(2, 2),
                 BackgroundColor = Color.White,
                 VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 Content = new StackLayout
                 {
-                    Orientation = StackOrientation.Vertical,
-                    HorizontalOptions = LayoutOptions.Fill,
+                    Orientation = StackOrientation.Horizontal,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
                     VerticalOptions = LayoutOptions.Start,
                     Spacing = 3,
                     Children = {
                         new StackLayout {
-                            Orientation = StackOrientation.Horizontal,
+                            Orientation = StackOrientation.Vertical,
                             HorizontalOptions = LayoutOptions.Fill,
                             VerticalOptions = LayoutOptions.Start,
-                            Spacing = 5,
+                            Spacing = 3,
                             Children = {
-                                _IconeImage,
-                                _BandeiraLabel,
+                                new StackLayout {
+                                    Orientation = StackOrientation.Horizontal,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Start,
+                                    Spacing = 5,
+                                    Children = {
+                                        _IconeImage,
+                                        _BandeiraLabel,
+                                    }
+                                },
+                                new StackLayout {
+                                    Orientation = StackOrientation.Horizontal,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Start,
+                                    Spacing = 5,
+                                    Children = {
+                                        new IconImage{
+                                            HorizontalOptions = LayoutOptions.Start,
+                                            VerticalOptions = LayoutOptions.Center,
+                                            Icon = "fa-credit-card",
+                                            IconSize = 20,
+                                            WidthRequest = 26,
+                                            IconColor = Estilo.Current.PrimaryColor
+                                        },
+                                        _NumeroLabel
+                                    }
+                                }
                             }
                         },
-                        new StackLayout {
-                            Orientation = StackOrientation.Horizontal,
-                            HorizontalOptions = LayoutOptions.Fill,
-                            VerticalOptions = LayoutOptions.Start,
-                            Spacing = 5,
-                            Children = {
-                                new IconImage{
-                                    HorizontalOptions = LayoutOptions.Start,
-                                    VerticalOptions = LayoutOptions.Center,
-                                    Icon = "fa-credit-card",
-                                    IconSize = 20,
-                                    WidthRequest = 26,
-                                    IconColor = Estilo.Current.PrimaryColor
-                                },
-                                _NumeroLabel
-                            }
-                        }
+                        _removerButtom
                     }
-                },
+                }
             };
         }
 
@@ -134,7 +145,28 @@ namespace Emagine.Pagamento.Cells
                 FontSize = 16
             };
             _NumeroLabel.SetBinding(Label.TextProperty, new Binding("Nome", stringFormat: "Terminado em {0}"));
-
+            _removerButtom = new IconImage
+            {
+                HorizontalOptions = LayoutOptions.EndAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                IconColor = Estilo.Current.DangerColor,
+                Icon = "fa-remove",
+                IconSize = 28,
+                WidthRequest = 28,
+                HeightRequest = 28
+            };
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += async (s, e) => {
+                if (await UserDialogs.Instance.ConfirmAsync("Tem certeza?", "Aviso", "Sim", "Não")) {
+                    var listaPage = buscarPagina(this.Parent);
+                    if (listaPage != null)
+                    {
+                        var cartao = (CartaoInfo)BindingContext;
+                        listaPage.excluir(cartao);
+                    }
+                }
+            };
+            _removerButtom.GestureRecognizers.Add(tapGestureRecognizer);
         }
     }
 }

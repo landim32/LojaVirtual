@@ -37,12 +37,12 @@ namespace Emagine.Frete.BLL
                 ret = await new MotoristaBLL().listarPedidosAsync();
                 if (!confirm && ret != null)
                 {
-                    if (ret.IdFrete == null && ret.Fretes != null && ret.Fretes.Count > 0)
+                    if (ret.IdFrete == null && ret.Pedidos != null && ret.Pedidos.Count > 0)
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            var pedido = ret.Fretes.First();
-                            confirm = await UserDialogs.Instance.ConfirmAsync("Nova entrega no valor de R$ " + pedido.Valor.GetValueOrDefault().ToString("N2") + " disponível para iniciar.", "Entrega", "Ver", "Não quero");
+                            var pedido = ret.Pedidos.First();
+                            confirm = await UserDialogs.Instance.ConfirmAsync("Nova entrega no valor de R$ " + pedido.Valor.ToString("N2") + " disponível para iniciar.", "Entrega", "Ver", "Não quero");
                             if (confirm)
                             {
                                 ((RootPage)App.Current.MainPage).PushAsync(new Pages.FreteResumoPage(pedido));

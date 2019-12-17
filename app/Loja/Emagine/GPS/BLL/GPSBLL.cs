@@ -193,8 +193,7 @@ namespace Emagine.GPS.BLL
             {
                 var endereco = new EnderecoInfo
                 {
-                    //Logradouro = enderecoGoogle.FeatureName,
-                    Logradouro = enderecoGoogle.Thoroughfare,
+                    Logradouro = enderecoGoogle.FeatureName,
                     Cep = enderecoGoogle.PostalCode,
                     Latitude = enderecoGoogle.Latitude,
                     Longitude = enderecoGoogle.Longitude,
@@ -216,21 +215,7 @@ namespace Emagine.GPS.BLL
         {
             var enderecoGoogle = await pegarEnderecoGooglePorPosicao(posicao);
             if (enderecoGoogle != null) {
-                var endereco = new List<string>();
-                if (!string.IsNullOrEmpty(enderecoGoogle.Thoroughfare)) {
-                    endereco.Add(enderecoGoogle.Thoroughfare);
-                }
-                if (!string.IsNullOrEmpty(enderecoGoogle.SubLocality)) {
-                    endereco.Add(enderecoGoogle.SubLocality);
-                }
-                if (!string.IsNullOrEmpty(enderecoGoogle.Locality))
-                {
-                    endereco.Add(enderecoGoogle.Locality);
-                }
-                if (!string.IsNullOrEmpty(enderecoGoogle.SubAdminArea)) {
-                    endereco.Add(enderecoGoogle.SubAdminArea);
-                }
-                return string.Join(", ", endereco);
+                return enderecoGoogle.ToString();
             }
             return null;
         }

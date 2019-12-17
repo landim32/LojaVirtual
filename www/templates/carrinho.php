@@ -3,7 +3,6 @@
 namespace Emagine\Loja;
 
 use Emagine\Base\EmagineApp;
-use Emagine\Endereco\Model\EnderecoInfo;
 use Emagine\Pedido\BLL\PedidoBLL;
 use Emagine\Produto\Model\LojaInfo;
 use Emagine\Produto\Model\ProdutoInfo;
@@ -11,12 +10,14 @@ use Emagine\Produto\Model\ProdutoInfo;
 /**
  * @var EmagineApp $app
  * @var LojaInfo $loja
- * @var EnderecoInfo $endereco
+ * @var string $enderecoEntrega
  * @var double $valorFrete
  * @var ProdutoInfo[] $produtos
- * @var string[] $pagamentos
  */
-$urlHome = $app->getBaseUrl() . "/" . $loja->getSlug();
+$urlHome = $app->getBaseUrl() . "/site/" . $loja->getSlug();
+
+$regraPedido = new PedidoBLL();
+$pagamentos = $regraPedido->listarPagamento();
 ?>
 <div class="container">
     <div class="panel panel-default">
@@ -35,7 +36,7 @@ $urlHome = $app->getBaseUrl() . "/" . $loja->getSlug();
                 <tfoot>
                 <tr>
                     <td class="hidden-xs">&nbsp;</td>
-                    <td class="text-right">Entrega em <b><?php echo $endereco->getEnderecoCompleto(false, false); ?></b>. <b>Frete:</b></td>
+                    <td class="text-right">Entrega em <b><?php echo $enderecoEntrega; ?></b>. <b>Frete:</b></td>
                     <th class="text-right"><?php echo number_format($valorFrete, 2, ",", "."); ?></th>
                     <th class="text-center">-</th>
                 </tr>
@@ -45,14 +46,6 @@ $urlHome = $app->getBaseUrl() . "/" . $loja->getSlug();
                     <th class="text-right" id="valorTotal"></th>
                     <th class="text-center">-</th>
                 </tr>
-                <?php if ($loja->getValorMinimo() > 0) : ?>
-                    <tr>
-                        <th class="hidden-xs">&nbsp;</th>
-                        <th class="text-right">Valor Mínimo da Compra:</th>
-                        <th class="text-right"><?php echo $loja->getValorMinimoStr(); ?></th>
-                        <th class="text-center">-</th>
-                    </tr>
-                <?php endif; ?>
                 </tfoot>
             </table>
             <form method="POST" class="form-horizontal">

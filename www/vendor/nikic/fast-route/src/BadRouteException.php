@@ -2,6 +2,5 @@
 
 namespace FastRoute;
 
-class BadRouteException extends \LogicException
-{
+class BadRouteException extends \LogicException {
 }

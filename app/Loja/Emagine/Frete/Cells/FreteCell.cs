@@ -9,22 +9,21 @@ using Emagine.Base.Estilo;
 using Emagine.Frete.Model;
 using Emagine.Login.Factory;
 using Emagine.Frete.Factory;
-using Emagine.Pagamento.Model;
 
 namespace Emagine.Frete.Cells
 {
     public class FreteCell : ViewCell
     {
-        private int x = 0, y = 0;
-
         private StackLayout _mainLayout;
-        private Grid _gridLayout;
         private Label _OrigemLabel;
+        private Label _UsuarioLabel;
+        //private Label _DestinoLabel;
+        private Label _PesoLabel;
         private Label _DimensaoLabel;
         private Label _ValorLabel;
         private Label _DistanciaLabel;
-        private Label _PesoLabel;
         private Label _SituacaoLabel;
+        //private MenuItem _excluirButton;
 
         public FreteCell()
         {
@@ -39,8 +38,13 @@ namespace Emagine.Frete.Cells
             };
         }
 
-        protected void adicionarAtributo(string icone, Label label) {
-            _gridLayout.Children.Add(new StackLayout
+        private Grid gerarAtributo(FreteInfo frete) {
+            var grid = new Grid
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+            };
+            grid.Children.Add(new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.Fill,
@@ -50,19 +54,52 @@ namespace Emagine.Frete.Cells
                     new IconImage{
                         HorizontalOptions = LayoutOptions.Start,
                         VerticalOptions = LayoutOptions.Center,
-                        Icon = icone,
+                        Icon = "fa-dollar",
                         IconSize = 16,
                         WidthRequest = 20,
                         IconColor = Estilo.Current.PrimaryColor
                     },
-                    label
+                    _ValorLabel
                 }
-            }, x, y);
-            x++;
-            if (x > 1) {
-                y++;
-                x = 0;
+            }, 0, 0);
+            grid.Children.Add(new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Spacing = 5,
+                Children = {
+                    new IconImage{
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Center,
+                        Icon = "fa-map",
+                        IconSize = 16,
+                        WidthRequest = 20,
+                        IconColor = Estilo.Current.PrimaryColor
+                    },
+                    _DistanciaLabel
+                }
+            }, 1, 0);
+            if (frete != null && frete.Peso > 0) {
+                grid.Children.Add(new StackLayout {
+                    Orientation = StackOrientation.Horizontal,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Start,
+                    Spacing = 5,
+                    Children = {
+                        new IconImage{
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Center,
+                            Icon = "fa-balance-scale",
+                            IconSize = 16,
+                            WidthRequest = 20,
+                            IconColor = Estilo.Current.PrimaryColor
+                        },
+                        _PesoLabel
+                    }
+                }, 2, 0);
             }
+            return grid;
         }
 
         protected override void OnBindingContextChanged()
@@ -70,11 +107,14 @@ namespace Emagine.Frete.Cells
             base.OnBindingContextChanged();
             var frete = (FreteInfo)BindingContext;
 
-            //var regraUsuario = UsuarioFactory.create();
-            //var usuario = regraUsuario.pegarAtual();
+            var regraUsuario = UsuarioFactory.create();
+            var usuario = regraUsuario.pegarAtual();
 
             var regraMotorista = MotoristaFactory.create();
             var motorista = regraMotorista.pegarAtual();
+
+            var regraFrete = FreteFactory.create();
+            var freteAtual = regraFrete.pegarAtual();
 
             _mainLayout.Children.Add(new StackLayout
             {
@@ -116,6 +156,28 @@ namespace Emagine.Frete.Cells
                     }
                 });
             }
+            _mainLayout.Children.Add(gerarAtributo(frete));
+            if (frete != null && !string.IsNullOrEmpty(frete.Dimensao))
+            {
+                _mainLayout.Children.Add(new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Start,
+                    Spacing = 5,
+                    Children = {
+                        new IconImage{
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Center,
+                            Icon = "fa-arrows-alt",
+                            IconSize = 16,
+                            WidthRequest = 20,
+                            IconColor = Estilo.Current.PrimaryColor
+                        },
+                        _DimensaoLabel
+                    }
+                });
+            }
             if (motorista != null)
             {
                 _mainLayout.Children.Add(new StackLayout
@@ -142,106 +204,6 @@ namespace Emagine.Frete.Cells
                         }
                     }
                 });
-            }
-            else if (frete.IdMotorista > 0)
-            {
-                _mainLayout.Children.Add(new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Start,
-                    Spacing = 5,
-                    Children = {
-                        new IconImage{
-                            HorizontalOptions = LayoutOptions.Start,
-                            VerticalOptions = LayoutOptions.Center,
-                            Icon = "fa-user",
-                            IconSize = 16,
-                            WidthRequest = 20,
-                            IconColor = Estilo.Current.PrimaryColor
-                        },
-                        new Label {
-                            HorizontalOptions = LayoutOptions.Start,
-                            VerticalOptions = LayoutOptions.Start,
-                            FontAttributes = FontAttributes.Bold,
-                            TextColor = Estilo.Current.PrimaryColor,
-                            Text = frete.Motorista.Usuario.Nome
-                        }
-                    }
-                });
-            }
-            if (frete != null)
-            {
-                if (frete.Preco > 0)
-                {
-                    adicionarAtributo("fa-dollar", new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        FontAttributes = FontAttributes.Bold,
-                        Text = "R$ " + frete.Preco.ToString("N2")
-                    });
-                }
-                if (frete.Distancia > 0) {
-                    adicionarAtributo("fa-map", new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        FontAttributes = FontAttributes.Bold,
-                        Text = frete.DistanciaStr
-                    });
-                }
-                if (frete.Peso > 0)
-                {
-                    adicionarAtributo("fa-balance-scale", new Label {
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        FontAttributes = FontAttributes.Bold,
-                        Text = frete.Peso.ToString("N1") + "Kg"
-                    });
-                }
-                if (!string.IsNullOrEmpty(frete.Dimensao))
-                {
-                    adicionarAtributo("fa-arrows-alt", new Label {
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        FontAttributes = FontAttributes.Bold,
-                        Text = frete.Dimensao
-                    });
-                }
-                if (frete.Duracao > 0)
-                {
-                    adicionarAtributo("fa-clock-o", new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        FontAttributes = FontAttributes.Bold,
-                        Text = frete.DuracaoStr
-                    });
-                }
-                else if (frete.PrevisaoTempo > 0) {
-                    adicionarAtributo("fa-clock-o", new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        FontAttributes = FontAttributes.Bold,
-                        Text = frete.PrevisaoStr
-                    });
-                }
-                adicionarAtributo("fa-calendar", new Label
-                {
-                    HorizontalOptions = LayoutOptions.Start,
-                    VerticalOptions = LayoutOptions.Start,
-                    FontAttributes = FontAttributes.Bold,
-                    Text = frete.DataInclusaoStr
-                });
-            }
-            _mainLayout.Children.Add(_gridLayout);
-            if (motorista != null)
-            {
-                var regraFrete = FreteFactory.create();
-                var freteAtual = regraFrete.pegarAtual();
-
                 if (freteAtual != null && freteAtual.Id == frete.Id && frete.IdMotorista == motorista.Id)
                 {
                     _mainLayout.Children.Add(new StackLayout
@@ -296,74 +258,6 @@ namespace Emagine.Frete.Cells
                     }
                 });
             }
-
-            if (frete != null && frete.IdPagamento > 0 && frete.Pagamento != null)
-            {
-                var texto = string.Empty;
-                var cor = Estilo.Current.PrimaryColor;
-                switch (frete.Pagamento.Tipo) {
-                    case TipoPagamentoEnum.Boleto:
-                        texto = (motorista != null) ? "Receber por Boleto Bancário" : "Pagar com Boleto Bancário";
-                        cor = Estilo.Current.DangerColor;
-                        break;
-                    case TipoPagamentoEnum.CartaoOffline:
-                        texto = (motorista != null) ? "Receber por máquina de cartão" : "Pagar com máquina de cartão";
-                        cor = Estilo.Current.DangerColor;
-                        break;
-                    case TipoPagamentoEnum.CreditoOnline:
-                        if (frete.Pagamento.Situacao == SituacaoPagamentoEnum.Pago)
-                        {
-                            texto = "Pago com cartão de crédito";
-                            cor = Estilo.Current.SuccessColor;
-                        }
-                        else {
-                            texto = (motorista != null) ? "Receber por cartão de crédito" : "Pagar com cartão de crédito";
-                            cor = Estilo.Current.DangerColor;
-                        }
-                        break;
-                    case TipoPagamentoEnum.DebitoOnline:
-                        if (frete.Pagamento.Situacao == SituacaoPagamentoEnum.Pago)
-                        {
-                            texto = "Pago com cartão de débito";
-                            cor = Estilo.Current.SuccessColor;
-                        }
-                        else
-                        {
-                            texto = (motorista != null) ? "Receber por cartão de débito" : "Pagar com cartão de débito";
-                            cor = Estilo.Current.DangerColor;
-                        }
-                        break;
-                    case TipoPagamentoEnum.Dinheiro:
-                        texto = (motorista != null) ? "Receber por dinheiro" : "Pagar com dinheiro";
-                        cor = Estilo.Current.DangerColor;
-                        break;
-                }
-
-                _mainLayout.Children.Add(new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Start,
-                    Spacing = 5,
-                    Children = {
-                        new IconImage{
-                            HorizontalOptions = LayoutOptions.Start,
-                            VerticalOptions = LayoutOptions.Center,
-                            Icon = "fa-dollar",
-                            IconSize = 16,
-                            WidthRequest = 20,
-                            IconColor = Estilo.Current.PrimaryColor
-                        },
-                        new Label {
-                            HorizontalOptions = LayoutOptions.Start,
-                            VerticalOptions = LayoutOptions.Start,
-                            FontAttributes = FontAttributes.Bold,
-                            TextColor = cor,
-                            Text = texto
-                        }
-                    }
-                });
-            }
         }
 
         private void inicializarComponente()
@@ -374,22 +268,16 @@ namespace Emagine.Frete.Cells
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Start
             };
-            _gridLayout = new Grid
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-            };
             _SituacaoLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Estilo.Current.PrimaryColor,
-                FontSize = 20
+                FontSize = 18
             };
             _SituacaoLabel.SetBinding(Label.TextProperty, new Binding("SituacaoStr"));
-            _OrigemLabel = new Label
-            {
+            _OrigemLabel = new Label {
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
             };

@@ -10,7 +10,7 @@ use Emagine\Produto\Model\ProdutoInfo;
  * @var LojaInfo $loja
  * @var ProdutoInfo[] $produtos
  */
-$url = $app->getBaseUrl() . "/" . $loja->getSlug();
+$url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
 ?>
     <div class="container">
         <ol class="breadcrumb">

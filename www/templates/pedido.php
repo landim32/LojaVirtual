@@ -13,7 +13,7 @@ use Emagine\Produto\Model\LojaInfo;
  */
 
 $cliente = $pedido->getUsuario();
-$url = $app->getBaseUrl() . "/" . $loja->getSlug();
+$url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
 ?>
 <div class="container">
     <ol class="breadcrumb">
@@ -26,9 +26,6 @@ $url = $app->getBaseUrl() . "/" . $loja->getSlug();
         <div class="col-md-3">
             <a href="<?php echo $url . "/alterar-meus-dados"; ?>" class="list-group-item">
                 <i class="fa fa-fw fa-user-circle"></i> Alterar Dados
-            </a>
-            <a href="<?php echo $url . "/enderecos"; ?>" class="list-group-item">
-                <i class="fa fa-fw fa-map-marker"></i> Endereços
             </a>
             <a href="<?php echo $url . "/pedidos"; ?>" class="list-group-item active">
                 <i class="fa fa-fw fa-shopping-cart"></i> Pedidos feitos
@@ -61,17 +58,17 @@ $url = $app->getBaseUrl() . "/" . $loja->getSlug();
                             <dt>Telefone:</dt>
                             <dd><?php echo $cliente->getTelefone(); ?></dd>
                         <?php endif; ?>
-                        <?php if (!isNullOrEmpty($pedido->getCep())) : ?>
+                        <?php if (!isNullOrEmpty($cliente->getCep())) : ?>
                             <dt>CEP:</dt>
                             <dd><?php echo $pedido->getCep(); ?></dd>
                         <?php endif; ?>
                         <dt>Logradouro:</dt>
                         <dd><?php echo $pedido->getLogradouro(); ?></dd>
-                        <?php if (!isNullOrEmpty($pedido->getComplemento())) : ?>
+                        <?php if (!isNullOrEmpty($cliente->getComplemento())) : ?>
                             <dt>Complemento:</dt>
                             <dd><?php echo $pedido->getComplemento(); ?></dd>
                         <?php endif; ?>
-                        <?php if (!isNullOrEmpty($pedido->getNumero())) : ?>
+                        <?php if (!isNullOrEmpty($cliente->getNumero())) : ?>
                             <dt>Numero:</dt>
                             <dd><?php echo $pedido->getNumero(); ?></dd>
                         <?php endif; ?>

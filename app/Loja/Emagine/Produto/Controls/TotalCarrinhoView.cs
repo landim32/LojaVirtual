@@ -16,28 +16,8 @@ namespace Emagine.Produto.Controls
         private double _total = 0;
 
         private Grid _totalLayout;
-        private Label _quantidadeTituloLabel;
         private Label _quantidadeLabel;
-        private Label _totalTituloLabel;
         private Label _totalLabel;
-
-        public string QuantidadeTitulo {
-            get {
-                return _quantidadeTituloLabel.Text;
-            }
-            set {
-                _quantidadeTituloLabel.Text = value;
-            }
-        }
-
-        public string TotalTitulo {
-            get {
-                return _totalTituloLabel.Text;
-            }
-            set {
-                _totalTituloLabel.Text = value;
-            }
-        }
 
         public int Quantidade {
             get {
@@ -75,8 +55,7 @@ namespace Emagine.Produto.Controls
             }
             set {
                 _total = value;
-                //_totalLabel.Text = "R$" + _total.ToString("N2");
-                _totalLabel.Text = _total.ToString("N2");
+                _totalLabel.Text = "R$" + _total.ToString("N2");
             }
         }
 
@@ -84,8 +63,7 @@ namespace Emagine.Produto.Controls
             inicializarComponente();
             atualizarTotal();
             Content = new Frame {
-                Style = Estilo.Current[EstiloTotal.TOTAL_FRAME],
-                MinimumHeightRequest = 30,
+                Style = Estilo.Current[Estilo.TOTAL_FRAME],
                 Content = _totalLayout
             };
         }
@@ -100,37 +78,20 @@ namespace Emagine.Produto.Controls
             };
             _totalLayout.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
-            _quantidadeTituloLabel = new Label
-            {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[EstiloTotal.TOTAL_LABEL],
-                Text = "Quantidade: "
-            };
-
             _quantidadeLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[EstiloTotal.TOTAL_TEXTO],
+                Style = Estilo.Current[Estilo.TOTAL_TEXTO],
                 Text = "0",
-            };
-
-            _totalTituloLabel = new Label
-            {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[EstiloTotal.TOTAL_LABEL],
-                Text = "Total: "
             };
 
             _totalLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[EstiloTotal.TOTAL_TEXTO],
-                Text = "0,00",
-                //Text = "R$ 0,00",
+                Style = Estilo.Current[Estilo.TOTAL_TEXTO],
+                Text = "R$ 0,00",
             };
         }
 
@@ -157,7 +118,12 @@ namespace Emagine.Produto.Controls
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     Spacing = 2,
                     Children = {
-                        _quantidadeTituloLabel,
+                        new Label {
+                            VerticalOptions = LayoutOptions.Center,
+                            HorizontalOptions = LayoutOptions.Start,
+                            Style = Estilo.Current[Estilo.TOTAL_LABEL],
+                            Text = "Quantidade: "
+                        },
                         _quantidadeLabel
                     }
                 }, left, 0);
@@ -173,7 +139,12 @@ namespace Emagine.Produto.Controls
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     Spacing = 2,
                     Children = {
-                        _totalTituloLabel,
+                        new Label {
+                            VerticalOptions = LayoutOptions.Center,
+                            HorizontalOptions = LayoutOptions.Start,
+                            Style = Estilo.Current[Estilo.TOTAL_LABEL],
+                            Text = "Total: "
+                        },
                         _totalLabel
                     }
                 }, left, 0);
@@ -191,8 +162,7 @@ namespace Emagine.Produto.Controls
             var regraCarrinho = CarrinhoFactory.create();
             regraCarrinho.AoAtualizar += CarrinhoAoAtualizar;
             _quantidadeLabel.Text = regraCarrinho.getQuantidade().ToString("N0");
-            //_totalLabel.Text = "R$ " + regraCarrinho.getTotal().ToString("N2");
-            _totalLabel.Text = regraCarrinho.getTotal().ToString("N2");
+            _totalLabel.Text = "R$ " + regraCarrinho.getTotal().ToString("N2");
         }
 
         public void desvincularComCarrinho() {

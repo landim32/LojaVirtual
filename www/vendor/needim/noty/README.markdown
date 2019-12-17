@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://ned.im/noty?ref=readme">
-    <img src="http://ned.im/noty/_media/noty-v3-logo.png" width=200 height=70>
+    <img src="http://ned.im/noty/img/projects/noty-v3-logo.png" width=200 height=70>
   </a>
 
   <p align="center">
@@ -14,7 +14,6 @@
     <a href="https://bower.io/"><img src="https://img.shields.io/bower/v/noty.svg" alt="Bower version"></a>
     <a href="https://www.npmjs.com/package/noty"><img src="https://img.shields.io/npm/v/noty.svg" alt="NPM version"></a>
     <a href="https://packagist.org/packages/needim/noty"><img src="https://img.shields.io/packagist/v/needim/noty.svg" alt="Packagist version"></a>
-    <a href="https://cdnjs.com/libraries/noty"><img src="https://img.shields.io/cdnjs/v/noty.svg" alt="CDNJS version"></a>
     <br>
     <img src="https://img.shields.io/david/needim/noty.svg" alt="Dependencies">
     <img src="https://img.shields.io/david/dev/needim/noty.svg" alt="Dev Dependencies">
@@ -38,27 +37,6 @@ The notifications can be positioned at the;
 There are lots of other options in the API to customise the text, animation, buttons and much more.
 
 It also has various callbacks for the buttons, opening closing the notifications and queue control.
-
-### Sponsored By
-<table>
-  <tr>
-    <td vlign="center">
-      <a target="_blank" href="https://pusher.com/?utm_source=needim&utm_medium=paid&utm_campaign=needim">
-        <img src="http://ned.im/noty/_media/pusher_logo_dark.png" width="160" alt="">
-      </a>
-    </td>
-    <td vlign="center">
-      <a target="_blank" href="https://www.jetbrains.com?ref=notyjs">
-        <img src="http://ned.im/noty/_media/logo_JetBrains_4.svg" width="80" alt="">
-      </a>
-    </td>
-    <td vlign="center">
-      <a target="_blank" href="https://www.browserstack.com?ref=notyjs">
-        <img src="http://ned.im/noty/_media/browserstack.svg" width="220" alt="">
-      </a>
-    </td>
-  </tr>
-</table>
 
 ***
 ### Features
@@ -105,18 +83,14 @@ new Noty({
 $ npm run dev
 $ npm test
 $ npm run build
-$ npm run browserstack
-$ npm run serve-docs
 ```
 
 ##### Development environment
 - [x] Standard
-- [x] Prettier
 - [x] ES6 & Babel & Webpack
 - [x] Sass
 - [x] Autoprefixer
-- [x] QUnit
-- [x] BrowserStack
+- [x] AVA
 - [x] Pre-commit tests
 - [x] Travis CI
 

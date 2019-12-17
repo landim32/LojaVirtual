@@ -17,6 +17,7 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 use Slim\Collection;
 use Slim\Exception\InvalidMethodException;
+use Slim\Exception\MethodNotAllowedException;
 use Slim\Interfaces\Http\HeadersInterface;
 
 /**
@@ -113,7 +114,6 @@ class Request extends Message implements ServerRequestInterface
      * Valid request methods
      *
      * @var string[]
-     * @deprecated
      */
     protected $validMethods = [
         'CONNECT' => 1,
@@ -197,10 +197,8 @@ class Request extends Message implements ServerRequestInterface
             $this->protocolVersion = str_replace('HTTP/', '', $serverParams['SERVER_PROTOCOL']);
         }
 
-        if (!$this->headers->has('Host') && $this->uri->getHost() !== '') {
-            $port = $this->uri->getPort() ? ":{$this->uri->getPort()}" : '';
-
-            $this->headers->set('Host', $this->uri->getHost() . $port);
+        if (!$this->headers->has('Host') || $this->uri->getHost() !== '') {
+            $this->headers->set('Host', $this->uri->getHost());
         }
 
         $this->registerMediaTypeParser('application/json', function ($input) {
@@ -351,7 +349,7 @@ class Request extends Message implements ServerRequestInterface
         }
 
         $method = strtoupper($method);
-        if (preg_match("/^[!#$%&'*+.^_`|~0-9a-z-]+$/i", $method) !== 1) {
+        if (!isset($this->validMethods[$method])) {
             throw new InvalidMethodException($this, $method);
         }
 
@@ -1203,25 +1201,14 @@ class Request extends Message implements ServerRequestInterface
      *
      * Note: This method is not part of the PSR-7 standard.
      *
-     * @param array|null $only list the keys to retrieve.
-     * @return array|null
+     * @return array
      */
-    public function getParams(array $only = null)
+    public function getParams()
     {
         $params = $this->getQueryParams();
         $postParams = $this->getParsedBody();
         if ($postParams) {
             $params = array_merge($params, (array)$postParams);
-        }
-
-        if ($only) {
-            $onlyParams = [];
-            foreach ($only as $key) {
-                if (array_key_exists($key, $params)) {
-                    $onlyParams[$key] = $params[$key];
-                }
-            }
-            return $onlyParams;
         }
 
         return $params;

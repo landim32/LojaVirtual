@@ -8,9 +8,7 @@ using Emagine.Login.Factory;
 using Emagine.Login.Model;
 using Emagine.Pagamento.Factory;
 using Emagine.Pagamento.Model;
-using Emagine.Pedido.Factory;
 using Emagine.Pedido.Model;
-using Emagine.Pedido.Pages;
 using Emagine.Produto.Factory;
 using System;
 using System.Collections.Generic;
@@ -79,44 +77,6 @@ namespace Emagine.Pagamento.Pages
             }
         }
 
-        /*
-        private async void abrirHorarioEntrega(PedidoInfo pedido) {
-            UserDialogs.Instance.ShowLoading("Carregando horários de entrega...");
-            try
-            {
-                var regraHorario = PedidoHorarioFactory.create();
-                var horarios = await regraHorario.listar(Pedido.IdLoja);
-                if (horarios.Count > 1)
-                {
-                    var horarioEntregaPage = new HorarioEntregaPage()
-                    {
-                        Title = "Horário de Entrega",
-                        Horarios = horarios
-                    };
-                    horarioEntregaPage.AoSelecionar += (s2, horario) =>
-                    {
-                        Pedido.DiaEntrega = horarioEntregaPage.DiaEntrega;
-                        Pedido.HorarioEntrega = horario.Horario;
-                        definirEntrega(Pedido);
-                    };
-                    UserDialogs.Instance.HideLoading();
-                    await Navigation.PushAsync(horarioEntregaPage);
-                }
-                else
-                {
-                    UserDialogs.Instance.HideLoading();
-                    definirEntrega(Pedido);
-                }
-            }
-            catch (Exception erro)
-            {
-                UserDialogs.Instance.HideLoading();
-                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                //await DisplayAlert("Erro", erro.Message, "Entendi");
-            }
-        }
-        */
-
         protected virtual void inicializarComponente() {
             _entregaButton = new MenuButton {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -159,7 +119,6 @@ namespace Emagine.Pagamento.Pages
                         Pedido.Latitude = endereco.Latitude;
                         Pedido.Longitude = endereco.Longitude;
 
-                        //abrirHorarioEntrega(Pedido);
                         definirEntrega(Pedido);
                     });
                     var enderecos = new List<EnderecoInfo>();
@@ -191,32 +150,14 @@ namespace Emagine.Pagamento.Pages
                             Pedido.Latitude = endereco.Latitude;
                             Pedido.Longitude = endereco.Longitude;
 
-                            var regraHorario = PedidoHorarioFactory.create();
-                            var horarios = await regraHorario.listar(Pedido.IdLoja);
-                            if (horarios.Count > 1)
-                            {
-                                var horarioEntregaPage = new HorarioEntregaPage()
-                                {
-                                    Title = "Horário de Entrega",
-                                    Horarios = horarios
-                                };
-                                horarioEntregaPage.AoSelecionar += (s2, e2) =>
-                                {
-                                    definirEntrega(Pedido);
-                                };
-                                UserDialogs.Instance.HideLoading();
-                                await Navigation.PushAsync(horarioEntregaPage);
-                            }
-                            else {
-                                UserDialogs.Instance.HideLoading();
-                                definirEntrega(Pedido);
-                            }
+                            UserDialogs.Instance.HideLoading();
+
+                            definirEntrega(Pedido);
                         }
                         catch (Exception erro)
                         {
                             UserDialogs.Instance.HideLoading();
                             UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                            //await DisplayAlert("Erro", erro.Message, "Entendi");
                         }
                     }, false);
                     await Navigation.PushAsync(cepPage);

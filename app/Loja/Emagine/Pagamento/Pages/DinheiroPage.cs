@@ -148,8 +148,7 @@ namespace Emagine.Pagamento.Pages
                 catch (Exception erro)
                 {
                     UserDialogs.Instance.HideLoading();
-                    //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                    await DisplayAlert("Erro", erro.Message, "Entendi");
+                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
                 }
             };
         }

@@ -1,11 +1,3 @@
-/* 
-  @package NOTY - Dependency-free notification library 
-  @version version: 3.1.4 
-  @contributors https://github.com/needim/noty/graphs/contributors 
-  @documentation Examples and Documentation - http://needim.github.com/noty 
-  @license Licensed under the MIT licenses: http://www.opensource.org/licenses/mit-license.php 
-*/
-
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -361,10 +353,7 @@ function visibilityChangeFlow() {
     }, 100);
   }
 
-  if (visibilityChange) {
-    addListener(document, visibilityChange, onVisibilityChange);
-  }
-
+  addListener(document, visibilityChange, onVisibilityChange);
   addListener(window, 'blur', onBlur);
   addListener(window, 'focus', onFocus);
 }
@@ -520,7 +509,6 @@ var Defaults = exports.Defaults = {
     afterShow: null,
     onClose: null,
     afterClose: null,
-    onClick: null,
     onHover: null,
     onTemplate: null
   },
@@ -533,13 +521,14 @@ var Defaults = exports.Defaults = {
     conditions: []
   },
   modal: false,
-  visibilityControl: false
+  visibilityControl: true
+};
 
-  /**
-   * @param {string} queueName
-   * @return {object}
-   */
-};function getQueueCounts() {
+/**
+ * @param {string} queueName
+ * @return {object}
+ */
+function getQueueCounts() {
   var queueName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'global';
 
   var count = 0;
@@ -745,8 +734,6 @@ function findOrCreateContainer(ref) {
   if (!ref.layoutDom) {
     ref.layoutDom = document.createElement('div');
     ref.layoutDom.setAttribute('id', layoutID);
-    ref.layoutDom.setAttribute('role', 'alert');
-    ref.layoutDom.setAttribute('aria-live', 'polite');
     Utils.addClass(ref.layoutDom, 'noty_layout');
     document.querySelector('body').appendChild(ref.layoutDom);
   }
@@ -1150,18 +1137,17 @@ var Push = exports.Push = function () {
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
- * @version   4.1.1
+ * @version   4.1.0
  */
 
 (function (global, factory) {
-	 true ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.ES6Promise = factory());
+     true ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global.ES6Promise = factory());
 }(this, (function () { 'use strict';
 
 function objectOrFunction(x) {
-  var type = typeof x;
-  return x !== null && (type === 'object' || type === 'function');
+  return typeof x === 'function' || typeof x === 'object' && x !== null;
 }
 
 function isFunction(x) {
@@ -1169,12 +1155,12 @@ function isFunction(x) {
 }
 
 var _isArray = undefined;
-if (Array.isArray) {
-  _isArray = Array.isArray;
-} else {
+if (!Array.isArray) {
   _isArray = function (x) {
     return Object.prototype.toString.call(x) === '[object Array]';
   };
+} else {
+  _isArray = Array.isArray;
 }
 
 var isArray = _isArray;
@@ -1362,7 +1348,7 @@ function then(onFulfillment, onRejection) {
   @return {Promise} a promise that will become fulfilled with the given
   `value`
 */
-function resolve$1(object) {
+function resolve(object) {
   /*jshint validthis:true */
   var Constructor = this;
 
@@ -1371,7 +1357,7 @@ function resolve$1(object) {
   }
 
   var promise = new Constructor(noop);
-  resolve(promise, object);
+  _resolve(promise, object);
   return promise;
 }
 
@@ -1402,24 +1388,24 @@ function getThen(promise) {
   }
 }
 
-function tryThen(then$$1, value, fulfillmentHandler, rejectionHandler) {
+function tryThen(then, value, fulfillmentHandler, rejectionHandler) {
   try {
-    then$$1.call(value, fulfillmentHandler, rejectionHandler);
+    then.call(value, fulfillmentHandler, rejectionHandler);
   } catch (e) {
     return e;
   }
 }
 
-function handleForeignThenable(promise, thenable, then$$1) {
+function handleForeignThenable(promise, thenable, then) {
   asap(function (promise) {
     var sealed = false;
-    var error = tryThen(then$$1, thenable, function (value) {
+    var error = tryThen(then, thenable, function (value) {
       if (sealed) {
         return;
       }
       sealed = true;
       if (thenable !== value) {
-        resolve(promise, value);
+        _resolve(promise, value);
       } else {
         fulfill(promise, value);
       }
@@ -1429,12 +1415,12 @@ function handleForeignThenable(promise, thenable, then$$1) {
       }
       sealed = true;
 
-      reject(promise, reason);
+      _reject(promise, reason);
     }, 'Settle: ' + (promise._label || ' unknown promise'));
 
     if (!sealed && error) {
       sealed = true;
-      reject(promise, error);
+      _reject(promise, error);
     }
   }, promise);
 }
@@ -1443,36 +1429,36 @@ function handleOwnThenable(promise, thenable) {
   if (thenable._state === FULFILLED) {
     fulfill(promise, thenable._result);
   } else if (thenable._state === REJECTED) {
-    reject(promise, thenable._result);
+    _reject(promise, thenable._result);
   } else {
     subscribe(thenable, undefined, function (value) {
-      return resolve(promise, value);
+      return _resolve(promise, value);
     }, function (reason) {
-      return reject(promise, reason);
+      return _reject(promise, reason);
     });
   }
 }
 
-function handleMaybeThenable(promise, maybeThenable, then$$1) {
-  if (maybeThenable.constructor === promise.constructor && then$$1 === then && maybeThenable.constructor.resolve === resolve$1) {
+function handleMaybeThenable(promise, maybeThenable, then$$) {
+  if (maybeThenable.constructor === promise.constructor && then$$ === then && maybeThenable.constructor.resolve === resolve) {
     handleOwnThenable(promise, maybeThenable);
   } else {
-    if (then$$1 === GET_THEN_ERROR) {
-      reject(promise, GET_THEN_ERROR.error);
+    if (then$$ === GET_THEN_ERROR) {
+      _reject(promise, GET_THEN_ERROR.error);
       GET_THEN_ERROR.error = null;
-    } else if (then$$1 === undefined) {
+    } else if (then$$ === undefined) {
       fulfill(promise, maybeThenable);
-    } else if (isFunction(then$$1)) {
-      handleForeignThenable(promise, maybeThenable, then$$1);
+    } else if (isFunction(then$$)) {
+      handleForeignThenable(promise, maybeThenable, then$$);
     } else {
       fulfill(promise, maybeThenable);
     }
   }
 }
 
-function resolve(promise, value) {
+function _resolve(promise, value) {
   if (promise === value) {
-    reject(promise, selfFulfillment());
+    _reject(promise, selfFulfillment());
   } else if (objectOrFunction(value)) {
     handleMaybeThenable(promise, value, getThen(value));
   } else {
@@ -1501,7 +1487,7 @@ function fulfill(promise, value) {
   }
 }
 
-function reject(promise, reason) {
+function _reject(promise, reason) {
   if (promise._state !== PENDING) {
     return;
   }
@@ -1586,7 +1572,7 @@ function invokeCallback(settled, promise, callback, detail) {
     }
 
     if (promise === value) {
-      reject(promise, cannotReturnOwn());
+      _reject(promise, cannotReturnOwn());
       return;
     }
   } else {
@@ -1597,25 +1583,25 @@ function invokeCallback(settled, promise, callback, detail) {
   if (promise._state !== PENDING) {
     // noop
   } else if (hasCallback && succeeded) {
-      resolve(promise, value);
+      _resolve(promise, value);
     } else if (failed) {
-      reject(promise, error);
+      _reject(promise, error);
     } else if (settled === FULFILLED) {
       fulfill(promise, value);
     } else if (settled === REJECTED) {
-      reject(promise, value);
+      _reject(promise, value);
     }
 }
 
 function initializePromise(promise, resolver) {
   try {
     resolver(function resolvePromise(value) {
-      resolve(promise, value);
+      _resolve(promise, value);
     }, function rejectPromise(reason) {
-      reject(promise, reason);
+      _reject(promise, reason);
     });
   } catch (e) {
-    reject(promise, e);
+    _reject(promise, e);
   }
 }
 
@@ -1631,7 +1617,7 @@ function makePromise(promise) {
   promise._subscribers = [];
 }
 
-function Enumerator$1(Constructor, input) {
+function Enumerator(Constructor, input) {
   this._instanceConstructor = Constructor;
   this.promise = new Constructor(noop);
 
@@ -1640,6 +1626,7 @@ function Enumerator$1(Constructor, input) {
   }
 
   if (isArray(input)) {
+    this._input = input;
     this.length = input.length;
     this._remaining = input.length;
 
@@ -1649,31 +1636,34 @@ function Enumerator$1(Constructor, input) {
       fulfill(this.promise, this._result);
     } else {
       this.length = this.length || 0;
-      this._enumerate(input);
+      this._enumerate();
       if (this._remaining === 0) {
         fulfill(this.promise, this._result);
       }
     }
   } else {
-    reject(this.promise, validationError());
+    _reject(this.promise, validationError());
   }
 }
 
 function validationError() {
   return new Error('Array Methods must be provided an Array');
-}
+};
 
-Enumerator$1.prototype._enumerate = function (input) {
-  for (var i = 0; this._state === PENDING && i < input.length; i++) {
-    this._eachEntry(input[i], i);
+Enumerator.prototype._enumerate = function () {
+  var length = this.length;
+  var _input = this._input;
+
+  for (var i = 0; this._state === PENDING && i < length; i++) {
+    this._eachEntry(_input[i], i);
   }
 };
 
-Enumerator$1.prototype._eachEntry = function (entry, i) {
+Enumerator.prototype._eachEntry = function (entry, i) {
   var c = this._instanceConstructor;
-  var resolve$$1 = c.resolve;
+  var resolve$$ = c.resolve;
 
-  if (resolve$$1 === resolve$1) {
+  if (resolve$$ === resolve) {
     var _then = getThen(entry);
 
     if (_then === then && entry._state !== PENDING) {
@@ -1681,28 +1671,28 @@ Enumerator$1.prototype._eachEntry = function (entry, i) {
     } else if (typeof _then !== 'function') {
       this._remaining--;
       this._result[i] = entry;
-    } else if (c === Promise$2) {
+    } else if (c === Promise) {
       var promise = new c(noop);
       handleMaybeThenable(promise, entry, _then);
       this._willSettleAt(promise, i);
     } else {
-      this._willSettleAt(new c(function (resolve$$1) {
-        return resolve$$1(entry);
+      this._willSettleAt(new c(function (resolve$$) {
+        return resolve$$(entry);
       }), i);
     }
   } else {
-    this._willSettleAt(resolve$$1(entry), i);
+    this._willSettleAt(resolve$$(entry), i);
   }
 };
 
-Enumerator$1.prototype._settledAt = function (state, i, value) {
+Enumerator.prototype._settledAt = function (state, i, value) {
   var promise = this.promise;
 
   if (promise._state === PENDING) {
     this._remaining--;
 
     if (state === REJECTED) {
-      reject(promise, value);
+      _reject(promise, value);
     } else {
       this._result[i] = value;
     }
@@ -1713,7 +1703,7 @@ Enumerator$1.prototype._settledAt = function (state, i, value) {
   }
 };
 
-Enumerator$1.prototype._willSettleAt = function (promise, i) {
+Enumerator.prototype._willSettleAt = function (promise, i) {
   var enumerator = this;
 
   subscribe(promise, undefined, function (value) {
@@ -1770,8 +1760,8 @@ Enumerator$1.prototype._willSettleAt = function (promise, i) {
   fulfilled, or rejected if any of them become rejected.
   @static
 */
-function all$1(entries) {
-  return new Enumerator$1(this, entries).promise;
+function all(entries) {
+  return new Enumerator(this, entries).promise;
 }
 
 /**
@@ -1839,7 +1829,7 @@ function all$1(entries) {
   @return {Promise} a promise which settles in the same way as the first passed
   promise to settle.
 */
-function race$1(entries) {
+function race(entries) {
   /*jshint validthis:true */
   var Constructor = this;
 
@@ -1891,11 +1881,11 @@ function race$1(entries) {
   Useful for tooling.
   @return {Promise} a promise rejected with the given `reason`.
 */
-function reject$1(reason) {
+function reject(reason) {
   /*jshint validthis:true */
   var Constructor = this;
   var promise = new Constructor(noop);
-  reject(promise, reason);
+  _reject(promise, reason);
   return promise;
 }
 
@@ -2010,27 +2000,27 @@ function needsNew() {
   Useful for tooling.
   @constructor
 */
-function Promise$2(resolver) {
+function Promise(resolver) {
   this[PROMISE_ID] = nextId();
   this._result = this._state = undefined;
   this._subscribers = [];
 
   if (noop !== resolver) {
     typeof resolver !== 'function' && needsResolver();
-    this instanceof Promise$2 ? initializePromise(this, resolver) : needsNew();
+    this instanceof Promise ? initializePromise(this, resolver) : needsNew();
   }
 }
 
-Promise$2.all = all$1;
-Promise$2.race = race$1;
-Promise$2.resolve = resolve$1;
-Promise$2.reject = reject$1;
-Promise$2._setScheduler = setScheduler;
-Promise$2._setAsap = setAsap;
-Promise$2._asap = asap;
+Promise.all = all;
+Promise.race = race;
+Promise.resolve = resolve;
+Promise.reject = reject;
+Promise._setScheduler = setScheduler;
+Promise._setAsap = setAsap;
+Promise._asap = asap;
 
-Promise$2.prototype = {
-  constructor: Promise$2,
+Promise.prototype = {
+  constructor: Promise,
 
   /**
     The primary way of interacting with a promise is through its `then` method,
@@ -2259,8 +2249,7 @@ Promise$2.prototype = {
   }
 };
 
-/*global self*/
-function polyfill$1() {
+function polyfill() {
     var local = undefined;
 
     if (typeof global !== 'undefined') {
@@ -2290,17 +2279,16 @@ function polyfill$1() {
         }
     }
 
-    local.Promise = Promise$2;
+    local.Promise = Promise;
 }
 
 // Strange compat..
-Promise$2.polyfill = polyfill$1;
-Promise$2.Promise = Promise$2;
+Promise.polyfill = polyfill;
+Promise.Promise = Promise;
 
-return Promise$2;
+return Promise;
 
 })));
-
 //# sourceMappingURL=es6-promise.map
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(8)))
@@ -2377,7 +2365,6 @@ var Noty = function () {
       afterShow: [],
       onClose: [],
       afterClose: [],
-      onClick: [],
       onHover: [],
       onTemplate: []
     };
@@ -2390,7 +2377,6 @@ var Noty = function () {
     this.on('afterShow', this.options.callbacks.afterShow);
     this.on('onClose', this.options.callbacks.onClose);
     this.on('afterClose', this.options.callbacks.afterClose);
-    this.on('onClick', this.options.callbacks.onClick);
     this.on('onHover', this.options.callbacks.onHover);
     this.on('onTemplate', this.options.callbacks.onTemplate);
 
@@ -2425,26 +2411,26 @@ var Noty = function () {
     value: function show() {
       var _this = this;
 
-      if (this.options.killer === true) {
+      if (this.options.killer === true && !API.PageHidden) {
         Noty.closeAll();
-      } else if (typeof this.options.killer === 'string') {
+      } else if (typeof this.options.killer === 'string' && !API.PageHidden) {
         Noty.closeAll(this.options.killer);
-      }
+      } else {
+        var queueCounts = API.getQueueCounts(this.options.queue);
 
-      var queueCounts = API.getQueueCounts(this.options.queue);
+        if (queueCounts.current >= queueCounts.maxVisible || API.PageHidden) {
+          API.addToQueue(this);
 
-      if (queueCounts.current >= queueCounts.maxVisible || API.PageHidden && this.options.visibilityControl) {
-        API.addToQueue(this);
+          if (API.PageHidden && this.hasSound && Utils.inArray('docHidden', this.options.sounds.conditions)) {
+            Utils.createAudioElements(this);
+          }
 
-        if (API.PageHidden && this.hasSound && Utils.inArray('docHidden', this.options.sounds.conditions)) {
-          Utils.createAudioElements(this);
+          if (API.PageHidden && Utils.inArray('docHidden', this.options.titleCount.conditions)) {
+            API.docTitle.increment();
+          }
+
+          return this;
         }
-
-        if (API.PageHidden && Utils.inArray('docHidden', this.options.titleCount.conditions)) {
-          API.docTitle.increment();
-        }
-
-        return this;
       }
 
       API.Store[this.id] = this;
@@ -2495,7 +2481,6 @@ var Noty = function () {
         Utils.addClass(this.barDom, 'noty_close_with_click');
         Utils.addListener(this.barDom, 'click', function (e) {
           Utils.stopPropagation(e);
-          API.fire(_this, 'onClick');
           _this.close();
         }, false);
       }
@@ -2505,9 +2490,6 @@ var Noty = function () {
       }, false);
 
       if (this.options.timeout) Utils.addClass(this.barDom, 'noty_has_timeout');
-      if (this.options.progressBar) {
-        Utils.addClass(this.barDom, 'noty_has_progressbar');
-      }
 
       if (Utils.inArray('button', this.options.closeWith)) {
         Utils.addClass(this.barDom, 'noty_close_with_button');
@@ -2823,7 +2805,7 @@ var Noty = function () {
   }, {
     key: 'version',
     value: function version() {
-      return "3.1.4";
+      return "3.1.0";
     }
 
     /**
@@ -3022,10 +3004,6 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');

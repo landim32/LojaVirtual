@@ -12,7 +12,7 @@ use Emagine\Produto\Model\LojaInfo;
 
 $regraCategoria = new CategoriaBLL();
 $categorias = $regraCategoria->listarPai($loja->getId());
-$url = $app->getBaseUrl() . "/" . $loja->getSlug() . "/%s";
+$url = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/%s";
 $menuCategoria = $regraCategoria->gerarMenu($url, $categorias);
 
 ?>
@@ -24,7 +24,7 @@ $menuCategoria = $regraCategoria->gerarMenu($url, $categorias);
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo $app->getBaseUrl() . "/" . $loja->getSlug(); ?>">
+            <a class="navbar-brand" href="<?php echo $app->getBaseUrl() . "/site/" . $loja->getSlug(); ?>">
                 <i class="fa fa-home"></i>
             </a>
         </div>

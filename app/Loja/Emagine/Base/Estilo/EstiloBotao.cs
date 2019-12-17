@@ -12,8 +12,6 @@ namespace Emagine.Base.Estilo
         public int FontSize { get; set; }
         public string FontFamily { get; set; }
         public Color TextColor { get; set; }
-        public Color BorderColor { get; set; }
-        public double BorderWidth { get; set; }
         public FontAttributes FontAttributes { get; set; }
         public int CornerRadius { get; set; }
         public int BorderRadius {
@@ -61,22 +59,6 @@ namespace Emagine.Base.Estilo
                     Value = TextColor
                 });
             }
-            if (BorderColor != Color.Transparent)
-            {
-                estilo.Setters.Add(new Setter
-                {
-                    Property = Button.BorderColorProperty,
-                    Value = BorderColor
-                });
-            }
-            if (BorderWidth != default(double))
-            {
-                estilo.Setters.Add(new Setter
-                {
-                    Property = Button.BorderWidthProperty,
-                    Value = BorderWidth
-                });
-            }
             if (FontAttributes != FontAttributes.None) {
                 estilo.Setters.Add(new Setter
                 {
@@ -88,7 +70,7 @@ namespace Emagine.Base.Estilo
             {
                 estilo.Setters.Add(new Setter
                 {
-                    Property = Button.CornerRadiusProperty,
+                    Property = Button.BorderRadiusProperty,
                     Value = CornerRadius
                 });
             }

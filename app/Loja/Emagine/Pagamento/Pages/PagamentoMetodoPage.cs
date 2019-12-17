@@ -5,7 +5,6 @@ using Emagine.Endereco.Model;
 using Emagine.Endereco.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
-using Emagine.Login.Utils;
 using Emagine.Pagamento.Factory;
 using Emagine.Pagamento.Model;
 using System;
@@ -72,6 +71,8 @@ namespace Emagine.Pagamento.Pages
             }
         }
 
+        public PagamentoInfo Pagamento { get; set; }
+
         public bool UsaCartaoOffline {
             get
             {
@@ -83,8 +84,6 @@ namespace Emagine.Pagamento.Pages
                 atualizarTela();
             }
         }
-
-        public PagamentoInfo Pagamento { get; set; }
 
         public event EventHandler<PagamentoInfo> AoEfetuarPagamento;
 
@@ -245,8 +244,7 @@ namespace Emagine.Pagamento.Pages
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Entendi");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
 
@@ -308,14 +306,12 @@ namespace Emagine.Pagamento.Pages
                 else
                 {
                     UserDialogs.Instance.HideLoading();
-                    //UserDialogs.Instance.Alert(retorno.Mensagem, "Erro", "Fechar");
-                    await DisplayAlert("Erro", retorno.Mensagem, "Entendi");
+                    UserDialogs.Instance.Alert(retorno.Mensagem, "Erro", "Fechar");
                 }
             }
             catch (Exception erro) {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Entendi");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
 
@@ -402,8 +398,7 @@ namespace Emagine.Pagamento.Pages
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                //UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                await DisplayAlert("Erro", erro.Message, "Entendi");
+                UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
             }
         }
     }

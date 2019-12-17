@@ -1,7 +1,6 @@
 ﻿using Emagine.Base.Controls;
 using Emagine.Base.Estilo;
 using Emagine.Produto.Controls;
-using Emagine.Produto.Factory;
 using Emagine.Produto.Model;
 using FormsPlugin.Iconize;
 using Plugin.Share;
@@ -28,9 +27,6 @@ namespace Emagine.Produto.Cells
         protected Label _moedaPromocaoLabel;
         protected Label _valorPromocaoLabel;
         protected IconImage _destaqueIcon;
-        protected IconImage _compartilharButton;
-        protected IconImage _removerButton;
-        protected QuantidadeVControl _quantidadeButton;
 
         public ProdutoBaseCell()
         {
@@ -140,7 +136,7 @@ namespace Emagine.Produto.Cells
                 HorizontalOptions = LayoutOptions.End,
                 Style = Estilo.Current[EstiloProduto.PRODUTO_PRECO_VALOR]
             };
-            _valorLabel.SetBinding(Label.TextProperty, new Binding("ValorPromocao", stringFormat: "{0:N2}"));
+            _valorLabel.SetBinding(Label.TextProperty, new Binding("ValorPromocao", stringFormat: "{0:N2} "));
             _valorLabel.SetBinding(Label.TextColorProperty, new Binding("PromocaoCor"));
 
             _volumeLabel = new Label {
@@ -171,7 +167,7 @@ namespace Emagine.Produto.Cells
                 HorizontalOptions = LayoutOptions.End,
                 Style = Estilo.Current[EstiloProduto.PRODUTO_PROMOCAO_VALOR]
             };
-            _valorPromocaoLabel.SetBinding(Label.TextProperty, new Binding("Valor", stringFormat: "{0:N2}"));
+            _valorPromocaoLabel.SetBinding(Label.TextProperty, new Binding("Valor", stringFormat: "{0:N2} "));
 
             var valorLayout = new StackLayout
             {
@@ -216,75 +212,6 @@ namespace Emagine.Produto.Cells
                 Style = Estilo.Current[EstiloProduto.PRODUTO_ICONE]
             };
             _destaqueIcon.SetBinding(Label.IsVisibleProperty, new Binding("Destaque"));
-
-            _compartilharButton = new IconImage
-            {
-                //VerticalOptions = LayoutOptions.CenterAndExpand,
-                //HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.Start,
-                Icon = "fa-share-alt",
-                IconColor = Estilo.Current.PrimaryColor,
-                IconSize = 28,
-                Margin = new Thickness(0, 2)
-            };
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (sender, e) =>
-            {
-                if (!CrossShare.IsSupported)
-                    return;
-
-                var produto = (ProdutoInfo)BindingContext;
-                if (produto == null)
-                {
-                    return;
-                }
-
-                CrossShare.Current.Share(new ShareMessage
-                {
-                    //Title = produto.Nome,
-                    //Text = "R$ " + produto.ValorFinal.ToString("N2"),
-                    //Url = "http://smartappcompras.com.br/site/" + produto.Slug
-                    Url = produto.Url
-                });
-            };
-            _compartilharButton.GestureRecognizers.Add(tapGestureRecognizer);
-
-            _removerButton = new IconImage
-            {
-                VerticalOptions = LayoutOptions.EndAndExpand,
-                HorizontalOptions = LayoutOptions.Start,
-                Icon = "fa-remove",
-                IconColor = Estilo.Current.DangerColor,
-                IconSize = 28,
-                Margin = new Thickness(0, 2)
-            };
-            var tapRemover = new TapGestureRecognizer();
-            tapRemover.Tapped += (sender, e) =>
-            {
-                var produto = _quantidadeButton.Produto;
-                if (produto != null) {
-                    removerProduto(produto);
-                }
-            };
-            _removerButton.GestureRecognizers.Add(tapRemover);
-
-            _quantidadeButton = new QuantidadeVControl
-            {
-                Margin = new Thickness(0, 5, 5, 0),
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.End,
-                FontFamily = Estilo.Current.FontDefaultBold,
-                WidthRequest = 40,
-                HeightRequest = 120
-            };
-            _quantidadeButton.SetBinding(QuantidadeHControl.QuantidadeProperty, new Binding("QuantidadeCarrinho"));
-            _quantidadeButton.SetBinding(QuantidadeHControl.ProdutoProperty, new Binding("."));
-        }
-
-        protected virtual void removerProduto(ProdutoInfo produto) {
-            var regraCarrinho = CarrinhoFactory.create();
-            _quantidadeButton.Quantidade = regraCarrinho.excluir(produto);
         }
     }
 }

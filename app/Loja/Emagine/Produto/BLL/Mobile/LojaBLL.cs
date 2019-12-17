@@ -14,18 +14,6 @@ namespace Emagine.Produto.BLL.Mobile
 {
     public class LojaBLL : Base.LojaBLL
     {
-        public override int RaioBusca {
-            get {
-                if (App.Current.Properties.ContainsKey("raio_busca")) {
-                    return (int)App.Current.Properties["raio_busca"];
-                }
-                return 100;
-            }
-            set {
-                App.Current.Properties["raio_busca"] = value;
-                App.Current.SavePropertiesAsync();
-            }
-        }
 
         public override bool podeMudarLoja()
         {
@@ -47,27 +35,25 @@ namespace Emagine.Produto.BLL.Mobile
             return _lojas;
         }
 
-        public override async Task<IList<LojaInfo>> buscar(double latitude, double longitude, int raio, int idSeguimento = 0)
+        public override async Task<IList<LojaInfo>> buscar(double latitude, double longitude)
         {
-            var args = new List<object>() {
-                new LojaBuscaInfo {
-                    Latitude = latitude,
-                    Longitude = longitude,
-                    Raio = raio,
-                    IdSeguimento = idSeguimento
-                }
-            };
+            var args = new List<object>();
+            args.Add(new LocalInfo
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            });
             _lojas = await queryPut<IList<LojaInfo>>(GlobalUtils.URLAplicacao + "/api/loja/buscar", args.ToArray());
             App.Current.Properties["pode_mudar_loja"] = (_lojas.Count > 1);
             await App.Current.SavePropertiesAsync();
             return _lojas;
         }
 
-        public override Task gravarAtual(LojaInfo loja)
+        public override void gravarAtual(LojaInfo loja)
         {
             _loja = loja;
             App.Current.Properties["loja"] = JsonConvert.SerializeObject(loja);
-            return App.Current.SavePropertiesAsync();
+            App.Current.SavePropertiesAsync();
         }
 
         public override async Task limparAtual()

@@ -195,10 +195,11 @@ namespace Emagine.Endereco.Controls
                         Endereco = await new BLL.CepBLL().pegarPorCep(Regex.Replace(e.NewTextValue, "[^0-9]+", ""));
                         UserDialogs.Instance.HideLoading();
                     }
-                    catch (Exception error)
+                    catch (Exception erro)
                     {
                         UserDialogs.Instance.HideLoading();
-                        UserDialogs.Instance.ShowError("Erro ao tentar obter o endereço, verifique sua conexão, ou tente novamente em alguns instantes");
+                        UserDialogs.Instance.Alert(erro.Message, "Erro", "Entendi");
+                        //UserDialogs.Instance.Alert("Erro ao tentar obter o endereço, verifique sua conexão, ou tente novamente em alguns instantes", "Erro", "Entendi");
                     }
                 }
             };

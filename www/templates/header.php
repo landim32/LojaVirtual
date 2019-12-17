@@ -14,15 +14,15 @@ use Emagine\Login\Model\UsuarioInfo;
  */
 $regraUsuario = new UsuarioBLL();
 if ($regraUsuario->estaLogado()) {
-    $urlCarrinho = $app->getBaseUrl() . "/" . $loja->getSlug() . "/carrinho";
+    $urlCarrinho = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/carrinho";
 }
 else {
-    $urlCarrinho = $app->getBaseUrl() . "/" . $loja->getSlug() . "/login";
+    $urlCarrinho = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/login";
 }
-$urlLogin = $app->getBaseUrl() . "/" . $loja->getSlug() . "/login";
-$urlCadastro = $app->getBaseUrl() . "/" . $loja->getSlug() . "/cadastro";
-$urlAlterar = $app->getBaseUrl() . "/" . $loja->getSlug() . "/alterar-meus-dados";
-$urlLogoff = $app->getBaseUrl() . "/" . $loja->getSlug() . "/logoff";
+$urlLogin = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/login";
+$urlCadastro = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/cadastro";
+$urlAlterar = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/alterar-meus-dados";
+$urlLogoff = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/logoff";
 ?>
 <!DOCTYPE html>
 <html lang="pt_BR">
@@ -36,20 +36,18 @@ $urlLogoff = $app->getBaseUrl() . "/" . $loja->getSlug() . "/logoff";
     <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo get_tema_path(); ?>/favicon.ico">
     <title><?php echo APP_NAME; ?></title>
     <?php echo $app->renderCss(); ?>
-    <script src="//platform-api.sharethis.com/js/sharethis.js#property=5b1542b58e56ee0011c80166&product=inline-share-buttons"></script>
 </head>
 <body>
 <?php echo $app->renderModal(); ?>
 <header>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 hidden-xs hidden-sm">
+            <div class="col-md-2 hidden-xs hidden-sm">
                 <a href="<?php echo $app->getBaseUrl() . "/"; ?>">
-                    <img src="<?php echo $app->getBaseUrl() . "/images/logo.png"; ?>" class="img-responsive"
-                         style="max-height: 120px; margin: 7px auto" />
+                    <img src="<?php echo $app->getBaseUrl() . "/images/logo.png"; ?>" class="img-responsive" style="max-height: 120px;" />
                 </a>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="row" style="padding-top: 10px; padding-bottom: 10px;">
                     <div id="usuario" class="col-md-3 col-sm-6 col-xs-6">
                         <?php if (!is_null($usuario) && $usuario->getId() > 0) : ?>
@@ -57,10 +55,7 @@ $urlLogoff = $app->getBaseUrl() . "/" . $loja->getSlug() . "/logoff";
                                 <img src="<?php //echo $app->getBaseUrl() . "/usuarios/42x42/" . $usuario->getFoto(); ?>" class="img-circle" />
                             </a-->
                             <i class="fa fa-user-circle-o fa-3x pull-left"></i>
-                            <a href="<?php echo $urlAlterar; ?>" style="font-weight: bold;">
-                                <?php echo $usuario->getNome(); ?>
-                            </a>
-                            <br />
+                            <a href="<?php echo $urlAlterar; ?>" style="font-weight: bold;"><?php echo $usuario->getNome(); ?></a> <br />
                             <small class="hidden-xs">
                                 <a href="<?php echo $urlAlterar; ?>">Minha conta</a> |
                                 <a href="<?php echo $urlLogoff; ?>">Sair</a>
@@ -86,7 +81,7 @@ $urlLogoff = $app->getBaseUrl() . "/" . $loja->getSlug() . "/logoff";
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                        <form method="GET" action="<?php echo $app->getBaseUrl() . "/" . $loja->getSlug() . "/busca" ?>" class="form-horizontal">
+                        <form method="GET" action="<?php echo $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/busca" ?>" class="form-horizontal">
                             <div class="input-group input-group-lg">
                                 <input type="text" class="form-control" name="p" placeholder="O que você procura?" value="<?php echo $palavraChave; ?>" />
                                 <span class="input-group-btn">

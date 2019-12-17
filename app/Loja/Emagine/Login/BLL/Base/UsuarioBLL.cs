@@ -27,12 +27,6 @@ namespace Emagine.Login.BLL.Base
             return await queryPut<int>(GlobalUtils.URLAplicacao + "/api/usuario/logar", args.ToArray());
         }
 
-        public async Task<IList<UsuarioInfo>> listar()
-        {
-            var url = GlobalUtils.URLAplicacao + "/api/usuario/listar";
-            return await queryGet<IList<UsuarioInfo>>(url);
-        }
-
         public async Task<UsuarioInfo> pegar(int id_usuario)
         {
             return await queryGet<UsuarioInfo>(GlobalUtils.URLAplicacao + "/api/usuario/pegar/" + id_usuario.ToString());
@@ -53,6 +47,13 @@ namespace Emagine.Login.BLL.Base
             }
         }
 
+        public async Task trocarSenha(UsuarioTrocaSenhaInfo info)
+        {
+            await queryPut(GlobalUtils.URLAplicacao + "/api/usuario/trocar-senha", new UsuarioTrocaSenhaInfo[1] { info });
+            return;
+        }
+
+        [Obsolete("Use alterarSenha")]
         public async Task<bool> resetarSenha(UsuarioNovaSenhaInfo info)
         {
             try

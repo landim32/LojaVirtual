@@ -12,9 +12,6 @@ namespace Emagine.Frete.Model
         [JsonProperty("id_motorista")]
         public int IdMotorista { get; set; }
 
-        [JsonProperty("id_frete")]
-        public int? IdFrete { get; set; }
-
         [JsonProperty("latitude")]
         public double Latitude { get; set; }
 

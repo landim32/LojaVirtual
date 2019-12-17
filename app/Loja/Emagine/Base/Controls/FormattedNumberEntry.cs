@@ -13,12 +13,10 @@ namespace Emagine.Base.Controls
 
         public double Value
         {
-            get
-            {
+            get {
                 return (double)GetValue(ValueProperty);
             }
-            set
-            {
+            set {
                 SetValue(ValueProperty, value);
             }
         }
@@ -32,21 +30,17 @@ namespace Emagine.Base.Controls
 
         public static double DumbParse(string input)
         {
-            if (string.IsNullOrEmpty(input))
-            {
+            if (string.IsNullOrEmpty(input)) {
                 return 0;
             }
             string retorno = string.Empty;
-            foreach (var c in input.ToCharArray())
-            {
-                if (char.IsNumber(c))
-                {
+            foreach (var c in input.ToCharArray()) {
+                if (char.IsNumber(c)) {
                     retorno += c;
                 }
             }
             double numero = 0;
-            if (double.TryParse(retorno, out numero))
-            {
+            if (double.TryParse(retorno, out numero)) {
                 return numero / 100;
             }
             return 0;

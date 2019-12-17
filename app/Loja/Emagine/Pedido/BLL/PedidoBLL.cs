@@ -25,15 +25,6 @@ namespace Emagine.Pedido.BLL
             return await queryGet<IList<PedidoInfo>>(url);
         }
 
-        public async Task<IList<PedidoInfo>> listarAvaliacao(int idLoja = 0, int idUsuario = 0)
-        {
-            string url = GlobalUtils.URLAplicacao + "/api/pedido/listar-avaliacao/" + idLoja.ToString();
-            if (idUsuario > 0) {
-                url += "/" + idUsuario.ToString();
-            }
-            return await queryGet<IList<PedidoInfo>>(url);
-        }
-
         public async Task<PedidoInfo> pegar(int idPedido)
         {
             string url = GlobalUtils.URLAplicacao + "/api/pedido/pegar/" + idPedido.ToString();

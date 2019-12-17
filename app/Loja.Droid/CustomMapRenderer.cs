@@ -135,7 +135,8 @@ namespace Loja.Droid
                 {
                     _map.AnimateCamera(cameraUpdate);
                 }
-                else {
+                else
+                {
                     _map.MoveCamera(cameraUpdate);
                 }
             }

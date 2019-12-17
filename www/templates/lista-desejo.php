@@ -14,7 +14,7 @@ use Emagine\Produto\Model\ProdutoInfo;
  * @var double $valorFrete
  * @var ProdutoInfo[] $produtos
  */
-$url = $app->getBaseUrl() . "/" . $loja->getSlug();
+$url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
 
 $regraPedido = new PedidoBLL();
 $pagamentos = $regraPedido->listarPagamento();
@@ -30,9 +30,6 @@ $pagamentos = $regraPedido->listarPagamento();
             <div class="list-group">
                 <a href="<?php echo $url . "/alterar-meus-dados"; ?>" class="list-group-item">
                     <i class="fa fa-fw fa-user-circle"></i> Alterar Dados
-                </a>
-                <a href="<?php echo $url . "/enderecos"; ?>" class="list-group-item">
-                    <i class="fa fa-fw fa-map-marker"></i> Endereços
                 </a>
                 <a href="<?php echo $url . "/pedidos"; ?>" class="list-group-item">
                     <i class="fa fa-fw fa-shopping-cart"></i> Pedidos feitos

@@ -14,10 +14,11 @@ namespace Emagine.Login.IBLL
     public interface IUsuarioBLL
     {
         Task<int> logar(string email, string senha);
-        Task<IList<UsuarioInfo>> listar();
         Task<UsuarioInfo> pegar(int id_usuario);
         Task<bool> recuperarSenha(UsuarioNovaSenhaInfo info);
+        [Obsolete("Use trocarSenha")]
         Task<bool> resetarSenha(UsuarioNovaSenhaInfo info);
+        Task trocarSenha(UsuarioTrocaSenhaInfo info);
         Task<int> inserir(UsuarioInfo usuario);
         Task<int> alterar(UsuarioInfo usuario);
         void gravarAtual(UsuarioInfo usuario);

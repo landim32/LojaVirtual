@@ -185,7 +185,7 @@ class Uri implements UriInterface
         if (preg_match('/^(\[[a-fA-F0-9:.]+\])(:\d+)?\z/', $host, $matches)) {
             $host = $matches[1];
 
-            if (isset($matches[2])) {
+            if ($matches[2]) {
                 $port = (int) substr($matches[2], 1);
             }
         } else {
@@ -378,31 +378,10 @@ class Uri implements UriInterface
     public function withUserInfo($user, $password = null)
     {
         $clone = clone $this;
-        $clone->user = $this->filterUserInfo($user);
-        if ($clone->user) {
-            $clone->password = $password ? $this->filterUserInfo($password) : '';
-        } else {
-            $clone->password = '';
-        }
+        $clone->user = $user;
+        $clone->password = $password ? $password : '';
 
         return $clone;
-    }
-
-    /**
-     * Filters the user info string.
-     *
-     * @param string $query The raw uri query string.
-     * @return string The percent-encoded query string.
-     */
-    protected function filterUserInfo($query)
-    {
-        return preg_replace_callback(
-            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=]+|%(?![A-Fa-f0-9]{2}))/u',
-            function ($match) {
-                return rawurlencode($match[0]);
-            },
-            $query
-        );
     }
 
     /**

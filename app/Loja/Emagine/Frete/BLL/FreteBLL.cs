@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Emagine.Base.BLL;
 using Emagine.Base.Utils;
-using Emagine.Frete.Factory;
 using Emagine.Frete.Model;
 using Emagine.Login.BLL;
 using Newtonsoft.Json;
@@ -82,12 +81,6 @@ namespace Emagine.Frete.BLL
             return queryGet<List<FreteHistoricoInfo>>(GlobalUtils.URLAplicacao + "/api/frete/historico/" + idFrete.ToString());
         }
 
-        public Task<FreteInfo> orcar(FreteInfo frete)
-        {
-            var args = new List<object>() { frete };
-            return queryPut<FreteInfo>(GlobalUtils.URLAplicacao + "/api/frete/orcar", args.ToArray());
-        }
-
         public Task<int> inserir(FreteInfo entrega)
         {
             var args = new List<object>();
@@ -116,29 +109,6 @@ namespace Emagine.Frete.BLL
         public Task excluir(int id_frete)
         {
             return execGet(GlobalUtils.URLAplicacao + "/api/frete/excluir/" + id_frete.ToString());
-        }
-
-        public void atualizarPreco(IList<FreteInfo> fretes) {
-            var regraMotorista = MotoristaFactory.create();
-            var motorista = regraMotorista.pegarAtual();
-            foreach (var frete in fretes) {
-                atualizarPreco(frete, motorista);
-            }
-        }
-
-        public void atualizarPreco(FreteInfo frete, MotoristaInfo motorista = null) {
-            if (motorista == null)
-            {
-                var regraMotorista = MotoristaFactory.create();
-                motorista = regraMotorista.pegarAtual();
-            }
-            if (motorista.ValorHora > 0 && frete.PrevisaoTempo > 0) {
-                double previsao = frete.PrevisaoTempo;
-                if (previsao < 3600) {
-                    previsao = 3600;
-                }
-                frete.Preco = motorista.ValorHora * (previsao / 3600);
-            }
         }
     }
 }

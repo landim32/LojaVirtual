@@ -5,7 +5,6 @@ using Emagine.Endereco.Model;
 using Emagine.Endereco.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
-using Emagine.Pedido.Cells;
 using Emagine.Pedido.Model;
 using FormsPlugin.Iconize;
 using System;
@@ -51,12 +50,7 @@ namespace Emagine.Pedido.Pages
             set {
                 _pedidoListView.ItemsSource = null;
                 _pedidos = value;
-                var pedidos = (
-                    from p in _pedidos
-                    orderby p.UltimaAlteracao descending
-                    select p
-                ).ToList();
-                _pedidoListView.ItemsSource = pedidos;
+                _pedidoListView.ItemsSource = _pedidos;
             }
         }
 

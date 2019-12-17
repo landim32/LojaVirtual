@@ -17,8 +17,6 @@ namespace Emagine.Produto.BLL.Base
         protected LojaInfo _loja = null;
         protected IList<LojaInfo> _lojas = null;
 
-        public virtual int RaioBusca { get; set; }
-
         public virtual bool podeMudarLoja()
         {
             return true;
@@ -32,30 +30,21 @@ namespace Emagine.Produto.BLL.Base
             return await queryGet<IList<LojaInfo>>(url);
         }
 
-        public virtual async Task<IList<LojaInfo>> buscar(double latitude, double longitude, int raio, int idSeguimento = 0)
+        public virtual async Task<IList<LojaInfo>> buscar(double latitude, double longitude)
         {
             var url = GlobalUtils.URLAplicacao + "/api/loja/buscar";
-            var args = new List<object>() {
-                new LojaBuscaInfo
-                {
-                    Latitude = latitude,
-                    Longitude = longitude,
-                    Raio = raio,
-                    IdSeguimento = idSeguimento
-                }
-            };
+            var args = new List<object>();
+            args.Add(new LocalInfo
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            });
             return await queryPut<IList<LojaInfo>>(url, args.ToArray());
         }
 
-        public virtual async Task<LojaInfo> pegar(int idLoja)
+        public virtual void gravarAtual(LojaInfo loja)
         {
-            var url = GlobalUtils.URLAplicacao + "/api/loja/pegar/" + idLoja.ToString();
-            return await queryGet<LojaInfo>(url);
-        }
-
-        public virtual Task gravarAtual(LojaInfo loja)
-        {
-            return new TaskFactory().StartNew(() => { _loja = loja; });
+            _loja = loja;
             //App.Current.Properties["loja"] = JsonConvert.SerializeObject(loja);
             //App.Current.SavePropertiesAsync();
         }

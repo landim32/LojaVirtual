@@ -18,7 +18,7 @@ use Emagine\Produto\Model\LojaInfo;
  * @var bool $fonteGrande
  */
 $regraUsuario = new UsuarioBLL();
-$url = $app->getBaseUrl() . "/" . $loja->getSlug();
+$url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
 ?>
 <div class="container">
     <ol class="breadcrumb">
@@ -34,7 +34,7 @@ $url = $app->getBaseUrl() . "/" . $loja->getSlug();
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <?php require "usuario-novo-foot.php"; ?>
+                    <?php require "cadastro-form.php"; ?>
                 </div>
             </div>
         </div>

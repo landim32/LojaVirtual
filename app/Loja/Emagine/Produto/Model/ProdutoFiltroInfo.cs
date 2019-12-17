@@ -46,13 +46,5 @@ namespace Emagine.Produto.Model
         public bool? ApenasPromocao { get; set; }
         [JsonProperty("palavra_chave")]
         public string PalavraChave { get; set; }
-        [JsonProperty("exibe_origem")]
-        public bool? ExibeOrigem { get; set; }
-        [JsonProperty("pagina")]
-        public int? Pagina { get; set; }
-        [JsonProperty("tamanho_pagina")]
-        public int? TamanhoPagina { get; set; }
-        [JsonProperty("condicao")]
-        public bool? Condicao { get; set; }
     }
 }

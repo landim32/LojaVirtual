@@ -6,7 +6,6 @@ using Emagine.Endereco.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
 using Emagine.Login.Pages;
-using Emagine.Login.Utils;
 using Emagine.Pagamento.Model;
 using Emagine.Pagamento.Pages;
 using Emagine.Pagamento.Utils;
@@ -119,7 +118,9 @@ namespace Emagine.Produto.Utils
             {
                 LoginUtils.carregarUsuario((usuario) => {
                     var metodoEntregaPage = PedidoUtils.gerarEntregaMetodo(async (pedido) => {
-                        if (await UserDialogs.Instance.ConfirmAsync("Deseja fechar o pedido?", "Aviso", "Sim", "Não", null)) {
+                        //if (await UserDialogs.Instance.ConfirmAsync("Deseja fechar o pedido?", "Aviso", "Sim", "Não", null)) {
+                        var paginaAtual = ((RootPage)App.Current.MainPage).PaginaAtual;
+                        if (await paginaAtual.DisplayActionSheet("Deseja fechar o pedido?", null, "Fechar", new string[2] { "Sim", "Não" }) == "Sim") { 
                             var pagamentoMetodoPage = PagamentoUtils.gerarPagamento(async (pagamento) => {
                                 UserDialogs.Instance.ShowLoading("Enviando...");
                                 try
@@ -167,63 +168,17 @@ namespace Emagine.Produto.Utils
                                         idPedido = await regraPedido.inserir(pedido);
                                     }
                                     var pedidoFechado = await regraPedido.pegar(idPedido);
-                                    var regraCarrinho = CarrinhoFactory.create();
-                                    regraCarrinho.limpar();
-
-                                    if (pedidoFechado.Entrega == EntregaEnum.RetiradaMapeada) {
+                                    if (pedidoFechado.Entrega == EntregaEnum.RetiradaMapeada)
+                                    {
                                         AcompanhamentoUtils.iniciarAcompanhamento(pedidoFechado);
                                     }
-
-                                    if (pedidoFechado.Entrega == EntregaEnum.Entrega && pedido.Situacao != Pedido.Model.SituacaoEnum.AguardandoPagamento) {
-                                        var regraHorario = PedidoHorarioFactory.create();
-                                        var horarios = await regraHorario.listar(pedidoFechado.IdLoja);
-                                        if (horarios.Count > 1)
-                                        {
-                                            var horarioEntregaPage = new HorarioEntregaPage()
-                                            {
-                                                Title = "Horário de Entrega",
-                                                //Pedido = pedidoFechado,
-                                                Horarios = horarios
-                                            };
-                                            horarioEntregaPage.AoSelecionar += async (s2, horario) =>
-                                            {
-                                                UserDialogs.Instance.ShowLoading("Enviando...");
-                                                try
-                                                {
-                                                    pedidoFechado.DiaEntrega = horarioEntregaPage.DiaEntrega;
-                                                    pedidoFechado.HorarioEntrega = horario;
-                                                    pedidoFechado.Avisar = false;
-
-                                                    await regraPedido.alterar(pedidoFechado);
-                                                    ((RootPage)App.Current.MainPage).PaginaAtual = new PedidoPage
-                                                    {
-                                                        Pedido = pedidoFechado
-                                                    };
-                                                    UserDialogs.Instance.HideLoading();
-                                                }
-                                                catch (Exception erro)
-                                                {
-                                                    UserDialogs.Instance.HideLoading();
-                                                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
-                                                }
-                                            };
-                                            UserDialogs.Instance.HideLoading();
-                                            ((RootPage)App.Current.MainPage).PushAsync(horarioEntregaPage);
-                                        }
-                                        else
-                                        {
-                                            UserDialogs.Instance.HideLoading();
-                                            ((RootPage)App.Current.MainPage).PaginaAtual = new PedidoPage {
-                                                Pedido = pedidoFechado
-                                            };
-                                        }
-                                    }
-                                    else {
-                                        UserDialogs.Instance.HideLoading();
-                                        ((RootPage)App.Current.MainPage).PaginaAtual = new PedidoPage {
-                                            Pedido = pedidoFechado
-                                        };
-                                    }
+                                    UserDialogs.Instance.HideLoading();
+                                    var pedidoPage = new PedidoPage
+                                    {
+                                        Pedido = pedidoFechado
+                                    };
+                                    //((RootPage)App.Current.MainPage).PushAsync(pedidoPage);
+                                    ((RootPage)App.Current.MainPage).PaginaAtual = pedidoPage;
                                 }
                                 catch (Exception erro)
                                 {

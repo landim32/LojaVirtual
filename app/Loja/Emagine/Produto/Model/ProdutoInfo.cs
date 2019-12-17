@@ -114,22 +114,6 @@ namespace Emagine.Produto.Model
             }
         }
 
-        [JsonIgnore]
-        public string ValorStr {
-            get {
-                return Valor.ToString("N2") + " ";
-            }
-        }
-
-        [JsonIgnore]
-        public string ValorPromocaoStr
-        {
-            get
-            {
-                return ValorPromocao.ToString("N2") + " ";
-            }
-        }
-
         /*
         [JsonIgnore]
         public Color PromocaoCor {

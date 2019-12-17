@@ -30,9 +30,6 @@ namespace Emagine.Produto.Model
         [JsonProperty("foto")]
         public string Foto { get; set; }
 
-        [JsonProperty("foto_url")]
-        public string FotoUrl { get; set; }
-
         [JsonProperty("quantidade")]
         public int Quantidade { get; set; }
     }

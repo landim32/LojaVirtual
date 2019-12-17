@@ -18,7 +18,6 @@ namespace Emagine.Base.Estilo
         public const string PRODUTO_PRECO_MOEDA = "produto-preco-moeda";
         public const string PRODUTO_PROMOCAO_VALOR = "produto-promocao";
         public const string PRODUTO_PROMOCAO_MOEDA = "produto-promocao-moeda";
-        public const string PRODUTO_CARRINHO_BOTAO = "produto-carrinho-botao";
 
         public EstiloFrame Frame { get; set; } = new EstiloFrame();
         public EstiloImage Foto { get; set; } = new EstiloImage();
@@ -32,6 +31,5 @@ namespace Emagine.Base.Estilo
         public EstiloLabel PrecoValor { get; set; } = new EstiloLabel();
         public EstiloLabel PromocaoMoeda { get; set; } = new EstiloLabel();
         public EstiloLabel PromocaoValor { get; set; } = new EstiloLabel();
-        public EstiloBotao Carrinho { get; set; } = new EstiloBotao();
     }
 }

@@ -48,7 +48,7 @@ namespace Emagine.Frete.Pages
             }
             if (e.Origem != null)
             {
-                aux = aux.Where(x => x.Locais.Where(y => y.Tipo == FreteLocalTipoEnum.Origem && y.Uf == e.Origem).Count() > 0).ToList();
+                aux = aux.Where(x => x.Locais.Where(y => y.Tipo == FreteLocalTipoEnum.Saida && y.Uf == e.Origem).Count() > 0).ToList();
             }
             _freteListView.ItemsSource = aux;
         }
@@ -89,7 +89,7 @@ namespace Emagine.Frete.Pages
             _freteListView.RowHeight = -1;
             _freteListView.SeparatorVisibility = SeparatorVisibility.Default;
             _freteListView.SetBinding(ListView.ItemsSourceProperty, new Binding("."));
-            _freteListView.ItemTemplate = new DataTemplate(typeof(FreteMotoristaOldCell));
+            _freteListView.ItemTemplate = new DataTemplate(typeof(FreteMotoristaCell));
             _freteListView.ItemTapped += async (sender, e) =>
             {
                 if (e == null)

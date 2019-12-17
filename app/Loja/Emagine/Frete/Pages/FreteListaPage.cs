@@ -23,10 +23,6 @@ namespace Emagine.Frete.Pages
 
         private IList<FreteInfo> _fretes;
 
-        public void setItemTemplate(Type itemTemplate) {
-            _freteListView.ItemTemplate = new DataTemplate(itemTemplate);
-        }
-
         public IList<FreteInfo> Fretes {
             get {
                 return _fretes;
@@ -116,7 +112,7 @@ namespace Emagine.Frete.Pages
                         }
                         if (e.Origem != null)
                         {
-                            aux = aux.Where(x => x.Locais.Where(y => y.Tipo == FreteLocalTipoEnum.Origem && y.Uf == e.Origem).Count() > 0).ToList();
+                            aux = aux.Where(x => x.Locais.Where(y => y.Tipo == FreteLocalTipoEnum.Saida && y.Uf == e.Origem).Count() > 0).ToList();
                         }
                         _freteListView.ItemsSource = aux;
                     };

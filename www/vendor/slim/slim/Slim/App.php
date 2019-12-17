@@ -52,7 +52,7 @@ class App
      *
      * @var string
      */
-    const VERSION = '3.10.0';
+    const VERSION = '3.8.1';
 
     /**
      * Container
@@ -249,24 +249,6 @@ class App
     }
 
     /**
-     * Add a route that sends an HTTP redirect
-     *
-     * @param string              $from
-     * @param string|UriInterface $to
-     * @param int                 $status
-     *
-     * @return RouteInterface
-     */
-    public function redirect($from, $to, $status = 302)
-    {
-        $handler = function ($request, ResponseInterface $response) use ($to, $status) {
-            return $response->withHeader('Location', (string)$to)->withStatus($status);
-        };
-
-        return $this->get($from, $handler);
-    }
-
-    /**
      * Route Groups
      *
      * This method accepts a route pattern and a callback. All route
@@ -310,28 +292,10 @@ class App
         $response = $this->container->get('response');
 
         try {
-            ob_start();
             $response = $this->process($this->container->get('request'), $response);
         } catch (InvalidMethodException $e) {
             $response = $this->processInvalidMethod($e->getRequest(), $response);
-        } finally {
-            $output = ob_get_clean();
         }
-
-        if (!empty($output) && $response->getBody()->isWritable()) {
-            $outputBuffering = $this->container->get('settings')['outputBuffering'];
-            if ($outputBuffering === 'prepend') {
-                // prepend output buffer content
-                $body = new Http\Body(fopen('php://temp', 'r+'));
-                $body->write($output . $response->getBody());
-                $response = $response->withBody($body);
-            } elseif ($outputBuffering === 'append') {
-                // append output buffer content
-                $response->getBody()->write($output);
-            }
-        }
-
-        $response = $this->finalize($response);
 
         if (!$silent) {
             $this->respond($response);
@@ -410,11 +374,13 @@ class App
             $response = $this->handlePhpError($e, $request, $response);
         }
 
+        $response = $this->finalize($response);
+
         return $response;
     }
 
     /**
-     * Send the response to the client
+     * Send the response the client
      *
      * @param ResponseInterface $response
      */
@@ -422,16 +388,6 @@ class App
     {
         // Send response
         if (!headers_sent()) {
-            // Headers
-            foreach ($response->getHeaders() as $name => $values) {
-                foreach ($values as $value) {
-                    header(sprintf('%s: %s', $name, $value), false);
-                }
-            }
-
-            // Set the status _after_ the headers, because of PHP's "helpful" behavior with location headers.
-            // See https://github.com/slimphp/Slim/issues/1730
-
             // Status
             header(sprintf(
                 'HTTP/%s %s %s',
@@ -439,6 +395,13 @@ class App
                 $response->getStatusCode(),
                 $response->getReasonPhrase()
             ));
+
+            // Headers
+            foreach ($response->getHeaders() as $name => $values) {
+                foreach ($values as $value) {
+                    header(sprintf('%s: %s', $name, $value), false);
+                }
+            }
         }
 
         // Body

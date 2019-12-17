@@ -2,30 +2,18 @@
 
 namespace FastRoute\DataGenerator;
 
-use FastRoute\BadRouteException;
 use FastRoute\DataGenerator;
+use FastRoute\BadRouteException;
 use FastRoute\Route;
 
-abstract class RegexBasedAbstract implements DataGenerator
-{
-    /** @var mixed[][] */
+abstract class RegexBasedAbstract implements DataGenerator {
     protected $staticRoutes = [];
-
-    /** @var Route[][] */
     protected $methodToRegexToRoutesMap = [];
 
-    /**
-     * @return int
-     */
-    abstract protected function getApproxChunkSize();
+    protected abstract function getApproxChunkSize();
+    protected abstract function processChunk($regexToRoutesMap);
 
-    /**
-     * @return mixed[]
-     */
-    abstract protected function processChunk($regexToRoutesMap);
-
-    public function addRoute($httpMethod, $routeData, $handler)
-    {
+    public function addRoute($httpMethod, $routeData, $handler) {
         if ($this->isStaticRoute($routeData)) {
             $this->addStaticRoute($httpMethod, $routeData, $handler);
         } else {
@@ -33,11 +21,7 @@ abstract class RegexBasedAbstract implements DataGenerator
         }
     }
 
-    /**
-     * @return mixed[]
-     */
-    public function getData()
-    {
+    public function getData() {
         if (empty($this->methodToRegexToRoutesMap)) {
             return [$this->staticRoutes, []];
         }
@@ -45,41 +29,26 @@ abstract class RegexBasedAbstract implements DataGenerator
         return [$this->staticRoutes, $this->generateVariableRouteData()];
     }
 
-    /**
-     * @return mixed[]
-     */
-    private function generateVariableRouteData()
-    {
+    private function generateVariableRouteData() {
         $data = [];
         foreach ($this->methodToRegexToRoutesMap as $method => $regexToRoutesMap) {
             $chunkSize = $this->computeChunkSize(count($regexToRoutesMap));
             $chunks = array_chunk($regexToRoutesMap, $chunkSize, true);
-            $data[$method] = array_map([$this, 'processChunk'], $chunks);
+            $data[$method] =  array_map([$this, 'processChunk'], $chunks);
         }
         return $data;
     }
 
-    /**
-     * @param int
-     * @return int
-     */
-    private function computeChunkSize($count)
-    {
+    private function computeChunkSize($count) {
         $numParts = max(1, round($count / $this->getApproxChunkSize()));
-        return (int) ceil($count / $numParts);
+        return ceil($count / $numParts);
     }
 
-    /**
-     * @param mixed[]
-     * @return bool
-     */
-    private function isStaticRoute($routeData)
-    {
+    private function isStaticRoute($routeData) {
         return count($routeData) === 1 && is_string($routeData[0]);
     }
 
-    private function addStaticRoute($httpMethod, $routeData, $handler)
-    {
+    private function addStaticRoute($httpMethod, $routeData, $handler) {
         $routeStr = $routeData[0];
 
         if (isset($this->staticRoutes[$httpMethod][$routeStr])) {
@@ -103,8 +72,7 @@ abstract class RegexBasedAbstract implements DataGenerator
         $this->staticRoutes[$httpMethod][$routeStr] = $handler;
     }
 
-    private function addVariableRoute($httpMethod, $routeData, $handler)
-    {
+    private function addVariableRoute($httpMethod, $routeData, $handler) {
         list($regex, $variables) = $this->buildRegexForRoute($routeData);
 
         if (isset($this->methodToRegexToRoutesMap[$httpMethod][$regex])) {
@@ -119,12 +87,7 @@ abstract class RegexBasedAbstract implements DataGenerator
         );
     }
 
-    /**
-     * @param mixed[]
-     * @return mixed[]
-     */
-    private function buildRegexForRoute($routeData)
-    {
+    private function buildRegexForRoute($routeData) {
         $regex = '';
         $variables = [];
         foreach ($routeData as $part) {
@@ -155,19 +118,14 @@ abstract class RegexBasedAbstract implements DataGenerator
         return [$regex, $variables];
     }
 
-    /**
-     * @param string
-     * @return bool
-     */
-    private function regexHasCapturingGroups($regex)
-    {
+    private function regexHasCapturingGroups($regex) {
         if (false === strpos($regex, '(')) {
             // Needs to have at least a ( to contain a capturing group
             return false;
         }
 
         // Semi-accurate detection for capturing groups
-        return (bool) preg_match(
+        return preg_match(
             '~
                 (?:
                     \(\?\(

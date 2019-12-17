@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Emagine.Pedido.Cells
+namespace Emagine.Endereco.Cells
 {
     public class PedidoCell: ViewCell
     {

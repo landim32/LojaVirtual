@@ -9,16 +9,17 @@ using Xamarin.Forms;
 using Emagine.Base.Estilo;
 using Emagine;
 using Emagine.Base.Utils;
-using Plugin.Iconize;
-using Emagine.Login.Model;
 
 namespace Emagine.Base.Pages
 {
     public class MenuPage : ContentPage
     {
+        private Image _logoImage;
+        private Image _fotoImage;
         private StackLayout _mainLayout;
         private StackLayout _usuarioLayout;
         private Label _nomeLabel;
+        private Label _tipoLabel;
         private ListView _listView;
         private Label _versaoLabel;
 
@@ -30,30 +31,6 @@ namespace Emagine.Base.Pages
             }
             set {
                 Title = value;
-            }
-        }
-
-        private UsuarioInfo _usuario;
-
-        public UsuarioInfo Usuario {
-            get {
-                return _usuario;
-            }
-            set {
-                _usuario = value;
-                if (_usuario != null)
-                {
-                    if (!_mainLayout.Children.Contains(_usuarioLayout))
-                    {
-                        _mainLayout.Children.Insert(0, _usuarioLayout);
-                    }
-                    _nomeLabel.Text = _usuario.Nome;
-                }
-                else {
-                    if (_mainLayout.Children.Contains(_usuarioLayout)) {
-                        _mainLayout.Children.Remove(_usuarioLayout);
-                    }
-                }
             }
         }
 
@@ -74,19 +51,52 @@ namespace Emagine.Base.Pages
 
             _menus = new List<MenuItemInfo>();
             inicializarComponente();
-            atualizarTela();
+            atualizarUsuario();
             Content = _mainLayout;
         }
 
-        public void atualizarTela()
+        public void atualizarUsuario()
         {
             _mainLayout.Children.Clear();
+            //_mainLayout.Children.Add(_logoImage);
             _mainLayout.Children.Add(_listView);
             _mainLayout.Children.Add(_versaoLabel);
+
+            /*
+            if (PreferenciaUtils.Perfil == PerfilEnum.Corretor)
+            {
+                _listView.Footer = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    Spacing = 3,
+                    Margin = new Thickness(0, 10, 0, 0),
+                    Children = {
+                        _OnlineSwitch,
+                        _OnlineLabel
+                    }
+                };
+            }
+            else
+            {
+                _listView.Footer = null;
+            }
+            */
+            //_listView.ItemsSource = listarMenu();
         }
 
         private void inicializarComponente()
         {
+            _logoImage = new Image
+            {
+                Source = "logo_menu.png",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.Center,
+                WidthRequest = 150,
+                HeightRequest = 150
+            };
+            
             _listView = new ListView
             {
                 HasUnevenRows = true,
@@ -110,31 +120,52 @@ namespace Emagine.Base.Pages
                 }
             };
 
+            _fotoImage = new Image
+            {
+                Margin = new Thickness(0, 5, 0, 0),
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Start,
+                Source = "imovel_corretor.png",
+                WidthRequest = 40,
+                HeightRequest = 40,
+                Aspect = Aspect.AspectFit
+            };
+
             _nomeLabel = new Label
             {
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalTextAlignment = TextAlignment.Center,
-                Style = Estilo.Estilo.Current[Estilo.Estilo.MENU_TEXTO],
+                TextColor = Color.FromHex("#ffffff"),
+                FontSize = 18,
                 FontAttributes = FontAttributes.Bold,
-                FontSize = 18
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Start
+            };
+
+            _tipoLabel = new Label
+            {
+                TextColor = Color.FromHex("#ffffff"),
+                FontSize = 15,
+                FontAttributes = FontAttributes.Italic,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Start
             };
 
             _usuarioLayout = new StackLayout
             {
-                Orientation = StackOrientation.Vertical,
+                Orientation = StackOrientation.Horizontal,
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Margin = new Thickness(10, 5),
+                Margin = new Thickness(0, 10),
                 Spacing = 10,
                 Children = {
+                    _fotoImage,
                     new StackLayout {
                         Orientation = StackOrientation.Vertical,
                         VerticalOptions = LayoutOptions.Start,
                         HorizontalOptions = LayoutOptions.Start,
                         Spacing = 0,
                         Children = {
-                            _nomeLabel
+                            _nomeLabel,
+                            _tipoLabel
                         }
                     }
                 }

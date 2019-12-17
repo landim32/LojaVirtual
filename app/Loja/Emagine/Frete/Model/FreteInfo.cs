@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Emagine.Login.Model;
-using Emagine.Pagamento.Model;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -23,10 +22,7 @@ namespace Emagine.Frete.Model
         public int IdUsuario { get; set; }
 
         [JsonProperty("id_pagamento")]
-        public int? IdPagamento { get; set; }
-
-        [JsonProperty("pagamento")]
-        public PagamentoInfo Pagamento { get; set; }
+        public long? IdPagamento { get; set; }
 
         [JsonProperty("usuario")]
         public UsuarioInfo Usuario { get; set; }
@@ -38,7 +34,7 @@ namespace Emagine.Frete.Model
         public MotoristaInfo Motorista { get; set; }
 
         [JsonIgnore]
-        public string NomeMotorista {
+        public string NomeMotorista { 
             get {
                 return (Motorista != null ? (Motorista.Usuario != null ? Motorista.Usuario.Nome : "-") : "");
             }
@@ -69,7 +65,7 @@ namespace Emagine.Frete.Model
         [JsonProperty("ultima_alteracao")]
         public string _UltimaAlteracao {
             get {
-                return UltimaAlteracao.ToString("yyyy-MM-dd HH:mm:ss");
+                return UltimaAlteracao.ToString("YYYY-mm-dd H:i:s");
             }
             set {
                 DateTime ultimaAlteracao;
@@ -92,33 +88,7 @@ namespace Emagine.Frete.Model
         public string FotoBase64 { get; set; }
 
         [JsonProperty("data_retirada")]
-        public string _DataRetirada {
-            get {
-                if (DataRetirada.HasValue) {
-                    return DataRetirada.Value.ToString("yyyy-MM-dd HH:mm:ss");
-                }
-                return null;
-            }
-            set {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    DateTime data;
-                    if (DateTime.TryParse(value, out data)) {
-                        DataRetirada = data;
-                    }
-                    else {
-                        DataRetirada = null;
-                    }
-                }
-                else {
-                    DataRetirada = null;
-                }
-            }
-        }
-
-        [JsonIgnore]
         public DateTime? DataRetirada { get; set; }
-
         [JsonProperty("data_retirada_str")]
         public string DataRetiradaStr { get; set; }
 
@@ -128,32 +98,7 @@ namespace Emagine.Frete.Model
         public string DataRetiradaExecutadaStr { get; set; }
 
         [JsonProperty("data_entrega")]
-        public string _DataEntrega {
-            get {
-                if (DataEntrega.HasValue) {
-                    return DataEntrega.Value.ToString("yyyy-MM-dd HH:mm:ss");
-                }
-                return null;
-            }
-            set {
-                if (!string.IsNullOrEmpty(value)) {
-                    DateTime data;
-                    if (DateTime.TryParse(value, out data)) {
-                        DataEntrega = data;
-                    }
-                    else {
-                        DataEntrega = null;
-                    }
-                }
-                else {
-                    DataEntrega = null;
-                }
-            }
-        }
-
-        [JsonIgnore]
         public DateTime? DataEntrega { get; set; }
-
         [JsonProperty("data_entrega_str")]
         public string DataEntregaStr { get; set; }
 
@@ -308,7 +253,7 @@ namespace Emagine.Frete.Model
         [JsonIgnore]
         public string EnderecoOrigem { 
             get{
-                var origem = Locais.Where(x => x.Tipo == FreteLocalTipoEnum.Origem).FirstOrDefault();
+                var origem = Locais.Where(x => x.Tipo == FreteLocalTipoEnum.Saida).FirstOrDefault();
                 if (origem == null)
                     return null;
                 else{
@@ -344,7 +289,7 @@ namespace Emagine.Frete.Model
         {
             get
             {
-                //var origem = Locais.Where(x => x.Tipo == FreteLocalTipoEnum.Origem).FirstOrDefault();
+                //var origem = Locais.Where(x => x.Tipo == FreteLocalTipoEnum.Saida).FirstOrDefault();
                 //var destino = Locais.Where(x => x.Tipo == FreteLocalTipoEnum.Destino).FirstOrDefault();
                 return EnderecoOrigem + " > " + EnderecoDestino;
             }
@@ -381,88 +326,29 @@ namespace Emagine.Frete.Model
         [JsonProperty("duracao")]
         public int Duracao { get; set; }
 
-        [JsonIgnore]
-        public string DuracaoStr {
-            get {
-                return new TimeSpan(0, 0, Duracao).ToString();
-            }
-        }
-
-        [JsonIgnore]
-        public TimeSpan Previsao {
-            get {
-                if (DataEntrega.HasValue && DataRetirada.HasValue) {
-                    return DataEntrega.Value.Subtract(DataRetirada.Value);
+        public bool TemSaida() {
+            bool retorno = false;
+            foreach (var local in Locais) {
+                if (local.Tipo == FreteLocalTipoEnum.Saida) {
+                    retorno = true;
+                    break;
                 }
-                return TimeSpan.Zero;
             }
+            return retorno;
         }
 
-        [JsonIgnore]
-        public int PrevisaoTempo {
-            get {
-                return (int)Math.Floor(Previsao.TotalSeconds);
-            }
-        }
-
-        [JsonIgnore]
-        public string PrevisaoStr {
-            get {
-                var p = Previsao;
-                return p.Hours.ToString().PadLeft(2, '0') + ":" + p.Minutes.ToString().PadLeft(2, '0');
-            }
-        }
-
-        [Obsolete("Use TemOrigem")]
-        public bool TemSaida()
+        public bool TemDestino()
         {
-            return TemOrigem();
-        }
-
-        public bool TemOrigem() {
-            return ((
-                from l in Locais where (l.Tipo == FreteLocalTipoEnum.Origem) select l
-            ).FirstOrDefault() != null);
-        }
-
-        public bool TemDestino() {
-            return ((
-                from l in Locais where (l.Tipo == FreteLocalTipoEnum.Destino) select l
-            ).FirstOrDefault() != null);
-        }
-
-        public FreteLocalInfo LocalOrigem {
-            get {
-                return (
-                    from l in Locais where (l.Tipo == FreteLocalTipoEnum.Origem) select l
-                ).FirstOrDefault();
-            }
-            set {
-                var origem = (
-                    from l in Locais where (l.Tipo == FreteLocalTipoEnum.Origem) select l
-                ).FirstOrDefault();
-                if (origem != null) {
-                    Locais.Remove(origem);
+            bool retorno = false;
+            foreach (var local in Locais)
+            {
+                if (local.Tipo == FreteLocalTipoEnum.Destino)
+                {
+                    retorno = true;
+                    break;
                 }
-                Locais.Insert(0, value);
             }
-        }
-
-        public FreteLocalInfo LocalDestino {
-            get {
-                return (
-                    from l in Locais where (l.Tipo == FreteLocalTipoEnum.Destino) select l
-                ).FirstOrDefault();
-            }
-            set {
-                var destino = (
-                    from l in Locais where (l.Tipo == FreteLocalTipoEnum.Destino) select l
-                ).FirstOrDefault();
-                if (destino != null) {
-                    Locais.Remove(destino);
-                }
-                Locais.Add(value);
-            }
+            return retorno;
         }
     }
 }

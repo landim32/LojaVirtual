@@ -6,13 +6,13 @@
     <item name="windowNoTitle">true</item>
     <item name="windowActionBar">false</item>
     <item name="colorPrimary">#2d2d30</item>
-    <item name="colorPrimaryDark">#2d2d30</item>
-    <item name="colorAccent">#00c851</item>
+    <item name="colorPrimaryDark">#715803</item>
+    <item name="colorAccent">#ff4b00</item>
     <item name="windowActionModeOverlay">true</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#00c851</item>
+    <item name="colorAccent">#ed1c24</item>
   </style>
   <style name="MyTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowBackground">@drawable/splash_screen</item>

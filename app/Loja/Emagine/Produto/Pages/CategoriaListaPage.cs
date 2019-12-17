@@ -1,5 +1,4 @@
-﻿using Acr.UserDialogs;
-using Emagine.Base.Estilo;
+﻿using Emagine.Base.Estilo;
 using Emagine.Produto.Cells;
 using Emagine.Produto.Factory;
 using Emagine.Produto.Model;
@@ -15,97 +14,56 @@ using Xamarin.Forms;
 
 namespace Emagine.Produto.Pages
 {
-    public class CategoriaListaPage : CategoriaBasePage
+    public class CategoriaListaPage : ContentPage
     {
-        /*
-        private Button _destaqueButton;
-        private Button _promocaoButton;
-        private Grid _menuGrid;
-        */
         private ListView _categoriaListView;
+
+        public event EventHandler<ProdutoListaPage> AoAbrirProdutoLista;
 
         public CategoriaListaPage()
         {
-            _mainLayout = new StackLayout
+            Title = "Departamentos";
+            Style = Estilo.Current[Estilo.TELA_EM_BRANCO];
+            inicializarComponente();
+            Content = new StackLayout
             {
-                //Margin = new Thickness(3, 3),
+                Margin = new Thickness(3, 3),
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 Children = {
-                    //_menuGrid,
-                    _buscaBar,
-                    _categoriaListView,
-                    new StackLayout {
-                        Orientation = StackOrientation.Vertical,
-                        VerticalOptions = LayoutOptions.Start,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        Margin = new Thickness(5, 0),
-                        Spacing = 0,
-                        Children = {
-                            new Label {
-                                VerticalOptions = LayoutOptions.Start,
-                                HorizontalOptions = LayoutOptions.Fill,
-                                HorizontalTextAlignment = TextAlignment.Center,
-                                Text = "Você está comprando em:",
-                                FontSize = 10
-                            },
-                            _empresaLabel
-                        }
-                    }
+                    _categoriaListView
                 }
             };
-            Content = _mainLayout;
         }
 
-        protected override void executarAtualizarCategoria(IList<CategoriaInfo> itens) {
-            _categoriaListView.ItemsSource = itens;
+        public int? IdCategoria { get; set; }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var regraLoja = LojaFactory.create();
+            var loja = regraLoja.pegarAtual();
+            if (loja != null) {
+                var regraCategoria = CategoriaFactory.create();
+                if (IdCategoria.HasValue) {
+                    _categoriaListView.ItemsSource = await regraCategoria.listarPorCategoria(loja.Id, IdCategoria.Value);
+                }
+                else {
+                    _categoriaListView.ItemsSource = await regraCategoria.listarPai(loja.Id);
+                }
+            }
+            else {
+                await DisplayAlert("Aviso", "Nenhuma loja selecionada.", "Fechar");
+            }
         }
-        
-        protected override void inicializarComponente() {
 
-            base.inicializarComponente();
-            /*
-            _destaqueButton = new Button
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.Start,
-                Text = "Destaques",
-                FontSize = 14,
-                HeightRequest = 40,
-                Style = Estilo.Current[EstiloProduto.PRODUTO_CARRINHO_BOTAO]
-            };
-
-            _promocaoButton = new Button
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.Start,
-                Text = "Promoções",
-                FontSize = 14,
-                HeightRequest = 40,
-                Style = Estilo.Current[EstiloProduto.PRODUTO_CARRINHO_BOTAO]
-            };
-
-            _menuGrid = new Grid
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Margin = 1,
-                RowSpacing = 1,
-                ColumnSpacing = 3
-            };
-            _menuGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            _menuGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-            _menuGrid.Children.Add(_destaqueButton, 0, 0);
-            _menuGrid.Children.Add(_promocaoButton, 1, 0);
-            */
-
+        private void inicializarComponente() {
             _categoriaListView = new ListView {
                 HasUnevenRows = true,
                 RowHeight = -1,
                 SeparatorVisibility = SeparatorVisibility.Default,
                 SeparatorColor = Estilo.Current.PrimaryColor,
-                ItemTemplate = new DataTemplate(typeof(HorarioEntregaCell))
+                ItemTemplate = new DataTemplate(typeof(CategoriaCell))
             };
             _categoriaListView.SetBinding(ListView.ItemsSourceProperty, new Binding("."));
             _categoriaListView.ItemTapped += async (sender, e) => {
@@ -114,7 +72,39 @@ namespace Emagine.Produto.Pages
                 var categoria = (CategoriaInfo)((ListView)sender).SelectedItem;
                 _categoriaListView.SelectedItem = null;
 
-                await abrirCategoria(categoria);
+                var regraLoja = LojaFactory.create();
+                var loja = regraLoja.pegarAtual();
+                if (loja == null)
+                {
+                    await DisplayAlert("Aviso", "Nenhuma loja selecionada.", "Fechar");
+                    return;
+                }
+
+                var regraCategoria = CategoriaFactory.create();
+                var categoriasFilho = await regraCategoria.listarPorCategoria(loja.Id, categoria.Id);
+
+                if (categoriasFilho.Count > 0)
+                {
+                    var categoriaPage = new CategoriaListaPage
+                    {
+                        Title = categoria.Nome,
+                        IdCategoria = categoria.Id
+                    };
+                    if (AoAbrirProdutoLista != null)
+                    {
+                        categoriaPage.AoAbrirProdutoLista += AoAbrirProdutoLista;
+                    }
+                    await Navigation.PushAsync(categoriaPage);
+                }
+                else {
+                    var produtoPage = ProdutoUtils.gerarProdutoListaPorCategoria(categoria);
+                    if (AoAbrirProdutoLista != null) {
+                        AoAbrirProdutoLista(this, produtoPage);
+                    }
+                    else {
+                        await Navigation.PushAsync(produtoPage);
+                    }
+                }
             };
         }
     }

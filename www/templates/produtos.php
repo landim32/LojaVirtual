@@ -11,20 +11,15 @@ use Emagine\Produto\Model\ProdutoInfo;
  * @var ProdutoInfo[] $produtos
  * @var string $paginacao
  */
-$urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
 ?>
-<div class="container margin-top-10px">
+<div class="container">
     <div class="row">
-        <?php $i = 0; ?>
         <?php foreach ($produtos as $produto) : ?>
-            <?php $urlProduto = $urlBase . "/" . $produto->getCategoria()->getSlug() . "/" . $produto->getSlug(); ?>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="col-sm-4 col-md-3">
                 <div class="thumbnail">
-                    <a href="<?php echo $urlProduto; ?>">
-                        <img src="<?php echo $produto->getFotoUrl(250, 250); ?>" class="img-responsive" alt="<?php echo $produto->getNome(); ?>" style="width: 250px; height: 250px" />
-                    </a>
+                    <img src="<?php echo $app->getBaseUrl() . "/produto/250x250/" . $produto->getFoto(); ?>" class="img-responsive" alt="<?php echo $produto->getNome(); ?>" />
                     <div class="caption text-center">
-                        <h5><a href="<?php echo $urlProduto; ?>"><?php echo $produto->getNome(); ?></a></h5>
+                        <h5><?php echo $produto->getNome(); ?></h5>
                         <p>
                             <?php if ($produto->getValorPromocao() > 0) : ?>
                                 De: <span style="text-decoration:line-through"><small>R$ </small><?php echo "<strong>" . number_format($produto->getValor(), 2, "</strong><small>,", ".") . "</small>"; ?></span>
@@ -35,7 +30,6 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                         </p>
                         <div class="btn-adicionar"
                              data-id="<?php echo $produto->getId(); ?>"
-                             data-loja="<?php echo $produto->getIdLoja(); ?>"
                              data-foto="<?php echo $produto->getFoto(); ?>"
                              data-nome="<?php echo $produto->getNome(); ?>"
                              data-valor="<?php echo number_format( $produto->getValor(), 2, ".", ""); ?>"
@@ -44,17 +38,11 @@ $urlBase = $app->getBaseUrl() . "/" . $loja->getSlug();
                     </div>
                 </div>
             </div>
-            <?php
-            $i++;
-            if ($i % 4 == 0) {
-                echo "</div><div class='row'>";
-            }
-            ?>
         <?php endforeach; ?>
     </div>
     <?php if (!isNullOrEmpty($paginacao)) : ?>
-        <div class="row">
-            <div class="col-md-12 text-center"><?php echo $paginacao; ?></div>
-        </div>
+    <div class="row">
+        <div class="col-md-12 text-center"><?php echo $paginacao; ?></div>
+    </div>
     <?php endif; ?>
 </div>

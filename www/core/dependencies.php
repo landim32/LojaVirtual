@@ -3,67 +3,23 @@
 namespace Emagine\Loja;
 
 use Emagine\Base\EmagineApp;
-use Emagine\Endereco\Model\EnderecoInfo;
 use Emagine\Login\BLL\UsuarioBLL;
-use Emagine\Login\Model\UsuarioEnderecoInfo;
 use Emagine\Login\Model\UsuarioInfo;
 use Emagine\Produto\BLL\LojaBLL;
-use Psr\Container\ContainerInterface;
-use Slim\Http\Environment;
-use Slim\Http\Uri;
 use Slim\Views\PhpRenderer;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Http\Body;
 use Exception;
-use Slim\Views\Twig;
-use Slim\Views\TwigExtension;
 
 /**
  * @var EmagineApp $app;
  */
 
-/*
-$container = $app->getContainer();
-$container['view'] = function ($container) {
-    #@var ContainerInterface $container
-    //$basePath = $this->getBasePath();
-    $view = new Twig(dirname(__DIR__) . '/templates/exemplo_twig', [
-        'cache' => dirname(__DIR__) . '/cache/'
-    ]);
-    $router = $container->get('router');
-    $uri = Uri::createFromEnvironment(new Environment($_SERVER));
-    $view->addExtension(new TwigExtension($router, $uri));
-
-    return $view;
-};
-*/
-
-/*
-$app->add(function (Request $request, Response $response, $next) {
-    $response->getBody()->write('BEFORE');
-    $response = $next($request, $response);
-    $response->getBody()->write('AFTER');
-
-    return $response;
-});
-*/
-/*
-$container['baseView'] = function ($container) {
-    $basePath = $this->getBasePath();
-    return new Twig($basePath . '/templates/', [
-        'cache' => $basePath . '/cache/'
-    ]);
-};
-*/
-
 $app->addJavascriptUrl($app->getBaseUrl() . "/js/carrinho.js");
-$app->addJavascriptUrl($app->getBaseUrl() . "/js/endereco.js");
-//$app->addJavascriptUrl($app->getBaseUrl() . "/js/raio.js");
-
+$app->addJavascriptUrl($app->getBaseUrl() . "/js/pedido.js");
 
 /**
- * @throws Exception
  * @param EmagineApp $app
  * @param Request $request
  * @param Response $response
@@ -73,12 +29,12 @@ $app->addJavascriptUrl($app->getBaseUrl() . "/js/endereco.js");
 function exibirLogin(EmagineApp $app, Request $request, Response $response, $args) {
     $regraLoja = new LojaBLL();
     $regraUsuario = new UsuarioBLL();
-    $loja = $regraLoja->pegarPorSlug($args['loja_slug']);
+    $loja = $regraLoja->pegarPorSlug($args['slug']);
 
     $args['app'] = $app;
     $args['loja'] = $loja;
-    $args['urlResetar'] = $app->getBaseUrl() . "/" . $loja->getSlug() . "/resetar-senha";
-    $args['urlCadastro'] = $app->getBaseUrl() . "/" . $loja->getSlug() . "/cadastro";
+    $args['urlResetar'] = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/resetar-senha";
+    $args['urlCadastro'] = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/cadastro";
 
     /** @var PhpRenderer $rendererUsuario */
     $rendererUsuario = $app->getContainer()->get('loginView');
@@ -90,7 +46,7 @@ function exibirLogin(EmagineApp $app, Request $request, Response $response, $arg
     $body = $response->getBody();
     $str = "<div class='container'>";
     $str .= "<ol class=\"breadcrumb\">";
-    $url = $app->getBaseUrl() . "/" . $loja->getSlug();
+    $url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
     $str .= "<li><a href=\"" . $url . "\"><i class='fa fa-home'></i> Home</a></li>";
     $str .= "<li class=\"active\"><i class='fa fa-user-circle'></i> Login</li>";
     if ($regraUsuario->estaLogado()) {
@@ -108,7 +64,6 @@ function exibirLogin(EmagineApp $app, Request $request, Response $response, $arg
 }
 
 /**
- * @throws Exception
  * @param EmagineApp $app
  * @param Request $request
  * @param Response $response
@@ -123,7 +78,7 @@ function exibirUsuarioNovo(EmagineApp $app, Request $request, Response $response
     if (is_null($usuario)) {
         $usuario = new UsuarioInfo();
     }
-    $url = $app->getBaseUrl() . "/" . $loja->getSlug();
+    $url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
 
     $args['app'] = $app;
     $args['loja'] = $loja;
@@ -142,7 +97,6 @@ function exibirUsuarioNovo(EmagineApp $app, Request $request, Response $response
 }
 
 /**
- * @throws Exception
  * @param EmagineApp $app
  * @param Request $request
  * @param Response $response
@@ -152,13 +106,13 @@ function exibirUsuarioNovo(EmagineApp $app, Request $request, Response $response
  */
 function exibirUsuarioAlterar(EmagineApp $app, Request $request, Response $response, $args, $usuario = null) {
     $regraLoja = new LojaBLL();
-    //$regraUsuario = new UsuarioBLL();
+    $regraUsuario = new UsuarioBLL();
 
     $loja = $regraLoja->pegarPorSlug($args['slug']);
     if (is_null($usuario)) {
         $usuario = new UsuarioInfo();
     }
-    $url = $app->getBaseUrl() . "/" . $loja->getSlug();
+    $url = $app->getBaseUrl() . "/site/" . $loja->getSlug();
 
     $args['app'] = $app;
     $args['loja'] = $loja;
@@ -177,7 +131,6 @@ function exibirUsuarioAlterar(EmagineApp $app, Request $request, Response $respo
 }
 
 /**
- * @throws Exception
  * @param EmagineApp $app
  * @param Request $request
  * @param Response $response
@@ -220,7 +173,7 @@ function gravarLogin(EmagineApp $app, Request $request, Response $response, $arg
         }
 
         $regraUsuario->gravarCookie($usuario->getId());
-        $urlPedido = $app->getBaseUrl() . "/" . $loja->getSlug() . "/carrinho";
+        $urlPedido = $app->getBaseUrl() . "/site/" . $loja->getSlug() . "/carrinho";
         return $response->withStatus(302)->withHeader('Location', $urlPedido);
     }
     catch (Exception $e) {
@@ -228,52 +181,3 @@ function gravarLogin(EmagineApp $app, Request $request, Response $response, $arg
         return exibirUsuarioAlterar($app, $request, $response, $args, $usuario);
     }
 }
-
-/**
- * @param UsuarioEnderecoInfo $endereco
- * @param string $href
- * @param string $classe
- */
-/*
-function startLinkEndereco(UsuarioEnderecoInfo $endereco, $href, $classe = "endereco") {
-    echo "<a href=\"" . $href . "\"";
-    if (!isNullOrEmpty($classe)) {
-        echo " class=\"" . $classe . "\"";
-    }
-    if ($endereco->getId() > 0) {
-        echo " data-id=\"" . $endereco->getId() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getLogradouro())) {
-        echo " data-logradouro=\"" . $endereco->getLogradouro() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getLogradouro())) {
-        echo " data-complemento=\"" . $endereco->getComplemento() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getNumero())) {
-        echo " data-numero=\"" . $endereco->getNumero() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getBairro())) {
-        echo " data-bairro=\"" . $endereco->getBairro() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getCidade())) {
-        echo " data-cidade=\"" . $endereco->getCidade() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getUf())) {
-        echo " data-uf=\"" . $endereco->getUf() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getCep())) {
-        echo " data-cep=\"" . $endereco->getCep() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getLatitude())) {
-        echo " data-latitude=\"" . $endereco->getLatitude() . "\"";
-    }
-    if (!isNullOrEmpty($endereco->getLongitude())) {
-        echo " data-longitude=\"" . $endereco->getLongitude() . "\"";
-    }
-    echo ">";
-}
-
-function endLinkEndereco() {
-    echo "</a>";
-}
-*/

@@ -1,5 +1,4 @@
-﻿using Emagine.Produto.Events;
-using Emagine.Produto.Factory;
+﻿using Emagine.Produto.Factory;
 using Emagine.Produto.Model;
 using Emagine.Produto.Pages;
 using System;
@@ -19,37 +18,18 @@ namespace Emagine.Produto.Utils
 
         public static ProdutoBuscaPage gerarProdutoBusca()
         {
-            var regraLoja = LojaFactory.create();
-            var loja = regraLoja.pegarAtual();
             var produtoPage = new ProdutoBuscaPage
             {
-                Title = "Buscar produto",
-                Filtro = new ProdutoFiltroInfo
-                {
-                    IdLoja = loja.Id,
-                    Situacao = SituacaoEnum.Ativo,
-                    //Destaque = false,
-                }
+                Title = "Buscar produto"
             };
             return produtoPage;
         }
 
-        public static ProdutoBasePage gerarProdutoListaDestaque() {
-            var regraLoja = LojaFactory.create();
-            var loja = regraLoja.pegarAtual();
-
-            var produtoPage = ProdutoListaPageFactory.create();
-            produtoPage.Title = "Em Promoção";
-            produtoPage.Filtro = new ProdutoFiltroInfo
+        public static ProdutoListaPage gerarProdutoListaDestaque() {
+            var produtoPage = new ProdutoListaPage
             {
-                IdLoja = loja.Id,
-                Situacao = SituacaoEnum.Ativo,
-                Destaque = true,
+                Title = "Em Destaque"
             };
-            if (loja.ControleEstoque) {
-                produtoPage.Filtro.ApenasEstoque = true;
-            }
-            /*
             produtoPage.AoCarregar += async (object sender, ProdutoListaEventArgs produtoArgs) =>
             {
                 var regraLoja = LojaFactory.create();
@@ -66,23 +46,15 @@ namespace Emagine.Produto.Utils
                 }
                 produtoArgs.Produtos = await regraProduto.listarPorFiltro(filtro);
             };
-            */
             return produtoPage;
         }
 
-        public static ProdutoBasePage gerarProdutoListaPromocao() {
-            var regraLoja = LojaFactory.create();
-            var loja = regraLoja.pegarAtual();
-
-            var produtoPage = ProdutoListaPageFactory.create();
-            produtoPage.Title = "Em Promoção";
-            produtoPage.Filtro = new ProdutoFiltroInfo {
-                IdLoja = loja.Id,
-                Situacao = SituacaoEnum.Ativo,
-                ApenasEstoque = loja.ControleEstoque ? true : false,
-                ApenasPromocao = true
+        public static ProdutoListaPage gerarProdutoListaPromocao()
+        {
+            var produtoPage = new ProdutoListaPage
+            {
+                Title = "Em Promoção"
             };
-            /*
             produtoPage.AoCarregar += async (object sender, ProdutoListaEventArgs produtoArgs) =>
             {
                 var regraLoja = LojaFactory.create();
@@ -95,29 +67,23 @@ namespace Emagine.Produto.Utils
                     ApenasEstoque = loja.ControleEstoque ? true : false,
                     ApenasPromocao = true
                 };
+                /*
+                if (loja.ControleEstoque)
+                {
+                    filtro.ApenasEstoque = true;
+                }
+                */
                 produtoArgs.Produtos = await regraProduto.listarPorFiltro(filtro);
             };
-            */
             return produtoPage;
         }
 
-        public static ProdutoBasePage gerarProdutoListaPorCategoria(CategoriaInfo categoria)
+        public static ProdutoListaPage gerarProdutoListaPorCategoria(CategoriaInfo categoria)
         {
-            var regraLoja = LojaFactory.create();
-            var loja = regraLoja.pegarAtual();
-
-            var produtoPage = ProdutoListaPageFactory.create();
-            produtoPage.Title = categoria.Nome;
-            produtoPage.Filtro = new ProdutoFiltroInfo {
-                IdLoja = loja.Id,
-                IdCategoria = categoria.Id,
-                Situacao = SituacaoEnum.Ativo
-            };
-            if (loja.ControleEstoque)
+            var produtoPage = new ProdutoListaPage
             {
-                produtoPage.Filtro.ApenasEstoque = true;
-            }
-            /*
+                Title = categoria.Nome
+            };
             produtoPage.AoCarregar += async (object sender, ProdutoListaEventArgs produtoArgs) =>
             {
                 var regraLoja = LojaFactory.create();
@@ -135,7 +101,6 @@ namespace Emagine.Produto.Utils
                 var regraProduto = ProdutoFactory.create();
                 produtoArgs.Produtos = await regraProduto.listarPorFiltro(filtro);
             };
-            */
             return produtoPage;
         }
     }

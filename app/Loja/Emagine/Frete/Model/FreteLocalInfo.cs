@@ -52,5 +52,11 @@ namespace Emagine.Frete.Model
         [JsonProperty("logradouro")]
         public string Logradouro { get; set; }
 
+        [JsonProperty("latitude")]
+        public double? Latitude { get; set; }
+
+        [JsonProperty("longitude")]
+        public double? Longitude { get; set; }
+
     }
 }
