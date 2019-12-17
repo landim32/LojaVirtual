@@ -27,6 +27,12 @@ namespace Emagine.Login.BLL.Base
             return await queryPut<int>(GlobalUtils.URLAplicacao + "/api/usuario/logar", args.ToArray());
         }
 
+        public async Task<IList<UsuarioInfo>> listar()
+        {
+            var url = GlobalUtils.URLAplicacao + "/api/usuario/listar";
+            return await queryGet<IList<UsuarioInfo>>(url);
+        }
+
         public async Task<UsuarioInfo> pegar(int id_usuario)
         {
             return await queryGet<UsuarioInfo>(GlobalUtils.URLAplicacao + "/api/usuario/pegar/" + id_usuario.ToString());

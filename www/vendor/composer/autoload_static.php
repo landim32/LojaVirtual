@@ -18,10 +18,6 @@ class ComposerStaticIniteac89ca3a7ae85a1e5e3bb647362b869
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
-        'j' => 
-        array (
-            'joshtronic\\' => 11,
-        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -68,10 +64,6 @@ class ComposerStaticIniteac89ca3a7ae85a1e5e3bb647362b869
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-        ),
-        'joshtronic\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/joshtronic/php-loremipsum/src',
         ),
         'Webmozart\\Assert\\' => 
         array (

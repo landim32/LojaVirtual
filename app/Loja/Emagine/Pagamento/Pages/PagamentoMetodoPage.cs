@@ -72,8 +72,6 @@ namespace Emagine.Pagamento.Pages
             }
         }
 
-        public PagamentoInfo Pagamento { get; set; }
-
         public bool UsaCartaoOffline {
             get
             {
@@ -85,6 +83,8 @@ namespace Emagine.Pagamento.Pages
                 atualizarTela();
             }
         }
+
+        public PagamentoInfo Pagamento { get; set; }
 
         public event EventHandler<PagamentoInfo> AoEfetuarPagamento;
 

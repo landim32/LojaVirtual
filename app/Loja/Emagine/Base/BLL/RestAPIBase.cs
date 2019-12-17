@@ -10,26 +10,34 @@ namespace Emagine.Base.BLL
 {
     public class RestAPIBase
     {
-        private string INTERNET_ERRO = "Erro na conexão. Verifique sua Internet.";
+        //protected string API_URL = "http://emagine.com.br/emagine-frete";
+
+        public RestAPIBase()
+        {
+            //API_URL = GlobalAplicacao.getURLAplicacao();
+        }
+
+        protected HttpClient createClient() {
+            return new HttpClient {
+                Timeout = TimeSpan.FromSeconds(15) 
+            };
+        }
 
         protected async Task<T> queryGet<T>(string url)
         {
-            using (var client = new HttpClient()) {
-                try {
-                    HttpResponseMessage response = await client.GetAsync(url);
-                    var str = await response.Content.ReadAsStringAsync();
-                    if (!response.IsSuccessStatusCode) {
-                        throw new Exception(str);
-                    }
+            using (var client = createClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                //response.EnsureSuccessStatusCode();
+                var str = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(str);
+                }
+                try
+                {
                     var retorno = JsonConvert.DeserializeObject<T>(str);
                     return retorno;
-                }
-                catch (HttpRequestException erro)
-                {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
-                catch (TaskCanceledException erro) {
-                    throw new Exception(INTERNET_ERRO, erro);
                 }
                 catch (Exception erro)
                 {
@@ -40,7 +48,7 @@ namespace Emagine.Base.BLL
 
         protected async Task<string> queryGet(string url)
         {
-            using (var client = new HttpClient())
+            using (var client = createClient())
             {
                 try
                 {
@@ -53,14 +61,6 @@ namespace Emagine.Base.BLL
                     }
                     return str;
                 }
-                catch (HttpRequestException erro)
-                {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
-                catch (TaskCanceledException erro)
-                {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
                 catch (Exception erro)
                 {
                     throw erro;
@@ -70,108 +70,72 @@ namespace Emagine.Base.BLL
 
         protected async Task<T> queryPut<T>(string url, object[] args)
         {
-            using (var client = new HttpClient())
+            using (var client = createClient())
             {
+                var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
+                var content = new StringContent(strJson);
+                HttpResponseMessage response = await client.PutAsync(url, content);
+                var str = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode) {
+                    throw new Exception(str);
+                }
+                return JsonConvert.DeserializeObject<T>(str);
+                /*
                 try
                 {
-                    var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
-                    var content = new StringContent(strJson);
-                    HttpResponseMessage response = await client.PutAsync(url, content);
-                    var str = await response.Content.ReadAsStringAsync();
-                    if (!response.IsSuccessStatusCode) {
-                        throw new Exception(str);
-                    }
                     var retorno = JsonConvert.DeserializeObject<T>(str);
                     return retorno;
-                }
-                catch (HttpRequestException erro)
-                {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
-                catch (TaskCanceledException erro) {
-                    throw new Exception(INTERNET_ERRO, erro);
                 }
                 catch (Exception erro)
                 {
                     throw erro;
                 }
+                */
             }
         }
         protected async Task<string> queryPut(string url, object[] args)
         {
-            using (var client = new HttpClient()) {
-                try {
-                    var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
-                    var content = new StringContent(strJson);
-                    HttpResponseMessage response = await client.PutAsync(url, content);
-                    var str = await response.Content.ReadAsStringAsync();
-                    if (!response.IsSuccessStatusCode) {
-                        throw new Exception(str);
-                    }
-                    return str;
-                }
-                catch (HttpRequestException erro)
+            using (var client = createClient())
+            {
+                var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
+                var content = new StringContent(strJson);
+                HttpResponseMessage response = await client.PutAsync(url, content);
+                var str = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception(INTERNET_ERRO, erro);
+                    throw new Exception(str);
                 }
-                catch (TaskCanceledException erro)
-                {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
-                catch (Exception erro)
-                {
-                    throw erro;
-                }
+                return str;
             }
         }
 
         protected async Task execPut(string url, params object[] args)
         {
-            using (var client = new HttpClient()) {
-                try {
-                    var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
-                    var content = new StringContent(strJson);
-                    HttpResponseMessage response = await client.PutAsync(url, content);
-                    var str = await response.Content.ReadAsStringAsync();
-                    if (!response.IsSuccessStatusCode) {
-                        throw new Exception(str);
-                    }
-                    return;
-                }
-                catch (HttpRequestException erro)
+            using (var client = createClient())
+            {
+                var strJson = JsonConvert.SerializeObject(args.Length == 1 ? args[0] : args);
+                var content = new StringContent(strJson);
+                HttpResponseMessage response = await client.PutAsync(url, content);
+                var str = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception(INTERNET_ERRO, erro);
+                    throw new Exception(str);
                 }
-                catch (TaskCanceledException erro) {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
-                catch (Exception erro) {
-                    throw erro;
-                }
+                return;
             }
         }
 
         protected async Task execGet(string url)
         {
-            using (var client = new HttpClient()) {
-                try {
-                    HttpResponseMessage response = await client.GetAsync(url);
-                    var str = await response.Content.ReadAsStringAsync();
-                    if (!response.IsSuccessStatusCode) {
-                        throw new Exception(str);
-                    }
-                    return;
-                }
-                catch (HttpRequestException erro)
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                var str = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception(INTERNET_ERRO, erro);
+                    throw new Exception(str);
                 }
-                catch (TaskCanceledException erro) {
-                    throw new Exception(INTERNET_ERRO, erro);
-                }
-                catch (Exception erro) {
-                    throw erro;
-                }
+                return;
             }
         }
     }

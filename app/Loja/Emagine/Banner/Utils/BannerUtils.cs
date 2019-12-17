@@ -13,6 +13,6 @@ namespace Emagine.Banner.Utils
         public const string SEGUIMENTO = "seguimento";
         public const string CATEGORIA = "categoria";
 
-        
+        public static bool Ativo { get; set; } = true;
     }
 }

@@ -167,7 +167,7 @@ namespace Emagine.Frete.Pages
 
         protected override void OnDisappearing()
         {
-            AtualizacaoFrete.setConfirm(false);
+            //AtualizacaoFrete.setConfirm(false);
             base.OnDisappearing();
         }
 
@@ -216,7 +216,7 @@ namespace Emagine.Frete.Pages
             catch (Exception e)
             {
                 UserDialogs.Instance.HideLoading();
-                AtualizacaoFrete.setConfirm(false);
+                //AtualizacaoFrete.setConfirm(false);
             }
         }
 
@@ -268,7 +268,7 @@ namespace Emagine.Frete.Pages
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start,
                 FontAttributes = FontAttributes.Bold,
-                Text = "Valor: R$ " + _Info.Valor.ToString("N2")
+                Text = "Valor: " + (_Info.Valor.HasValue ? "R$ " + _Info.Valor.Value.ToString("N2") : "")
             };
             _Aceitar = new Button
             {

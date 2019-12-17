@@ -1,6 +1,7 @@
 ﻿using Emagine.Base.Model;
 using Emagine.Base.Pages;
-using FormsPlugin.Iconize;
+using Emagine.Login.Model;
+using Plugin.Iconize;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,16 @@ namespace Emagine.Base.Pages
         protected MenuPage Menu {
             get {
                 return (MenuPage)Master;
+            }
+        }
+
+
+        public UsuarioInfo Usuario {
+            get {
+                return ((MenuPage)Master).Usuario;
+            }
+            set {
+                ((MenuPage)Master).Usuario = value;
             }
         }
 

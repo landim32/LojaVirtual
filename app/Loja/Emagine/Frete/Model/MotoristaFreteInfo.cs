@@ -47,7 +47,7 @@ namespace Emagine.Frete.Model
         public string DistanciaEncomendaStr { get; set; }
 
         [JsonProperty("valor")]
-        public float Valor { get; set; }
+        public float? Valor { get; set; }
     
     }
 }

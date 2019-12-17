@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using Emagine.Base.BLL;
 using Emagine.Base.Estilo;
+using Emagine.Base.Pages;
 using Emagine.Base.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
@@ -154,6 +155,9 @@ namespace Emagine.Login.Pages
             var usuario = await regraUsuario.pegar(id_usuario);
             if (usuario != null) {
                 regraUsuario.gravarAtual(usuario);
+                if (App.Current.MainPage is RootPage) {
+                    ((RootPage)App.Current.MainPage).atualizarMenu();
+                }
                 executarEventoLogar(usuario);
             }
             else {

@@ -8,6 +8,7 @@
     <Compile Remove="Cells\**" />
     <Compile Remove="Emagine\Ads\**" />
     <Compile Remove="Emagine\Audio\**" />
+    <Compile Remove="Emagine\CRM\Bot\**" />
     <Compile Remove="Emagine\Frete\**" />
     <Compile Remove="Emagine\IO\**" />
     <Compile Remove="Emagine\Mapa\**" />
@@ -18,6 +19,7 @@
     <EmbeddedResource Remove="Cells\**" />
     <EmbeddedResource Remove="Emagine\Ads\**" />
     <EmbeddedResource Remove="Emagine\Audio\**" />
+    <EmbeddedResource Remove="Emagine\CRM\Bot\**" />
     <EmbeddedResource Remove="Emagine\Frete\**" />
     <EmbeddedResource Remove="Emagine\IO\**" />
     <EmbeddedResource Remove="Emagine\Mapa\**" />
@@ -28,6 +30,7 @@
     <None Remove="Cells\**" />
     <None Remove="Emagine\Ads\**" />
     <None Remove="Emagine\Audio\**" />
+    <None Remove="Emagine\CRM\Bot\**" />
     <None Remove="Emagine\Frete\**" />
     <None Remove="Emagine\IO\**" />
     <None Remove="Emagine\Mapa\**" />
@@ -39,6 +42,7 @@
 
   <ItemGroup>
     <Compile Remove="Emagine\Base\IBLL\ISQLite.cs" />
+    <Compile Remove="Emagine\Base\Pages\MenuFotoPage.cs" />
     <Compile Remove="Emagine\Endereco\Controls\EnderecoMapaForm.cs" />
     <Compile Remove="Emagine\GPS\Model\VelocidadeInfo.cs" />
     <Compile Remove="Emagine\GPS\Utils\GPSUtilsOld.cs" />
@@ -66,6 +70,7 @@
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.2.0" />
     <PackageReference Include="Xam.Plugin.Iconize" Version="1.0.10" />
     <PackageReference Include="Xam.Plugin.Media" Version="3.1.3" />
+    <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="2.0.2" />
     <PackageReference Include="Xam.Plugins.Notifier" Version="2.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
     <PackageReference Include="Xamarin.Forms.Extended.InfiniteScrolling" Version="1.0.0-preview2" />

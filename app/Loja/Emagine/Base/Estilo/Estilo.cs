@@ -49,6 +49,9 @@ namespace Emagine.Base.Estilo
         public const string ENDERECO_TITULO = "endereco-titulo";
         public const string ENDERECO_CAMPO = "endereco-campo";
         public const string ENDERECO_LABEL = "endereco-label";
+        public const string FRAME_DANGER = "frame-danger";
+        public const string FRAME_DANGER_ICON = "frame-danger-icon";
+        public const string FRAME_DANGER_TEXT = "frame-danger-text";
 
         private ResourceDictionary _resources = null;
         private Color _primaryColor;
@@ -100,6 +103,9 @@ namespace Emagine.Base.Estilo
         private EstiloLabel _enderecoLabel = null;
         private EstiloListView _listaPadrao = null;
         private EstiloFrame _listaFramePadrao = null;
+        private EstiloFrame _frameDanger = null;
+        private EstiloIcon _frameDangerIcon = null;
+        private EstiloLabel _frameDangerLabel = null;
 
         public Estilo() {
             _resources = new ResourceDictionary();
@@ -143,7 +149,10 @@ namespace Emagine.Base.Estilo
             _enderecoLabel = new EstiloLabel();
             _listaPadrao = new EstiloListView();
             _listaFramePadrao = new EstiloFrame();
-    }
+            _frameDanger = new EstiloFrame();
+            _frameDangerIcon = new EstiloIcon();
+            _frameDangerLabel = new EstiloLabel();
+        }
 
         public Color PrimaryColor {
             get {
@@ -619,6 +628,7 @@ namespace Emagine.Base.Estilo
         }
 
         public EstiloProduto Produto { get; set; } = new EstiloProduto();
+        public EstiloLoja Loja { get; set; } = new EstiloLoja();
         public EstiloTotal Total { get; set; } = new EstiloTotal();
         public EstiloQuantidade Quantidade { get; set; } = new EstiloQuantidade();
 
@@ -691,6 +701,7 @@ namespace Emagine.Base.Estilo
             gravarEstilo(ENDERECO_TITULO, _enderecoTitulo.gerar());
             gravarEstilo(ENDERECO_CAMPO, _enderecoCampo.gerar());
             gravarEstilo(ENDERECO_LABEL, _enderecoLabel.gerar());
+
             gravarEstilo(EstiloProduto.PRODUTO_FRAME, Produto.Frame.gerar());
             gravarEstilo(EstiloProduto.PRODUTO_FOTO, Produto.Foto.gerar());
             gravarEstilo(EstiloProduto.PRODUTO_TITULO, Produto.Titulo.gerar());
@@ -704,6 +715,14 @@ namespace Emagine.Base.Estilo
             gravarEstilo(EstiloProduto.PRODUTO_PROMOCAO_MOEDA, Produto.PromocaoMoeda.gerar());
             gravarEstilo(EstiloProduto.PRODUTO_PROMOCAO_VALOR, Produto.PromocaoValor.gerar());
             gravarEstilo(EstiloProduto.PRODUTO_CARRINHO_BOTAO, Produto.Carrinho.gerar());
+
+            gravarEstilo(EstiloLoja.LOJA_FRAME, Loja.Frame.gerar());
+            gravarEstilo(EstiloLoja.LOJA_FOTO, Loja.Foto.gerar());
+            gravarEstilo(EstiloLoja.LOJA_TITULO, Loja.Titulo.gerar());
+            gravarEstilo(EstiloLoja.LOJA_ICONE, Loja.Icone.gerar());
+            gravarEstilo(EstiloLoja.LOJA_ENDERECO, Loja.Endereco.gerar());
+            gravarEstilo(EstiloLoja.LOJA_DISTANCIA, Loja.Distancia.gerar());
+
             gravarEstilo(EstiloQuantidade.QUANTIDADE_FUNDO, Quantidade.Fundo.gerar());
             gravarEstilo(EstiloQuantidade.QUANTIDADE_TEXTO, Quantidade.QuantidadeTexto.gerar());
             gravarEstilo(EstiloQuantidade.QUANTIDADE_REMOVER_BOTAO, Quantidade.RemoverBotao.gerar());

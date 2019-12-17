@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Emagine.Banner.Utils;
 using Emagine.Base.Estilo;
 using Emagine.Pagamento.Model;
 using Emagine.Pagamento.Pages;
@@ -221,6 +222,7 @@ namespace Emagine.Produto.Pages
             };
             _continuarCompraButton.Clicked += (sender, e) => {
                 var categoriaPage = CategoriaPageFactory.create();
+                categoriaPage.BannerVisivel = BannerUtils.Ativo;
                 categoriaPage.Title = "Categorias";
                 Navigation.PushAsync(categoriaPage);
             };

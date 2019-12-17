@@ -1,5 +1,5 @@
 ﻿using Emagine.Base.Model;
-using FormsPlugin.Iconize;
+using Plugin.Iconize;
 using System;
 using System.Collections.Generic;
 using System.Linq;

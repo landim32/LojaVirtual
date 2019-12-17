@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "32e29c86f89053a6d28bb191da28d09a",
+    "content-hash": "f9cc62ff44f0a91bd3d1a9b59bf7cba4",
     "packages": [
         {
             "name": "components/bootstrap",
@@ -260,52 +260,6 @@
                 "pagamentos"
             ],
             "time": "2015-11-25T10:36:10+00:00"
-        },
-        {
-            "name": "joshtronic/php-loremipsum",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joshtronic/php-loremipsum.git",
-                "reference": "24b768a63091400200bf70d9f278d0569ae78a5c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joshtronic/php-loremipsum/zipball/24b768a63091400200bf70d9f278d0569ae78a5c",
-                "reference": "24b768a63091400200bf70d9f278d0569ae78a5c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "satooshi/php-coveralls": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "joshtronic\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Josh Sherman",
-                    "email": "hello@joshtronic.com",
-                    "homepage": "https://joshtronic.com"
-                }
-            ],
-            "description": "Lorem ipsum generator in PHP without dependencies",
-            "homepage": "https://github.com/joshtronic/php-loremipsum",
-            "keywords": [
-                "generator",
-                "ipsum",
-                "lorem"
-            ],
-            "time": "2018-01-09T05:57:45+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2554,9 +2508,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "joshtronic/php-loremipsum": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

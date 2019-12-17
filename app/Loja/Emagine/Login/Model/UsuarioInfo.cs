@@ -29,6 +29,8 @@ namespace Emagine.Login.Model
         public bool? PJ { get; set; }
         [JsonProperty("foto")]
         public string Foto { get; set; }
+        [JsonProperty("foto_url")]
+        public string FotoUrl { get; set; }
         [JsonProperty("email")]
         public string Email { get; set; }
         [JsonProperty("slug")]

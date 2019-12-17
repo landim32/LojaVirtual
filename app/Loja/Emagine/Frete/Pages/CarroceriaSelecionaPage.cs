@@ -36,7 +36,7 @@ namespace Emagine.Frete.Pages
             catch (Exception erro)
             {
                 UserDialogs.Instance.HideLoading();
-                UserDialogs.Instance.ShowError(erro.Message, 8000);
+                await UserDialogs.Instance.AlertAsync(erro.Message, "Erro", "Entendi");
             }
         }
 
@@ -74,10 +74,8 @@ namespace Emagine.Frete.Pages
                 if (e == null)
                     return;
                 var item = (TipoCarroceriaInfo)((ListView)sender).SelectedItem;
-                if(this.AoSelecionar != null){
-                    this.AoSelecionar(this, item);
-                }
-                Navigation.PopAsync();
+                AoSelecionar?.Invoke(this, item);
+                //Navigation.PopAsync();
             };
 
         }

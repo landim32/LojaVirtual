@@ -29,8 +29,8 @@ namespace Emagine.Frete.Cells
                                 HorizontalOptions = LayoutOptions.Start,
                                 VerticalOptions = LayoutOptions.Start,
                                 Icon = "fa-map-marker",
-                                IconSize = 22,
-                                WidthRequest = 30,
+                                IconSize = 14,
+                                WidthRequest = 16,
                                 IconColor = Estilo.Current.PrimaryColor
                             },
                             _Text
@@ -48,9 +48,9 @@ namespace Emagine.Frete.Cells
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 LineBreakMode = LineBreakMode.TailTruncation,
-                FontSize = 20
+                FontSize = 14
             };
-            _Text.SetBinding(Label.TextProperty, new Binding("Text"));
+            _Text.SetBinding(Label.TextProperty, new Binding("."));
         }
     }
 }

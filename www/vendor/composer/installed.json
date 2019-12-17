@@ -323,54 +323,6 @@
         ]
     },
     {
-        "name": "joshtronic/php-loremipsum",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/joshtronic/php-loremipsum.git",
-            "reference": "24b768a63091400200bf70d9f278d0569ae78a5c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/joshtronic/php-loremipsum/zipball/24b768a63091400200bf70d9f278d0569ae78a5c",
-            "reference": "24b768a63091400200bf70d9f278d0569ae78a5c",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "satooshi/php-coveralls": "~1.0"
-        },
-        "time": "2018-01-09T05:57:45+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "joshtronic\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Josh Sherman",
-                "email": "hello@joshtronic.com",
-                "homepage": "https://joshtronic.com"
-            }
-        ],
-        "description": "Lorem ipsum generator in PHP without dependencies",
-        "homepage": "https://github.com/joshtronic/php-loremipsum",
-        "keywords": [
-            "generator",
-            "ipsum",
-            "lorem"
-        ]
-    },
-    {
         "name": "monolog/monolog",
         "version": "1.23.0",
         "version_normalized": "1.23.0.0",

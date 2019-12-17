@@ -34,7 +34,7 @@ namespace Emagine.Produto.Cells
             inicilizarComponente();
             View = new Frame
             {
-                Style = Estilo.Current[Estilo.LISTA_FRAME_PADRAO],
+                Style = Estilo.Current[EstiloLoja.LOJA_FRAME],
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
                 Content = new StackLayout
@@ -53,10 +53,16 @@ namespace Emagine.Produto.Cells
                             Spacing = 0,
                             Children = {
                                 _NomeLabel,
-                                //_EnderecoLabel,
-                                //gerarNota(0),
-                                _notaControl,
-                                _DistanciaLabel
+                                _EnderecoLabel,
+                                new StackLayout {
+                                    Orientation = StackOrientation.Horizontal,
+                                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                                    VerticalOptions = LayoutOptions.Start,
+                                    Children = {
+                                        _DistanciaLabel,
+                                        _notaControl,
+                                    }
+                                },
                             }
                         },
                     }
@@ -64,81 +70,31 @@ namespace Emagine.Produto.Cells
             };
         }
 
-        /*
-        private StackLayout gerarNota(int nota)
-        {
-            return new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-                HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.Start,
-                Children = {
-                    new IconImage {
-                        Icon = (nota >= 1) ? "fa-star" : "fa-star-o",
-                        IconSize = 22,
-                        IconColor = Color.Gold
-                    },
-                    new IconImage {
-                        Icon = (nota >= 2) ? "fa-star" : "fa-star-o",
-                        IconSize = 22,
-                        IconColor = Color.Gold
-                    },
-                    new IconImage {
-                        Icon = (nota >= 3) ? "fa-star" : "fa-star-o",
-                        IconSize = 22,
-                        IconColor = Color.Gold
-                    },
-                    new IconImage {
-                        Icon = (nota >= 4) ? "fa-star" : "fa-star-o",
-                        IconSize = 22,
-                        IconColor = Color.Gold
-                    },
-                    new IconImage {
-                        Icon = (nota >= 5) ? "fa-star" : "fa-star-o",
-                        IconSize = 22,
-                        IconColor = Color.Gold
-                    }
-                }
-            };
-        }
-        */
-
         private void inicilizarComponente() {
             _FotoImage = new Image {
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start,
-                Aspect = Aspect.AspectFit,
-                WidthRequest = 80,
-                HeightRequest = 80
-                /*
-                WidthRequest = 120,
-                HeightRequest = 120
-                */
-                //Style = Estilo.Current[Estilo.LISTA_ITEM]
+                Style = Estilo.Current[EstiloLoja.LOJA_FOTO]
             };
             _FotoImage.SetBinding(Image.SourceProperty, new Binding("FotoUrl"));
             _NomeLabel = new Label {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Center,
-                FontAttributes = FontAttributes.Bold,
-                TextColor = Estilo.Current.BarBackgroundColor,
-                FontSize = 18,
+                Style = Estilo.Current[EstiloLoja.LOJA_TITULO]
             };
             _NomeLabel.SetBinding(Label.TextProperty, new Binding("Nome"));
             _EnderecoLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Italic,
-                TextColor = Color.FromHex("#7c7c7c"),
-                FontSize = 13,
+                Style = Estilo.Current[EstiloLoja.LOJA_ENDERECO]
             };
             _EnderecoLabel.SetBinding(Label.TextProperty, new Binding("EnderecoCompleto"));
 
             _notaControl = new NotaControl {
-                HorizontalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
                 VerticalOptions = LayoutOptions.Start,
-                IconSize = 24
+                IconSize = Estilo.Current.Loja.Icone.IconSize
             };
             _notaControl.SetBinding(NotaControl.NotaProperty, new Binding("Nota"));
             _notaControl.AoClicar += async (sender, nota) => {
@@ -177,10 +133,9 @@ namespace Emagine.Produto.Cells
             _DistanciaLabel = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromHex("#7c7c7c"),
-                FontSize = 14,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                VerticalTextAlignment = TextAlignment.Center,
+                Style = Estilo.Current[EstiloLoja.LOJA_DISTANCIA]
             };
             _DistanciaLabel.SetBinding(Label.TextProperty, new Binding("DistanciaStr"));
         }

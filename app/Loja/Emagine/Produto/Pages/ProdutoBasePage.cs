@@ -103,7 +103,6 @@ namespace Emagine.Produto.Pages
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = Estilo.Current[EstiloProduto.PRODUTO_FRAME],
                 Margin = new Thickness(7, 3),
-                Padding = new Thickness(4, 3),
                 Content = new StackLayout {
                     Orientation = StackOrientation.Horizontal,
                     VerticalOptions = LayoutOptions.Start,
@@ -124,7 +123,7 @@ namespace Emagine.Produto.Pages
                             FontSize = 18,
                             Margin = new Thickness(0, 0, 0, 3),
                             TextColor = Estilo.Current.Produto.Label.TextColor,
-                            Text = "Desculpe, no momento não temos esse produto em estoque. Agradecemos sua compreensão."
+                            Text = " Desculpe, no momento não temos esse produto em estoque. Agradecemos sua compreensão."
                         }
                     }
                 }

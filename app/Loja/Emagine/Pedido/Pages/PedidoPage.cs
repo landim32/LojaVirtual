@@ -717,17 +717,15 @@ namespace Emagine.Pedido.Pages
                 UserDialogs.Instance.ShowLoading("Carregando...");
                 try
                 {
-                    var regraPedido = PedidoFactory.create();
-                    var pedido = await regraPedido.pegar(Pedido.Id);
-
-                    pedido.Nota = avaliacao.Nota;
-                    pedido.Comentario = avaliacao.Comentario;
-                    if (pedido.Situacao == SituacaoEnum.Entregue) {
-                        pedido.Situacao = SituacaoEnum.Finalizado;
+                    Pedido.Nota = avaliacao.Nota;
+                    Pedido.Comentario = avaliacao.Comentario;
+                    if (Pedido.Situacao == SituacaoEnum.Entregue) {
+                        Pedido.Situacao = SituacaoEnum.Finalizado;
                     }
-                    await regraPedido.alterar(pedido);
+                    var regraPedido = PedidoFactory.create();
+                    await regraPedido.alterar(Pedido);
 
-                    pedido = await regraPedido.pegar(Pedido.Id);
+                    var pedido = await regraPedido.pegar(Pedido.Id);
                     Pedido = pedido;
                     atualizarTela(Pedido);
                     UserDialogs.Instance.HideLoading();

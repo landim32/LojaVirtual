@@ -26,7 +26,7 @@ namespace Emagine.Produto.Pages
 
         public CategoriaGridPage()
         {
-            Content = new StackLayout
+            _mainLayout = new StackLayout
             {
                 //Margin = new Thickness(3, 3),
                 VerticalOptions = LayoutOptions.Fill,
@@ -59,6 +59,7 @@ namespace Emagine.Produto.Pages
                     }
                 }
             };
+            Content = _mainLayout;
         }
 
         public IList<CategoriaInfo> Categorias

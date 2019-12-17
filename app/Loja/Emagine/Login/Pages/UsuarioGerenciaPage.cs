@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Emagine.Base.Estilo;
+using Emagine.Base.Pages;
 using Emagine.Endereco.Model;
 using Emagine.Endereco.Pages;
 using Emagine.Endereco.Utils;
@@ -82,6 +83,10 @@ namespace Emagine.Login.Pages
             }
             var usuario = await regraUsuario.pegar(usuarioAtual.Id);
             regraUsuario.gravarAtual(usuario);
+            if (App.Current.MainPage is RootPage)
+            {
+                ((RootPage)App.Current.MainPage).atualizarMenu();
+            }
             _usuarioPage.Usuario = usuario;
             var enderecos = new List<EnderecoInfo>();
             foreach (var endereco in usuario.Enderecos)

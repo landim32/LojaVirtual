@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using Emagine.Base.Controls;
 using Emagine.Base.Estilo;
+using Emagine.Base.Pages;
 using Emagine.Base.Utils;
 using Emagine.Login.Factory;
 using Emagine.Login.Model;
@@ -247,6 +248,10 @@ namespace Emagine.Login.Pages
                 if (usuarioCadastrado != null)
                 {
                     regraUsuario.gravarAtual(usuarioCadastrado);
+                    if (App.Current.MainPage is RootPage)
+                    {
+                        ((RootPage)App.Current.MainPage).atualizarMenu();
+                    }
                     return usuarioCadastrado;
                 }
                 else

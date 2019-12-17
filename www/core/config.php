@@ -2,16 +2,12 @@
 
 define("EM_DESENVOLVIMENTO", true);
 
-define("DB_HOST", "smartapp.mysql.dbaas.com.br");
-define("DB_USER", "smartapp");
-define("DB_PASS", "eaa69cpxy2");
-define("DB_NAME", "smartapp");
-/*
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "eaa69cpxy2");
+//define("DB_NAME", "pao_no_sinal");
 define("DB_NAME", "smartapp");
-*/
+//define("DB_NAME", "emagine_loja");
 
 define("EMAIL_REMETENTE", "rodrigo@emagine.com.br");
 define("NOME_REMETENTE", "Rodrigo Landim");
@@ -27,19 +23,16 @@ define("MAIL_USERNAME", "no-reply@emagine.com.br");
 define("MAIL_PASSWORD", "eaa69cpxy2");
 
 define("APP_NAME", "Smart App");
-/*
-define('CACHE_DIR','/var/www/smartappcompras.com.br/upload/cache');
-define("UPLOAD_PATH", "/var/www/smartappcompras.com.br/upload");
-define("TEMA_PATH", "/smartapp");
-*/
-define("UPLOAD_PATH", "/home/emagine/upload");
-define('CACHE_DIR', UPLOAD_PATH . "/cache");
-define("TEMA_PATH", "/smartapp");
-
+define('CACHE_DIR','/var/www/emagine.com.br/upload-loja/cache');
+define("UPLOAD_PATH", "/var/www/emagine.com.br/upload-loja");
 //define("TEMA_PATH", "");
-//define("TEMA_PATH", "/emagine-loja");
+define("TEMA_TIPO", "php");
+define("TEMA_DIR", dirname(__DIR__) . "/templates/smartapp");
+define("TEMA_PATH", "/emagine-loja");
+//define("TEMA_PATH", "/smartapp");
 //define("MAIL_BASE_URL", "http://smartappcompras.com.br" . TEMA_PATH);
 //define("SITE_URL", "http://smartappcompras.com.br" . TEMA_PATH);
+//define("TEMA_PATH", "/loja-demo");
 define("MAIL_BASE_URL", "http://emagine.com.br" . TEMA_PATH);
 define("SITE_URL", "http://emagine.com.br" . TEMA_PATH);
 

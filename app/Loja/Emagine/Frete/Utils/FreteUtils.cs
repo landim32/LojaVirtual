@@ -15,57 +15,69 @@ namespace Emagine.Frete.Utils
 {
     public static class FreteUtils
     {
-        public static void gerarPagamento(FreteInfo frete, Action<FreteInfo> aoEfetuarPagamento) {
+        private static PagamentoInfo gerarPagamentoInfo(FreteInfo frete)
+        {
             var regraUsuario = UsuarioFactory.create();
             var usuario = regraUsuario.pegarAtual();
-            var pgtoInicial = new PagamentoInfo
+            var pagamento = new PagamentoInfo
             {
                 Cpf = usuario.CpfCnpj,
                 IdUsuario = usuario.Id
             };
-            pgtoInicial.Itens.Add(new PagamentoItemInfo
+            pagamento.Itens.Add(new PagamentoItemInfo
             {
                 Descricao = "Frete",
                 Quantidade = 1,
                 Valor = frete.Preco
             });
-            var metodoPagamento = new PagamentoMetodoPage
+            return pagamento;
+        }
+
+        private static async Task<FreteInfo> processarFrete(FreteInfo frete, PagamentoInfo pagamento) {
+            var regraFrete = FreteFactory.create();
+            if (pagamento.Tipo == TipoPagamentoEnum.Dinheiro) {
+                frete.Situacao = FreteSituacaoEnum.ProcurandoMotorista;
+            }
+            else
             {
-                Pagamento = pgtoInicial,
+                switch (pagamento.Situacao)
+                {
+                    case SituacaoPagamentoEnum.Pago:
+                        frete.Situacao = FreteSituacaoEnum.ProcurandoMotorista;
+                        break;
+                    case SituacaoPagamentoEnum.Cancelado:
+                        frete.Situacao = FreteSituacaoEnum.Cancelado;
+                        break;
+                    default:
+                        frete.Situacao = FreteSituacaoEnum.AguardandoPagamento;
+                        break;
+                }
+            }
+            var id_frete = frete.Id;
+            if (id_frete > 0)
+            {
+                await regraFrete.alterar(frete);
+            }
+            else
+            {
+                id_frete = await regraFrete.inserir(frete);
+            }
+            return await regraFrete.pegar(id_frete);
+        }
+
+        public static CartaoPage gerarPagamentoCredito(FreteInfo frete, Action<FreteInfo> aoEfetuarPagamento) {
+            var pagamento = gerarPagamentoInfo(frete);
+            var cartaoPage = new CartaoPage {
+                Pagamento = pagamento,
                 UsaCredito = true,
-                UsaDebito = false,
-                UsaBoleto = false,
-                UsaDinheiro = true
+                UsaDebito = false
             };
-            metodoPagamento.AoEfetuarPagamento += async (sender, pagamento) =>
-            {
-                frete.IdPagamento = pagamento.IdPagamento;
+            cartaoPage.AoEfetuarPagamento += async (sender, novoPagamento) => {
+                frete.IdPagamento = novoPagamento.IdPagamento;
                 UserDialogs.Instance.ShowLoading("Processando pagamento...");
                 try
                 {
-                    var regraFrete = FreteFactory.create();
-                    switch (pagamento.Situacao)
-                    {
-                        case SituacaoPagamentoEnum.Pago:
-                            frete.Situacao = FreteSituacaoEnum.ProcurandoMotorista;
-                            break;
-                        case SituacaoPagamentoEnum.Cancelado:
-                            frete.Situacao = FreteSituacaoEnum.Cancelado;
-                            break;
-                        default:
-                            frete.Situacao = FreteSituacaoEnum.AguardandoPagamento;
-                            break;
-                    }
-                    var id_frete = frete.Id;
-                    if (id_frete > 0)
-                    {
-                        await regraFrete.alterar(frete);
-
-                    }
-                    else {
-                        id_frete = await regraFrete.inserir(frete);
-                    }
-                    var novoFrete = await regraFrete.pegar(id_frete);
+                    var novoFrete = await processarFrete(frete, novoPagamento);
                     UserDialogs.Instance.HideLoading();
                     aoEfetuarPagamento?.Invoke(novoFrete);
                 }
@@ -76,7 +88,40 @@ namespace Emagine.Frete.Utils
                 }
                 UserDialogs.Instance.HideLoading();
             };
-            ((RootPage)App.Current.MainPage).PushAsync(metodoPagamento);
+            return cartaoPage;
+        }
+
+        public static PagamentoMetodoPage gerarPagamento(FreteInfo frete, Action<FreteInfo> aoEfetuarPagamento) {
+
+            var pagamento = gerarPagamentoInfo(frete);
+            var metodoPagamento = new PagamentoMetodoPage
+            {
+                Pagamento = pagamento,
+                UsaCredito = true,
+                UsaDebito = false,
+                UsaBoleto = false,
+                UsaCartaoOffline = false,
+                UsaDinheiro = true
+            };
+            metodoPagamento.AoEfetuarPagamento += async (sender, novoPagamento) =>
+            {
+                frete.IdPagamento = novoPagamento.IdPagamento;
+                UserDialogs.Instance.ShowLoading("Processando pagamento...");
+                try
+                {
+                    var novoFrete = await processarFrete(frete, novoPagamento);
+                    UserDialogs.Instance.HideLoading();
+                    aoEfetuarPagamento?.Invoke(novoFrete);
+                }
+                catch (Exception erro)
+                {
+                    UserDialogs.Instance.HideLoading();
+                    await UserDialogs.Instance.AlertAsync(erro.Message, "Erro", "Entendi");
+                }
+                UserDialogs.Instance.HideLoading();
+            };
+            //((RootPage)App.Current.MainPage).PushAsync(metodoPagamento);
+            return metodoPagamento;
         }
     }
 }

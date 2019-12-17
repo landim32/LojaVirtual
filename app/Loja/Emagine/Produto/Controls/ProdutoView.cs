@@ -56,8 +56,8 @@ namespace Emagine.Produto.Controls
                             Margin = new Thickness(0, 0, 0, 3),
                             Spacing = 1,
                             Children = {
-                                _promocaoStack,
                                 _moedaValorLabel,
+                                _promocaoStack,
                                 _valorLabel
                             }
                         },
@@ -140,7 +140,7 @@ namespace Emagine.Produto.Controls
                 Style = Estilo.Current[EstiloProduto.PRODUTO_PRECO_VALOR]
             };
             //_valorLabel.SetBinding(Label.TextProperty, new Binding("ValorPromocao", stringFormat: "{0:N2}"));
-            _valorLabel.SetBinding(Label.TextProperty, new Binding("ValorFinal", stringFormat: "{0:N2} "));
+            _valorLabel.SetBinding(Label.TextProperty, new Binding("ValorPromocaoStr"));
             _valorLabel.SetBinding(Label.TextColorProperty, new Binding("PromocaoCor"));
             _valorLabel.GestureRecognizers.Add(clique);
 
@@ -170,7 +170,7 @@ namespace Emagine.Produto.Controls
                 Style = Estilo.Current[EstiloProduto.PRODUTO_PROMOCAO_VALOR]
             };
             //_valorPromocaoLabel.SetBinding(Label.TextProperty, new Binding("Valor", stringFormat: "{0:N2}"));
-            _valorPromocaoLabel.SetBinding(Label.TextProperty, new Binding("Valor", stringFormat: "{0:N2} "));
+            _valorPromocaoLabel.SetBinding(Label.TextProperty, new Binding("ValorStr"));
             _valorPromocaoLabel.GestureRecognizers.Add(clique);
 
             _estoqueLabel = new Label

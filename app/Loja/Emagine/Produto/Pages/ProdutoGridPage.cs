@@ -70,17 +70,6 @@ namespace Emagine.Produto.Pages
             Content = _mainLayout;
         }
 
-        protected virtual void adicionarAvisoVazio() {
-            _mainLayout.Children.Insert(0, _vazioFrame);
-        }
-
-        protected virtual void removerAvisoVazio() {
-            if (_mainLayout.Children.Contains(_vazioFrame))
-            {
-                _mainLayout.Children.Remove(_vazioFrame);
-            }
-        }
-
         protected InfiniteScrollCollection<ProdutoColunaInfo> criarListaInfinita() {
             return new InfiniteScrollCollection<ProdutoColunaInfo>
             {
@@ -132,8 +121,7 @@ namespace Emagine.Produto.Pages
                         _buscando = false;
                     }
                     if (retorno.Total == 0) {
-                        //_mainLayout.Children.Insert(0, _vazioFrame);
-                        adicionarAvisoVazio();
+                        _mainLayout.Children.Insert(1, _vazioFrame);
                     }
                     return produtos;
                 }
@@ -162,7 +150,9 @@ namespace Emagine.Produto.Pages
 
         protected override async Task carregarProduto()
         {
-            removerAvisoVazio();
+            if (_mainLayout.Children.Contains(_vazioFrame)) {
+                _mainLayout.Children.Remove(_vazioFrame);
+            }
             UserDialogs.Instance.ShowLoading("Carregando...");
             try
             {

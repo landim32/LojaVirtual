@@ -20,9 +20,12 @@ namespace Emagine.Login.Factory
         {
             if (_Usuario == null)
             {
+                /*
                 var assembly = Assembly.GetCallingAssembly();
                 var typeName = string.Format(TYPE_NAME, Tipo);
                 _Usuario = (IUsuarioBLL)assembly.CreateInstance(typeName);
+                */
+                _Usuario = new BLL.Mobile.UsuarioBLL();
             }
             return _Usuario;
         }

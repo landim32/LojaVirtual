@@ -21,7 +21,6 @@ namespace Emagine.Pedido.Cells
         private Label _MetodoEntregaLabel;
         private Label _ValorTotalLabel;
         private Label _SituacaoLabel;
-        private Label _empresaLabel;
 
         public PedidoCell() {
             inicializarComponente();
@@ -109,23 +108,6 @@ namespace Emagine.Pedido.Cells
                 }
             }, 1, 1);
 
-            _gridLayout.Children.Add(new StackLayout
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Orientation = StackOrientation.Vertical,
-                Spacing = 0,
-                Children = {
-                    new Label {
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Style = Estilo.Current[Estilo.LABEL_CONTROL],
-                        Text = "Loja:"
-                    },
-                    _empresaLabel
-                }
-            }, 0, 2);
-
             View = new Frame
             {
                 CornerRadius = 5,
@@ -179,16 +161,6 @@ namespace Emagine.Pedido.Cells
                 LineBreakMode = LineBreakMode.TailTruncation,
             };
             _SituacaoLabel.SetBinding(Label.TextProperty, new Binding("SituacaoStr"));
-
-            _empresaLabel = new Label
-            {
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.Start,
-                Style = Estilo.Current[Estilo.LABEL_CAMPO],
-                LineBreakMode = LineBreakMode.TailTruncation,
-            };
-            _empresaLabel.SetBinding(Label.TextProperty, new Binding("Loja.Nome"));
-            //Grid.SetColumnSpan(_empresaLabel, 2);
         }
     }
 }

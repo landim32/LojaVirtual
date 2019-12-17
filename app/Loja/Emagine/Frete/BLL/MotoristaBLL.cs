@@ -19,11 +19,11 @@ namespace Emagine.Frete.BLL
             return await queryGet<MotoristaInfo>(GlobalUtils.URLAplicacao + "/api/motorista/pegar/" + id_usuario.ToString());
         }
 
-        public async Task<int> inserir(MotoristaInfo motorista)
+        public async Task inserir(MotoristaInfo motorista)
         {
             var args = new List<object>();
             args.Add(motorista);
-            return await queryPut<int>(GlobalUtils.URLAplicacao + "/api/motorista/inserir", args.ToArray());
+            await execPut(GlobalUtils.URLAplicacao + "/api/motorista/inserir", args.ToArray());
         }
 
         public async Task<bool> inserirDisponibilidade(DisponibilidadeInfo disponibilidade)

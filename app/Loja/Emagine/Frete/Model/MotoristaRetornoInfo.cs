@@ -44,8 +44,8 @@ namespace Emagine.Frete.Model
         [JsonProperty("polyline")]
         public string Polyline { get; set; }
 
-        [JsonProperty("entregas")]
-        public IList<MotoristaFreteInfo> Pedidos { get; set; }
+        [JsonProperty("fretes")]
+        public IList<MotoristaFreteInfo> Fretes { get; set; }
 
         [JsonProperty("mensagens")]
         public IList<string> Mensagens { get; set; }

@@ -74,11 +74,6 @@ namespace Emagine.Produto.Pages
             };
         }
 
-        protected override void adicionarAvisoVazio()
-        {
-            _mainLayout.Children.Insert(1, _vazioFrame);
-        }
-
         protected override Task carregarProduto() {
             var regraLoja = LojaFactory.create();
             var loja = regraLoja.pegarAtual();

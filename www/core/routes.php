@@ -10,6 +10,7 @@ use Emagine\Pagamento\Model\PagamentoItemInfo;
 use Emagine\Pedido\BLL\PedidoHorarioBLL;
 use Emagine\Pedido\Model\PedidoItemInfo;
 use Emagine\Produto\BLL\SeguimentoBLL;
+use Slim\Views\Twig;
 use stdClass;
 use Emagine\Base\EmagineApp;
 use Emagine\Endereco\BLL\BairroBLL;
@@ -65,11 +66,13 @@ $app->get('/', function (Request $request, Response $response, $args) use($app) 
             }
         }
         else {
-            $urlSeguimento = $app->getBaseUrl() . "/%s/loja/busca-por-cep";
+            //$urlSeguimento = $app->getBaseUrl() . "/%s/loja/busca-por-cep";
+            $urlSeguimento = $app->getBaseUrl() . "/%s/busca-por-cep";
         }
     }
     else {
-        $urlSeguimento = $app->getBaseUrl() . "/%s/loja/busca-por-cep";
+        //$urlSeguimento = $app->getBaseUrl() . "/%s/loja/busca-por-cep";
+        $urlSeguimento = $app->getBaseUrl() . "/%s/busca-por-cep";
     }
 
     if (!is_null($banner)) {
@@ -103,6 +106,14 @@ $app->get('/', function (Request $request, Response $response, $args) use($app) 
     $args['endereco'] = $enderecoAtual;
     $args['raio'] = $raio;
 
+    /*
+    if ($app->getTemaTipo() == EmagineApp::TWIG) {
+        #@var Twig $renderer
+        $renderer = $this->get('view');
+        $response = $renderer->render($response, 'seguimentos.html', $args);
+        return $response;
+    }
+    */
     /** @var PhpRenderer $renderer */
     $renderer = $this->get('view');
     $response = $renderer->render($response, 'header-simples.php', $args);
@@ -143,12 +154,14 @@ $app->post('/', function (Request $request, Response $response, $args) use($app)
                 }
             }
             else {
-                $url = $app->getBaseUrl() . "/loja/busca-por-cep";
+                //$url = $app->getBaseUrl() . "/loja/busca-por-cep";
+                $url = $app->getBaseUrl() . "/busca-por-cep";
                 return $response->withStatus(302)->withHeader('Location', $url);
             }
         }
         else {
-            $url = $app->getBaseUrl() . "/loja/busca-por-cep";
+            //$url = $app->getBaseUrl() . "/loja/busca-por-cep";
+            $url = $app->getBaseUrl() . "/busca-por-cep";
             return $response->withStatus(302)->withHeader('Location', $url);
         }
     }
@@ -172,7 +185,8 @@ $app->get('/selecione-endereco', function (Request $request, Response $response,
             }
         }
         else {
-            $url = $app->getBaseUrl() . "/loja/busca-por-cep";
+            //$url = $app->getBaseUrl() . "/loja/busca-por-cep";
+            $url = $app->getBaseUrl() . "/busca-por-cep";
             return $response->withStatus(302)->withHeader('Location', $url);
         }
     }
@@ -186,7 +200,8 @@ $app->get('/selecione-endereco', function (Request $request, Response $response,
                 return $response->withStatus(302)->withHeader('Location', $url);
             }
             else {
-                $url = $app->getBaseUrl() . "/loja/busca-por-cep";
+                //$url = $app->getBaseUrl() . "/loja/busca-por-cep";
+                $url = $app->getBaseUrl() . "/busca-por-cep";
                 return $response->withStatus(302)->withHeader('Location', $url);
             }
         } else {
@@ -234,16 +249,6 @@ $app->group('/{slug_seguimento}/loja', function () use ($app) {
     });
     */
 
-    $app->get('/busca-por-cep', function (Request $request, Response $response, $args) use($app) {
-        $args['app'] = $app;
-        /* @var PhpRenderer $renderer */
-        $renderer = $this->get('view');
-        $response = $renderer->render($response, 'header-simples.php', $args);
-        $response = $renderer->render($response, 'cep-busca.php', $args);
-        $response = $renderer->render($response, 'footer-simples.php', $args);
-        return $response;
-    });
-
     $app->get('/busca[/{id_endereco}]', function (Request $request, Response $response, $args) use($app) {
         $id_endereco = intval($args['id_endereco']);
 
@@ -277,21 +282,24 @@ $app->group('/{slug_seguimento}/loja', function () use ($app) {
         $banner = $regraBanner->pegarPorSlug("tela-inicial");
         //$usuario = UsuarioBLL::pegarUsuarioAtual();
 
-        $filtro = new BannerFiltroInfo();
-        $filtro->setIdBanner($banner->getId());
-        $filtro->setOrdem(BannerFiltroInfo::ALEATORIO);
-        $filtro->setLatitude($endereco->getLatitude());
-        $filtro->setLongitude($endereco->getLongitude());
-        $filtro->setRaio($regraLoja->getRaio());
-
-        $pecas = $regraPeca->gerar($filtro);
+        if (!is_null($banner)) {
+            $filtro = new BannerFiltroInfo();
+            $filtro->setIdBanner($banner->getId());
+            $filtro->setOrdem(BannerFiltroInfo::ALEATORIO);
+            $filtro->setLatitude($endereco->getLatitude());
+            $filtro->setLongitude($endereco->getLongitude());
+            $filtro->setRaio($regraLoja->getRaio());
+            $pecas = $regraPeca->gerar($filtro);
+        }
         $lojas = $regraLoja->buscarPorPosicao($endereco->getLatitude(), $endereco->getLongitude(), $regraLoja->getRaio(), $seguimento->getId());
 
         $args['app'] = $app;
         $args['endereco'] = $endereco;
         $args['lojas'] = $lojas;
         $args['banner'] = $banner;
-        $args['pecas'] = $pecas;
+        if (isset($pecas)) {
+            $args['pecas'] = $pecas;
+        }
 
         /** @var PhpRenderer $renderer */
         $renderer = $this->get('view');
@@ -380,6 +388,16 @@ $app->group('/endereco', function () use ($app) {
         $response = $renderer->render($response, 'footer-simples.php', $args);
         return $response;
     });
+});
+
+$app->get('/busca-por-cep', function (Request $request, Response $response, $args) use($app) {
+    $args['app'] = $app;
+    /* @var PhpRenderer $renderer */
+    $renderer = $this->get('view');
+    $response = $renderer->render($response, 'header-simples.php', $args);
+    $response = $renderer->render($response, 'cep-busca.php', $args);
+    $response = $renderer->render($response, 'footer-simples.php', $args);
+    return $response;
 });
 
 $app->post('/busca-por-cep', function (Request $request, Response $response, $args) use($app) {

@@ -20,6 +20,10 @@ namespace Frete.Pages
 {
     public class CaronaFormPage: ContentPage
     {
+        private bool _precoVisivel = true;
+        private bool _agendamentoObrigatorio = false;
+
+        private StackLayout _mainLayout;
         private XfxEntry _PassageiroEntry;
         private XfxEntry _ObservacaoEntry;
         private StackLayout _TipoVeiculoLayout;
@@ -41,6 +45,25 @@ namespace Frete.Pages
         private XfxEntry _PrecoEntry;
         private Button _EnviarButton;
 
+        public bool TipoVeiculoExtra { get; set; } = true;
+        public bool PrecoVisivel {
+            get {
+                return _precoVisivel;
+            }
+            set {
+                _precoVisivel = value;
+                atualizarTela();
+            }
+        }
+        public bool AgendamentoObrigatorio {
+            get {
+                return _agendamentoObrigatorio;
+            }
+            set {
+                _agendamentoObrigatorio = value;
+                atualizarTela();
+            }
+        }
         public event EventHandler<FreteInfo> AoCadastrar;
 
         private FreteInfo _frete;
@@ -83,15 +106,15 @@ namespace Frete.Pages
                         _frete.Profundidade = profundidade;
                     }
                 }
-                if (_AgendandoSwitch.IsToggled) {
+                if (_agendamentoObrigatorio || _AgendandoSwitch.IsToggled) {
                     var dataRetirada = new DateTime(_DataRetiradaPicker.Date.Year, _DataRetiradaPicker.Date.Month, _DataRetiradaPicker.Date.Day, 0, 0, 0, DateTimeKind.Unspecified);
                     dataRetirada = dataRetirada.AddHours(_HoraRetiradaPicker.Time.Hours);
                     dataRetirada = dataRetirada.AddMinutes(_HoraRetiradaPicker.Time.Minutes);
                     _frete.DataRetirada = dataRetirada;
 
                     var dataEntrega = new DateTime(_DataEntregaPicker.Date.Year, _DataEntregaPicker.Date.Month, _DataEntregaPicker.Date.Day, 0, 0, 0, DateTimeKind.Unspecified);
-                    _frete.DataEntrega = dataEntrega.AddHours(_HoraEntregaPicker.Time.Hours);
-                    _frete.DataEntrega = dataEntrega.AddMinutes(_HoraEntregaPicker.Time.Minutes);
+                    dataEntrega = dataEntrega.AddHours(_HoraEntregaPicker.Time.Hours);
+                    dataEntrega = dataEntrega.AddMinutes(_HoraEntregaPicker.Time.Minutes);
                     _frete.DataEntrega = dataEntrega;
                 }
                 double preco = 0;
@@ -106,68 +129,143 @@ namespace Frete.Pages
         }
 
         public CaronaFormPage() {
-            Title = "Nova carona";
-
             inicializarComponente();
+
+            atualizarTela();
+
             Content = new ScrollView
             {
                 Orientation = ScrollOrientation.Vertical,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
-                Content = new StackLayout
-                {
-                    Orientation = StackOrientation.Vertical,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Start,
-                    Padding = new Thickness(3, 3),
-                    Children = {
-                        _PassageiroEntry,
-                        _TipoVeiculoLayout,
-                        new StackLayout{
-                            Orientation = StackOrientation.Horizontal,
-                            HorizontalOptions = LayoutOptions.Fill,
-                            VerticalOptions = LayoutOptions.Start,
-                            Spacing = 5,
-                            Children = {
-                                _UsaCargaSwitch,
-                                new Label {
-                                    HorizontalOptions = LayoutOptions.Fill,
-                                    VerticalOptions = LayoutOptions.Center,
-                                    Style = Estilo.Current[Estilo.LABEL_SWITCH],
-                                    Text = "Quero levar carga"
-                                }
-                            }
-                        },
-                        _cargaStackLayout,
-                        new StackLayout{
-                            Orientation = StackOrientation.Horizontal,
-                            HorizontalOptions = LayoutOptions.Fill,
-                            VerticalOptions = LayoutOptions.Start,
-                            Spacing = 5,
-                            Children = {
-                                _AgendandoSwitch,
-                                new Label {
-                                    HorizontalOptions = LayoutOptions.Fill,
-                                    VerticalOptions = LayoutOptions.Center,
-                                    Style = Estilo.Current[Estilo.LABEL_SWITCH],
-                                    Text = "Agendar dia e hora"
-                                }
-                            }
-                        },
-                        _agendadoStackLayout,
-                        _PrecoEntry,
-                        _ObservacaoEntry,
-                        _EnviarButton
+                Content = _mainLayout
+            };
+        }
+
+        private void atualizarTela() {
+            _mainLayout.Children.Clear();
+            _mainLayout.Children.Add(_PassageiroEntry);
+            _mainLayout.Children.Add(_TipoVeiculoLayout);
+            _mainLayout.Children.Add(new StackLayout {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Spacing = 5,
+                Children = {
+                    _UsaCargaSwitch,
+                    new Label {
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Center,
+                        Style = Estilo.Current[Estilo.LABEL_SWITCH],
+                        Text = "Quero levar carga"
                     }
                 }
-            };
+            });
+            _mainLayout.Children.Add(_cargaStackLayout);
+            if (_agendamentoObrigatorio)
+            {
+                _mainLayout.Children.Add(_agendadoStackLayout);
+                _agendadoStackLayout.Children.Clear();
+                atualizarAgendamento();
+            }
+            else
+            {
+                _mainLayout.Children.Add(new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Start,
+                    Spacing = 5,
+                    Children = {
+                        _AgendandoSwitch,
+                        new Label {
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Center,
+                            Style = Estilo.Current[Estilo.LABEL_SWITCH],
+                            Text = "Agendar dia e hora"
+                        }
+                    }
+                });
+                _mainLayout.Children.Add(_agendadoStackLayout);
+                _agendadoStackLayout.Children.Clear();
+                if (_AgendandoSwitch.IsToggled) {
+                    atualizarAgendamento();
+                }
+            }
+            if (_precoVisivel)
+            {
+                _mainLayout.Children.Add(_PrecoEntry);
+            }
+            _mainLayout.Children.Add(_ObservacaoEntry);
+            _mainLayout.Children.Add(_EnviarButton);
+        }
+
+        protected void atualizarAgendamento() {
+            _agendadoStackLayout.Children.Add(new Label
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Text = "Data hora da Retirada:",
+                Style = Estilo.Current[Estilo.LABEL_CONTROL]
+            });
+            _agendadoStackLayout.Children.Add(new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Children = {
+                    new IconImage {
+                        Icon = "fa-calendar",
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Center,
+                        Style = Estilo.Current[Estilo.ICONE_PADRAO]
+                    },
+                    _DataRetiradaPicker,
+                    new IconImage {
+                        Icon = "fa-clock-o",
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Center,
+                        Style = Estilo.Current[Estilo.ICONE_PADRAO]
+                    },
+                    _HoraRetiradaPicker
+                }
+            });
+            _agendadoStackLayout.Children.Add(new Label
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Text = "Data hora máxima para entrega:",
+                Style = Estilo.Current[Estilo.LABEL_CONTROL]
+            });
+            _agendadoStackLayout.Children.Add(new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Children = {
+                    new IconImage {
+                        Icon = "fa-calendar",
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Center,
+                        Style = Estilo.Current[Estilo.ICONE_PADRAO]
+                    },
+                    _DataEntregaPicker,
+                    new IconImage {
+                        Icon = "fa-clock-o",
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Center,
+                        Style = Estilo.Current[Estilo.ICONE_PADRAO]
+                    },
+                    _HoraEntregaPicker
+                }
+            });
         }
 
         private void definirTipoPorOrdem(FreteInfo frete) {
             for (int i = 0; i < frete.Locais.Count(); i++) {
                 if (i == 0)
                 {
-                    frete.Locais[i].Tipo = FreteLocalTipoEnum.Saida;
+                    frete.Locais[i].Tipo = FreteLocalTipoEnum.Origem;
                 }
                 else if (i == (frete.Locais.Count() - 1))
                 {
@@ -190,13 +288,14 @@ namespace Frete.Pages
                 PlaceholderColor = Color.Silver,
                 Value = tipo
             };
-            tipoVeiculoEntry.Clicked += (sender, e) =>
-            {
+            tipoVeiculoEntry.Clicked += (sender, e) => {
                 var tipoVeiculoPage = new TipoVeiculoSelecionaPage();
                 tipoVeiculoPage.AoSelecionar += (object s2, TipoVeiculoInfo e2) =>
                 {
                     ((DropDownList)sender).Value = e2;
-                    _TipoVeiculoLayout.Children.Add(criarTipoVeiculoEntry());
+                    if (TipoVeiculoExtra) {
+                        _TipoVeiculoLayout.Children.Add(criarTipoVeiculoEntry());
+                    }
                 };
                 Navigation.PushAsync(tipoVeiculoPage);
             };
@@ -205,11 +304,19 @@ namespace Frete.Pages
 
         private void inicializarComponente()
         {
+            _mainLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+                Padding = new Thickness(3, 3),
+            };
+
             _PassageiroEntry = new XfxEntry
             {
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
-                Placeholder = "Qtd. Passageiros",
+                Placeholder = "Quantidade de Passageiros",
                 Keyboard = Keyboard.Numeric,
                 ErrorDisplay = ErrorDisplay.None
             };
@@ -311,63 +418,7 @@ namespace Frete.Pages
             _AgendandoSwitch.Toggled += (sender, e) => {
                 _agendadoStackLayout.Children.Clear();
                 if (e.Value) {
-                    _agendadoStackLayout.Children.Add(new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Text = "Data hora da Retirada:",
-                        Style = Estilo.Current[Estilo.LABEL_CONTROL]
-                    });
-                    _agendadoStackLayout.Children.Add(new StackLayout {
-                        Orientation = StackOrientation.Horizontal,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Children = {
-                            new IconImage {
-                                Icon = "fa-calendar",
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.Center,
-                                Style = Estilo.Current[Estilo.ICONE_PADRAO]
-                            },
-                            _DataRetiradaPicker,
-                            new IconImage {
-                                Icon = "fa-clock-o",
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.Center,
-                                Style = Estilo.Current[Estilo.ICONE_PADRAO]
-                            },
-                            _HoraRetiradaPicker
-                        }
-                    });
-                    _agendadoStackLayout.Children.Add(new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Text = "Data hora máxima para entrega:",
-                        Style = Estilo.Current[Estilo.LABEL_CONTROL]
-                    });
-                    _agendadoStackLayout.Children.Add(new StackLayout
-                    {
-                        Orientation = StackOrientation.Horizontal,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Start,
-                        Children = {
-                            new IconImage {
-                                Icon = "fa-calendar",
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.Center,
-                                Style = Estilo.Current[Estilo.ICONE_PADRAO]
-                            },
-                            _DataEntregaPicker,
-                            new IconImage {
-                                Icon = "fa-clock-o",
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.Center,
-                                Style = Estilo.Current[Estilo.ICONE_PADRAO]
-                            },
-                            _HoraEntregaPicker
-                        }
-                    });
+                    atualizarAgendamento();
                 }
             };
 
@@ -434,8 +485,6 @@ namespace Frete.Pages
                     frete = await regraFrete.pegar(id_frete);
                     UserDialogs.Instance.HideLoading();
                     AoCadastrar?.Invoke(this, frete);
-                    //await DisplayAlert("Aviso", "Frete cadastro com sucesso.", "Fechar");
-                    //await Navigation.PopAsync();
                 }
                 catch (Exception erro)
                 {

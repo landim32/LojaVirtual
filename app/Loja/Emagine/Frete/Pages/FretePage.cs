@@ -77,6 +77,35 @@ namespace Emagine.Frete.Pages
             var motorista = regraMotorista.pegarAtual();
 
             _mainLayout.Children.Clear();
+            if (motorista != null && frete.Situacao == FreteSituacaoEnum.AprovandoMotorista)
+            {
+                _mainLayout.Children.Add(new Frame {
+                    Style = Estilo.Current[Estilo.FRAME_DANGER],
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Start,
+                    Content = new StackLayout {
+                        Orientation = StackOrientation.Horizontal,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        VerticalOptions = LayoutOptions.Start,
+                        Children = {
+                            new IconImage{
+                                Style = Estilo.Current[Estilo.FRAME_DANGER_ICON],
+                                HorizontalOptions = LayoutOptions.Start,
+                                VerticalOptions = LayoutOptions.Start,
+                                Icon = "fa-warning",
+                                WidthRequest = 20
+                            },
+                            new Label {
+                                Style = Estilo.Current[Estilo.FRAME_DANGER_TEXT],
+                                HorizontalOptions = LayoutOptions.FillAndExpand,
+                                VerticalOptions = LayoutOptions.Start,
+                                Text = "Atenção! Você se inscreveu para fazer esse atendimento. Aguarde a aprovação pelo passageiro."
+                            }
+                        }
+                    }
+                });
+            }
+
             if (frete.RotaEncontrada)
             {
                 if (!string.IsNullOrEmpty(frete.Polyline))
@@ -93,7 +122,8 @@ namespace Emagine.Frete.Pages
                         var posicoes = new List<Position>();
                         foreach (var local in frete.Locais)
                         {
-                            posicoes.Add(new Position(local.Latitude, local.Longitude));
+                            //posicoes.Add(new Position(local.Latitude, local.Longitude));
+                            posicoes.Add(new Position(local.Latitude.GetValueOrDefault(), local.Longitude.GetValueOrDefault()));
                         }
                         _CustomMap.Polyline = posicoes;
                     }
@@ -104,7 +134,7 @@ namespace Emagine.Frete.Pages
                     _mainLayout.Children.Insert(0, _CustomMap);
                     var posicoes = new List<Position>();
                     foreach (var local in frete.Locais) {
-                        posicoes.Add(new Position(local.Latitude, local.Longitude));
+                        posicoes.Add(new Position(local.Latitude.GetValueOrDefault(), local.Longitude.GetValueOrDefault()));
                     }
                     _CustomMap.Polyline = posicoes;
                 }
@@ -145,7 +175,7 @@ namespace Emagine.Frete.Pages
                 _mainLayout.Children.Add(gerarUsuario(frete.Usuario, "RESPONSÁVEL"));
             }
             if (frete.Motorista != null && frete.Motorista.Usuario != null && frete.IdMotorista != usuario.Id) {
-                _mainLayout.Children.Add(gerarUsuario(frete.Motorista.Usuario, "MOTORISTA"));
+                _mainLayout.Children.Add(gerarUsuario(frete.Motorista.Usuario, "MARINHEIRO"));
             }
             _mainLayout.Children.Add(_acaoView);
             _acaoView.Frete = frete;
@@ -192,7 +222,7 @@ namespace Emagine.Frete.Pages
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = Estilo.Current[Estilo.LABEL_CONTROL],
                 HorizontalTextAlignment = TextAlignment.End,
-                VerticalTextAlignment = TextAlignment.End,
+                VerticalTextAlignment = TextAlignment.Start,
                 Text = titulo
             }, 0, linha);
             gridLayout.Children.Add(labelControl, 1, linha);
@@ -250,16 +280,33 @@ namespace Emagine.Frete.Pages
             gridAdicionarTitulo(gridLayout, "DADOS BÁSICOS");
             if (frete.Preco > 0)
             {
-                gridAdicionarLinha(gridLayout, "Preco:", "R$" + frete.Preco.ToString("N2"), ref linha);
+                gridAdicionarLinha(gridLayout, "Preço:", "R$" + frete.Preco.ToString("N2"), ref linha);
             }
             if (frete.Distancia > 0)
             {
                 gridAdicionarLinha(gridLayout, "Distância:", frete.DistanciaStr, ref linha);
             }
+            /*
+            var situacoes = new List<FreteSituacaoEnum>() {
+                FreteSituacaoEnum.ProcurandoMotorista,
+                FreteSituacaoEnum.AprovandoMotorista,
+                FreteSituacaoEnum.AguardandoPagamento,
+                FreteSituacaoEnum.Aguardando
+            };
+            if (situacoes.Contains(frete.Situacao)) {
+
+            }
+            */
             if (frete.Tempo > 0)
             {
                 gridAdicionarLinha(gridLayout, "Previsão:", frete.TempoStr, ref linha);
             }
+            /*
+            if (frete.Duracao > 0)
+            {
+                gridAdicionarLinha(gridLayout, "Previsão:", frete.DuracaoStr, ref linha);
+            }
+            */
             return new Frame
             {
                 VerticalOptions = LayoutOptions.Start,
@@ -279,13 +326,20 @@ namespace Emagine.Frete.Pages
             };
             gridAdicionarTitulo(gridLayout, "AGENDAMENTO");
             gridAdicionarLinha(gridLayout, "Criação:", frete.DataInclusaoStr, ref linha);
-            gridAdicionarLinha(gridLayout, "Alteração:", frete.UltimaAlteracaoStr, ref linha);
+            if (frete.DataInclusao != frete.UltimaAlteracao)
+            {
+                gridAdicionarLinha(gridLayout, "Alteração:", frete.UltimaAlteracaoStr, ref linha);
+            }
             if (frete.DataRetirada.HasValue) {
                 gridAdicionarLinha(gridLayout, "Retirada:", frete.DataRetiradaStr, ref linha);
             }
             if (frete.DataEntrega.HasValue)
             {
                 gridAdicionarLinha(gridLayout, "Entrega:", frete.DataEntregaStr, ref linha);
+            }
+            if (frete.DataRetirada.HasValue && frete.DataEntrega.HasValue) {
+                var previsaoData = frete.DataEntrega.Value.Subtract(frete.DataRetirada.Value);
+                gridAdicionarLinha(gridLayout, "Previsão:", previsaoData.ToString(), ref linha);
             }
 
             return new Frame {

@@ -274,7 +274,7 @@ namespace Emagine.Pagamento.Pages
             /*
             var bandeira = regraPagamento.pegarBandeiraPorNumeroCartao(_NumeroCartaoEntry.Text);
             if (!bandeira.HasValue) {
-                 
+
             }
             */
             if (_ValidadeCartaoPicker.SelectedItem == null)
@@ -316,6 +316,10 @@ namespace Emagine.Pagamento.Pages
                 if (retorno.Situacao == SituacaoPagamentoEnum.Pago || retorno.Situacao == SituacaoPagamentoEnum.AguardandoPagamento) {
                     var pagamento = await regraPagamento.pegar(retorno.IdPagamento);
                     if (retorno.Situacao == SituacaoPagamentoEnum.Pago) {
+                        var nomeApp = "App";
+                        if (App.Current.MainPage is RootPage) {
+                            nomeApp = ((RootPage)App.Current.MainPage).NomeApp;
+                        }
                         var mensagem = "Foram debitados R$ {0} do seu cartão de crédito.";
                         var rootPage = (RootPage) App.Current.MainPage;
                         CrossLocalNotifications.Current.Show(rootPage.NomeApp, string.Format(mensagem, pagamento.ValorTotalStr));
@@ -466,7 +470,7 @@ namespace Emagine.Pagamento.Pages
         public static readonly BindableProperty UsaDebitoProperty = BindableProperty.Create(
             nameof(UsaDebito), typeof(bool), typeof(CartaoPage), default(bool),
             propertyChanged: UsaDebitoPropertyChanged
-        );      
+        );
 
         private static void UsaDebitoPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {

@@ -63,80 +63,37 @@ namespace Emagine.Produto.Utils
         }
         */
         
-        /*
-        public static Page gerarSelecionar() {
-            var regraUsuario = UsuarioFactory.create();
-            var usuario = regraUsuario.pegarAtual();
-            if (usuario != null)
-            {
-                if (usuario.Enderecos.Count == 1)
+        public static void inicializarLojaLista() {
+            EnderecoUtils.selecionarEndereco(async (endereco) => {
+                try
                 {
-                    var endereco = usuario.Enderecos[0];
-                    var lojaListaPage = new LojaListaPage {
-                        Title = "Selecione sua Loja"
-                    };
-                    lojaListaPage.AoCarregar += async (sender, e) =>
+                    UserDialogs.Instance.ShowLoading("Carregando...");
+                    var regraLoja = LojaFactory.create();
+                    var lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca);
+                    if (lojas.Count > 0)
                     {
-                        var regraLoja = LojaFactory.create();
-                        var regraBanner = BannerPecaFactory.create();
-                        e.Banners = await regraBanner.gerar(new BannerFiltroInfo
-                        {
-                            SlugBanner = BannerUtils.SEGUIMENTO,
-                            Latitude = endereco.Latitude.Value,
-                            Longitude = endereco.Longitude.Value,
-                            Raio = regraLoja.RaioBusca
-                        });
-                        e.Lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca);
-                    };
-                    return lojaListaPage;
-                }
-                else if (usuario.Enderecos.Count > 1)
-                {
-                    //return EnderecoUtils.gerarEnderecoLista((endereco) =>
-                    var enderecoListaPage = EnderecoUtils.gerarEnderecoLista((endereco) =>
-                    {
-                        var lojaListaPage = new LojaListaPage
-                        {
-                            Title = "Selecione sua Loja"
-                        };
-                        lojaListaPage.AoCarregar += async (sender, e) =>
-                        {
-                            var regraLoja = LojaFactory.create();
-                            var regraBanner = BannerPecaFactory.create();
-                            e.Banners = await regraBanner.gerar(new BannerFiltroInfo
-                            {
-                                SlugBanner = BannerUtils.SEGUIMENTO,
-                                Latitude = endereco.Latitude.Value,
-                                Longitude = endereco.Longitude.Value,
-                                Raio = regraLoja.RaioBusca
-                            });
-                            e.Lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca);
-                        };
+                        //var seguimentoPage = await gerarSeguimento(endereco);
+                        var lojaListaPage = await LojaUtils.gerarLojaLista(endereco, null, lojas);
+                        UserDialogs.Instance.HideLoading();
                         if (App.Current.MainPage is RootPage) {
                             ((RootPage)App.Current.MainPage).PushAsync(lojaListaPage);
                         }
                         else {
                             App.Current.MainPage = App.gerarRootPage(lojaListaPage);
                         }
-                    });
-                    var enderecos = new List<EnderecoInfo>();
-                    foreach (var endereco in usuario.Enderecos) {
-                        enderecos.Add(endereco);
                     }
-                    enderecoListaPage.Enderecos = enderecos;
-                    return enderecoListaPage;
+                    else {
+                        UserDialogs.Instance.HideLoading();
+                        await UserDialogs.Instance.AlertAsync("Você deve aumentar o raio da busca ou aguardar futura loja no seguimento.");
+                    }
                 }
-                else
+                catch (Exception erro)
                 {
-                    return gerarEndereco();
+                    UserDialogs.Instance.HideLoading();
+                    UserDialogs.Instance.Alert(erro.Message, "Erro", "Fechar");
                 }
-            }
-            else
-            {
-                return gerarEndereco();
-            }
+            });
         }
-        */
 
         public static async Task<Page> gerarTelaInicial() {
             UserDialogs.Instance.ShowLoading("Carregando...");
@@ -187,7 +144,7 @@ namespace Emagine.Produto.Utils
                                         if (lojas.Count > 0)
                                         {
                                             //var seguimentoPage = await gerarSeguimento(endereco);
-                                            var lojaListaPage = await LojaUtils.gerarLojaLista(seguimento, endereco, lojas);
+                                            var lojaListaPage = await LojaUtils.gerarLojaLista(endereco, seguimento, lojas);
                                             UserDialogs.Instance.HideLoading();
                                             if (App.Current.MainPage is RootPage) {
                                                 ((RootPage)App.Current.MainPage).PushAsync(lojaListaPage);
@@ -221,7 +178,7 @@ namespace Emagine.Produto.Utils
                                 var lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca, seguimento.Id);
                                 if (lojas.Count > 0) {
                                     //var seguimentoPage = await gerarSeguimento(endereco);
-                                    var lojaListaPage = await LojaUtils.gerarLojaLista(seguimento, endereco, lojas);
+                                    var lojaListaPage = await LojaUtils.gerarLojaLista(endereco, seguimento, lojas);
                                     UserDialogs.Instance.HideLoading();
                                     if (App.Current.MainPage is RootPage)
                                     {
@@ -314,7 +271,7 @@ namespace Emagine.Produto.Utils
                                     var lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca, seguimento.Id);
                                     if (lojas.Count > 0)
                                     {
-                                        var lojaListaPage = await LojaUtils.gerarLojaLista(seguimento, endereco, lojas);
+                                        var lojaListaPage = await LojaUtils.gerarLojaLista(endereco, seguimento, lojas);
                                         UserDialogs.Instance.HideLoading();
                                         await seguimentoPage.Navigation.PushAsync(lojaListaPage);
                                     }
@@ -347,7 +304,7 @@ namespace Emagine.Produto.Utils
                             var lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca, seguimento.Id);
                             if (lojas.Count > 0)
                             {
-                                var lojaListaPage = await LojaUtils.gerarLojaLista(seguimento, endereco, lojas);
+                                var lojaListaPage = await LojaUtils.gerarLojaLista(endereco, seguimento, lojas);
                                 UserDialogs.Instance.HideLoading();
                                 await seguimentoPage.Navigation.PushAsync(lojaListaPage);
                             }
@@ -375,36 +332,55 @@ namespace Emagine.Produto.Utils
         }
 
         //public static void gerarLojaLista(EnderecoInfo endereco) {
-        public static async Task<LojaListaPage> gerarLojaLista(SeguimentoInfo seguimento, EnderecoInfo endereco, IList<LojaInfo> lojas) {
+        public static async Task<LojaListaPage> gerarLojaLista(EnderecoInfo endereco, SeguimentoInfo seguimento = null, IList<LojaInfo> lojas = null) {
             var regraLoja = LojaFactory.create();
             var regraBanner = BannerPecaFactory.create();
             var lojaListaPage = new LojaListaPage
             {
                 Title = "Selecione sua Loja",
-                Banners = await regraBanner.gerar(new BannerFiltroInfo
+                BannerVisivel = BannerUtils.Ativo,
+                Lojas = lojas
+            };
+            if (lojaListaPage.BannerVisivel)
+            {
+                var bannerFiltro = new BannerFiltroInfo
                 {
                     SlugBanner = BannerUtils.SEGUIMENTO,
-                    IdSeguimento = seguimento.Id,
                     Latitude = endereco.Latitude.Value,
                     Longitude = endereco.Longitude.Value,
                     Raio = regraLoja.RaioBusca
-                }),
-                Lojas = lojas
-            };
+                };
+                if (seguimento != null)
+                {
+                    bannerFiltro.IdSeguimento = seguimento.Id;
+                }
+                lojaListaPage.Banners = await regraBanner.gerar(bannerFiltro);
+            }
             /*
             lojaListaPage.AoCarregar += async (sender, e) =>
             {
                 var regraLoja = LojaFactory.create();
                 var regraBanner = BannerPecaFactory.create();
-                e.Banners = await regraBanner.gerar(new BannerFiltroInfo
+                if (lojaListaPage.BannerVisivel)
                 {
-                    SlugBanner = BannerUtils.SEGUIMENTO,
-                    IdSeguimento = seguimento.Id,
-                    Latitude = endereco.Latitude.Value,
-                    Longitude = endereco.Longitude.Value,
-                    Raio = regraLoja.RaioBusca
-                });
-                e.Lojas = await regraLoja.buscar(endereco.Latitude.Value, endereco.Longitude.Value, regraLoja.RaioBusca, seguimento.Id);
+                    var bannerFiltro = new BannerFiltroInfo
+                    {
+                        SlugBanner = BannerUtils.SEGUIMENTO,
+                        Latitude = endereco.Latitude.Value,
+                        Longitude = endereco.Longitude.Value,
+                        Raio = regraLoja.RaioBusca
+                    };
+                    if (seguimento != null) {
+                        bannerFiltro.IdSeguimento = seguimento.Id;
+                    }
+                    e.Banners = await regraBanner.gerar(bannerFiltro);
+                }
+                e.Lojas = await regraLoja.buscar(
+                    endereco.Latitude.Value, 
+                    endereco.Longitude.Value, 
+                    regraLoja.RaioBusca, 
+                    (seguimento != null) ?  seguimento.Id : 0
+                );
             };
             */
             return lojaListaPage;

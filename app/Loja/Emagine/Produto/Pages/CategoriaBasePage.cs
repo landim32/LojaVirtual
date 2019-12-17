@@ -22,6 +22,7 @@ namespace Emagine.Produto.Pages
 {
     public abstract class CategoriaBasePage : ContentPage
     {
+        protected StackLayout _mainLayout;
         protected BannerView _bannerView;
         protected SearchBar _buscaBar;
         protected Label _empresaLabel;
@@ -36,6 +37,31 @@ namespace Emagine.Produto.Pages
             inicializarComponente();
         }
 
+        public bool BannerVisivel
+        {
+            get
+            {
+                return _mainLayout.Children.Contains(_bannerView);
+            }
+            set
+            {
+                if (value)
+                {
+                    if (!_mainLayout.Children.Contains(_bannerView))
+                    {
+                        _mainLayout.Children.Insert(0, _bannerView);
+                    }
+                }
+                else
+                {
+                    if (_mainLayout.Children.Contains(_bannerView))
+                    {
+                        _mainLayout.Children.Remove(_bannerView);
+                    }
+                }
+            }
+        }
+
         protected abstract void executarAtualizarCategoria(IList<CategoriaInfo> itens);
 
         protected async Task atualizarCategoria() {
@@ -47,12 +73,16 @@ namespace Emagine.Produto.Pages
                 var regraCategoria = CategoriaFactory.create();
                 UserDialogs.Instance.ShowLoading("Carregando...");
                 try {
-                    var regraBanner = BannerPecaFactory.create();
-                    _bannerView.ItemsSource = await regraBanner.gerar(new BannerFiltroInfo {
-                        SlugBanner = BannerUtils.CATEGORIA,
-                        IdLoja = loja.Id,
-                        Ordem = BannerOrdemEnum.PorOrdem
-                    });
+                    if (BannerVisivel)
+                    {
+                        var regraBanner = BannerPecaFactory.create();
+                        _bannerView.ItemsSource = await regraBanner.gerar(new BannerFiltroInfo
+                        {
+                            SlugBanner = BannerUtils.CATEGORIA,
+                            IdLoja = loja.Id,
+                            Ordem = BannerOrdemEnum.PorOrdem
+                        });
+                    }
                     if (IdCategoria.HasValue) {
                         executarAtualizarCategoria(await regraCategoria.listarPorCategoria(loja.Id, IdCategoria.Value));
                     }
@@ -87,6 +117,7 @@ namespace Emagine.Produto.Pages
 
             if (categoriasFilho.Count > 0) {
                 var categoriaPage = CategoriaPageFactory.create();
+                categoriaPage.BannerVisivel = this.BannerVisivel;
                 categoriaPage.Title = categoria.Nome;
                 categoriaPage.IdCategoria = categoria.Id;
                 if (AoAbrirProdutoLista != null) {

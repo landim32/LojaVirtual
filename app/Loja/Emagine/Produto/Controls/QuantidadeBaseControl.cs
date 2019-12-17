@@ -78,7 +78,7 @@ namespace Emagine.Produto.Controls
                 Style = Estilo.Current[EstiloQuantidade.QUANTIDADE_REMOVER_BOTAO],
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Estilo.Current.BotaoInfo.BackgroundColor,
+                //BackgroundColor = Estilo.Current.BotaoInfo.BackgroundColor,
                 CornerRadius = 20,
                 Padding = new Thickness(15, 5, 5, 5),
                 Content = new IconImage
@@ -129,7 +129,7 @@ namespace Emagine.Produto.Controls
                 if (Produto != null)
                 {
                     var regraCarrinho = CarrinhoFactory.create();
-                    Quantidade = regraCarrinho.remover(Produto.Id);
+                    Quantidade = regraCarrinho.remover(Produto);
                     //UserDialogs.Instance.Toast(string.Format("{0} foi removido ao seu carrinho.", Produto.Nome));
                 }
             };

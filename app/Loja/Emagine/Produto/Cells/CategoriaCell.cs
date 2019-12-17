@@ -20,7 +20,7 @@ namespace Emagine.Produto.Cells
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Start,
-                Margin = new Thickness(0, 7),
+                Margin = new Thickness(10, 7),
                 Children = {
                     _NomeLabel,
                     new Frame {

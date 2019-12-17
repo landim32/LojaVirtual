@@ -46,8 +46,7 @@ namespace Emagine.Pedido.Utils
                     ((Page)sender).Navigation.PushAsync(pedidoPage);
                 };
                 UserDialogs.Instance.HideLoading();
-                //((RootPage)App.Current.MainPage).PaginaAtual = pedidoListaPage;
-                ((RootPage)App.Current.MainPage).PushAsync(pedidoListaPage);
+                ((RootPage)App.Current.MainPage).PaginaAtual = pedidoListaPage;
             }
             catch (Exception erro)
             {

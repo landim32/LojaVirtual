@@ -65,33 +65,24 @@ namespace Emagine.Produto.BLL
             }
             var regraLoja = LojaFactory.create();
             var loja = regraLoja.pegarAtual();
-            /*
             if (!_produtos.ContainsKey(produto.Id)) {
                 _produtos.Add(produto.Id, produto);
             }
-            */
-            ProdutoInfo produtoAtual = null;
-            if (_produtos.ContainsKey(produto.Id)) {
-                produtoAtual = _produtos[produto.Id];
-            }
-            else {
-                produtoAtual = produto;
-                _produtos.Add(produtoAtual.Id, produtoAtual);
-            }
-            if (loja.ControleEstoque) {
-                if (produtoAtual.QuantidadeCarrinho < produtoAtual.Quantidade) {
-                    produtoAtual.QuantidadeCarrinho++;
+            if (loja.ControleEstoque)
+            {
+                if (produto.QuantidadeCarrinho < produto.Quantidade)
+                {
+                    produto.QuantidadeCarrinho++;
                 }
             }
             else {
-                produtoAtual.QuantidadeCarrinho++;
+                produto.QuantidadeCarrinho++;
             }
             this.Loja = loja;
             AoAtualizar?.Invoke(this, new CarrinhoEventArgs( getQuantidade(), getTotal()));
-            return produtoAtual.QuantidadeCarrinho;
+            return produto.QuantidadeCarrinho;
         }
 
-        /*
         public int remover(ProdutoInfo produto) {
             if (_produtos.ContainsKey(produto.Id))
             {
@@ -105,26 +96,6 @@ namespace Emagine.Produto.BLL
             }
             AoAtualizar?.Invoke(this, new CarrinhoEventArgs(getQuantidade(), getTotal()));
             return produto.QuantidadeCarrinho;
-        }
-        */
-        public int remover(int idProduto)
-        {
-            if (_produtos.ContainsKey(idProduto))
-            {
-                var produto = _produtos[idProduto];
-                produto.QuantidadeCarrinho--;
-                if (produto.QuantidadeCarrinho <= 0)
-                {
-                    _produtos.Remove(produto.Id);
-                }
-                if (_produtos.Count == 0)
-                {
-                    this.Loja = null;
-                }
-                AoAtualizar?.Invoke(this, new CarrinhoEventArgs(getQuantidade(), getTotal()));
-                return produto.QuantidadeCarrinho;
-            }
-            return 0;
         }
 
         public int excluir(ProdutoInfo produto)

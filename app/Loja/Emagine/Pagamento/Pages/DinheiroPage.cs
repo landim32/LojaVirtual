@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Emagine.Base.Controls;
 using Emagine.Base.Estilo;
 using Emagine.Pagamento.Factory;
 using Emagine.Pagamento.Model;
@@ -14,7 +15,7 @@ namespace Emagine.Pagamento.Pages
 {
     public class DinheiroPage : ContentPage
     {
-        private Entry _TrocoParaEntry;
+        private FormattedNumberEntry _TrocoParaEntry;
         private Entry _ObservacaoEntry;
         private Label _ValorTotalLabel;
         private Button _ConcluirButton;
@@ -105,7 +106,8 @@ namespace Emagine.Pagamento.Pages
                 FontSize = 24
             };
             _ValorTotalLabel.SetBinding(Label.TextProperty, new Binding("ValorTotalStr", stringFormat: "R${0}"));
-            _TrocoParaEntry = new Entry {
+            _TrocoParaEntry = new FormattedNumberEntry
+            {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Start,
                 Style = Estilo.Current[Estilo.ENTRY_PADRAO],

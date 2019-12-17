@@ -5,6 +5,7 @@ using Emagine.Base.Estilo;
 using Emagine.Frete.BLL;
 using Emagine.Frete.Factory;
 using Emagine.Frete.Model;
+using Emagine.Frete.Utils;
 using Emagine.Mapa.Controls;
 using Emagine.Mapa.Utils;
 using Plugin.Geolocator;
@@ -50,6 +51,7 @@ namespace Emagine.Frete.Pages
         protected override void OnDisappearing()
         {
             //AtualizacaoEntrega.setConfirm(false);
+            MotoristaUtils.Avisando = false;
             base.OnDisappearing();
         }
 

@@ -17,20 +17,22 @@ namespace Emagine.Produto.Pages
 {
     public class CategoriaListaPage : CategoriaBasePage
     {
+        /*
         private Button _destaqueButton;
         private Button _promocaoButton;
         private Grid _menuGrid;
+        */
         private ListView _categoriaListView;
 
         public CategoriaListaPage()
         {
-            Content = new StackLayout
+            _mainLayout = new StackLayout
             {
                 //Margin = new Thickness(3, 3),
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 Children = {
-                    _menuGrid,
+                    //_menuGrid,
                     _buscaBar,
                     _categoriaListView,
                     new StackLayout {
@@ -52,6 +54,7 @@ namespace Emagine.Produto.Pages
                     }
                 }
             };
+            Content = _mainLayout;
         }
 
         protected override void executarAtualizarCategoria(IList<CategoriaInfo> itens) {
@@ -61,6 +64,7 @@ namespace Emagine.Produto.Pages
         protected override void inicializarComponente() {
 
             base.inicializarComponente();
+            /*
             _destaqueButton = new Button
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -94,6 +98,7 @@ namespace Emagine.Produto.Pages
 
             _menuGrid.Children.Add(_destaqueButton, 0, 0);
             _menuGrid.Children.Add(_promocaoButton, 1, 0);
+            */
 
             _categoriaListView = new ListView {
                 HasUnevenRows = true,

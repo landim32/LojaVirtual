@@ -5,6 +5,7 @@ using Emagine.Base.Estilo;
 using Emagine.Frete.BLL;
 using Emagine.Frete.Factory;
 using Emagine.Frete.Model;
+using Emagine.Frete.Utils;
 using Emagine.Mapa.Controls;
 using Emagine.Mapa.Utils;
 using Plugin.Geolocator;
@@ -59,19 +60,21 @@ namespace Emagine.Frete.Pages
             };
         }
 
-        protected override void OnDisappearing()
-        {
-            CrossGeolocator.Current.PositionChanged -= testeAsync;
-            CrossGeolocator.Current.StopListeningAsync().Wait();
-            AtualizacaoFrete.setConfirm(false);
-            base.OnDisappearing();  
-        }
-
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            var retPedido = await new MotoristaBLL().listarPedidosAsync();
-            await iniciaAsync(retPedido);
+            //var retPedido = await new MotoristaBLL().listarPedidosAsync();
+            //await iniciaAsync(retPedido);
+            MotoristaUtils.Avisando = true;
+        }
+
+        protected override void OnDisappearing()
+        {
+            //CrossGeolocator.Current.PositionChanged -= testeAsync;
+            //CrossGeolocator.Current.StopListeningAsync().Wait();
+            //AtualizacaoFrete.setConfirm(false);
+            MotoristaUtils.Avisando = false;
+            base.OnDisappearing();  
         }
 
         public async System.Threading.Tasks.Task iniciaAsync(MotoristaRetornoInfo info)

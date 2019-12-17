@@ -108,13 +108,6 @@ namespace Emagine.Produto.Model
         }
 
         [JsonIgnore]
-        public string ValorFinalStr {
-            get {
-                return ValorFinal.ToString("N2") + " ";
-            }
-        }
-
-        [JsonIgnore]
         public bool EmPromocao {
             get {
                 return (ValorPromocao > 0);

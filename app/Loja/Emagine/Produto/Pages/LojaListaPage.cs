@@ -25,6 +25,7 @@ namespace Emagine.Produto.Pages
         private bool _carregado = false;
         public event LojaListaEventHandler AoCarregar;
 
+        private StackLayout _mainLayout;
         private BannerView _bannerView;
         private ListView _lojaListView;
         private Label _empresaLabel;
@@ -56,26 +57,12 @@ namespace Emagine.Produto.Pages
 
         public LojaListaPage()
         {
-            /*
-            ToolbarItems.Add(new IconToolbarItem
-            {
-                Text = "Buscar",
-                Icon = "fa-search",
-                IconColor = Color.White,
-                Order = ToolbarItemOrder.Primary,
-                Command = new Command(() => {
-                    //Navigation.PushAsync(new ProdutoListaPage());
-                })
-            });
-            */
-
             Title = "Selecione a Loja";
             Style = Estilo.Current[Estilo.TELA_PADRAO];
-            //BackgroundColor = Color.FromHex("#d9d9d9");
             inicializarComponente();
-            Content = new StackLayout
+
+            _mainLayout = new StackLayout
             {
-                //Margin = new Thickness(3, 3),
                 Orientation = StackOrientation.Vertical,
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
@@ -86,6 +73,30 @@ namespace Emagine.Produto.Pages
                     _empresaLabel
                 }
             };
+            Content = _mainLayout;
+        }
+
+        [Obsolete]
+        public LocalInfo Local { get; set; } = null;
+
+        public bool BannerVisivel {
+            get {
+                return _mainLayout.Children.Contains(_bannerView);
+            }
+            set {
+                if (value) {
+                    if (!_mainLayout.Children.Contains(_bannerView)) {
+                        _mainLayout.Children.Insert(0, _bannerView);
+                    }
+                }
+                else
+                {
+                    if (_mainLayout.Children.Contains(_bannerView))
+                    {
+                        _mainLayout.Children.Remove(_bannerView);
+                    }
+                }
+            }
         }
 
         protected override async void OnAppearing()
@@ -97,6 +108,9 @@ namespace Emagine.Produto.Pages
                 UserDialogs.Instance.ShowLoading("Carregando...");
                 try
                 {
+                    if (App.Current.MainPage is RootPage) {
+                        _empresaLabel.Text = ((RootPage)App.Current.MainPage).NomeApp + " ®";
+                    }
                     var regraLoja = LojaFactory.create();
                     var args = new LojaListaEventArgs();
                     await AoCarregar?.Invoke(this, args);
@@ -158,13 +172,11 @@ namespace Emagine.Produto.Pages
                 var promocaoListaPage = ProdutoUtils.gerarProdutoListaPromocao();
                 if (App.Current.MainPage is RootPage)
                 {
-                    //((RootPage)App.Current.MainPage).PaginaAtual = promocaoListaPage;
-                    ((RootPage)App.Current.MainPage).PushAsync(promocaoListaPage);
+                    ((RootPage)App.Current.MainPage).PaginaAtual = promocaoListaPage;
                 }
                 else {
                     await Navigation.PushAsync(promocaoListaPage);
                 }
-                //Navigation.PushAsync(promocaoListaPage);
             };
             _empresaLabel = new Label
             {
@@ -172,7 +184,7 @@ namespace Emagine.Produto.Pages
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalTextAlignment = TextAlignment.Center,
                 Margin = new Thickness(0, 5),
-                Text = "Smart Tecnologia ®"
+                //Text = "Smart Tecnologia ®"
             };
         }
     }
