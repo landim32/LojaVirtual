@@ -1,5 +1,5 @@
 
-# Loja Virtual
+# Loja Virtual / App Android & iOS
 > Solução completa de e-commerce em PHP e Xamarin.NET
 
 Solução completa e totalmente personalizada para para **lojas virtuais** e **e-commerce** em geral usando PHP e Xamarin.NET.
@@ -56,8 +56,8 @@ Solução completa e totalmente personalizada para para **lojas virtuais** e **e
 
 ## Histórico de lançamentos
 
-* 0.0.1
-    * Versão inicial
+* 0.8.1
+    * Primeira versão utilizável
 
 ## Meta
 
