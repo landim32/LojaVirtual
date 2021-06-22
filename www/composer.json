@@ -8,7 +8,7 @@
         "needim/noty": "^3.1",
         "monolog/monolog": "^1.23",
         "slim/php-view": "^2.2",
-        "phpmailer/phpmailer": "^5.2",
+        "phpmailer/phpmailer": "^6.5",
         "developercielo/api-3.0-php": "^1.2",
         "joshtronic/php-loremipsum": "dev-master",
         "iugu/iugu": "^1.0",
