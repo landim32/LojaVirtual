@@ -63,7 +63,7 @@
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.0.4" />
     <PackageReference Include="Xam.FormsPlugin.Iconize" Version="1.0.10" />
