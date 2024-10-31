@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Radar.ModoPercursoPage">
+<ContentPage.Resources>
+  <ResourceDictionary>
+    <Style x:Key="LabelStyle" TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="26" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="LabelStyleDescription" TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="StyleStack" TargetType="StackLayout">
+      <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+      <Setter Property="BackgroundColor" Value="#ffffff" />
+      <Setter Property="Orientation" Value="Vertical" />
+    </Style>
+    <Style x:Key="StyleSwitch" TargetType="Switch">
+      <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+      <Setter Property="Margin" Value="20,0,20,0" />
+    </Style>
+    <Style x:Key="StyleFrame" TargetType="Frame">
+
+      <Setter Property="BackgroundColor" Value="#b2dfdb" />
+      <Setter Property="Margin" Value="10,5,10,5" />
+    </Style>
+  </ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+		 <StackLayout Style="{StaticResource StyleStack}">
+				
+          <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	      	  <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+               <Label Text="Salvar Percurso"  Style="{StaticResource LabelStyle}"/>
+                <Switch Margin="70,0,0,0" Style="{StaticResource StyleSwitch}" x:Name="salvarPercurso" Toggled="salvarPercursoToggled"/>
+              </StackLayout>
+              <Label Style="{StaticResource LabelStyleDescription}" Text="Salvar o percurso(dados recebidos pelo GPS)" />
+              <Label Style="{StaticResource LabelStyleDescription}" Text="enquanto o Radar estiver em funcionamento"  />
+            </StackLayout>
+          </Frame>
+			<!--	
+          <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	          <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+                <Label Text="Excluir Antigos" Style="{StaticResource LabelStyle}"/>
+                <Switch Margin="80,0,0,0"   Style="{StaticResource StyleSwitch}" x:Name="excluirAntigos" Toggled="excluirAntigosToggled"/>
+              </StackLayout>
+              <Label Style="{StaticResource LabelStyleDescription}" Text="Excluir automaticamente os registros de percurso" />
+              <Label Style="{StaticResource LabelStyleDescription}" Text="que forem considerados antigos" />
+            </StackLayout>
+          </Frame>
+		
+          <Frame Style="{StaticResource StyleFrame}">
+				<StackLayout.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="tempoPercursoTapped"/>
+                </StackLayout.GestureRecognizers>
+		     <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	           <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                                        
+                <Label Text="Tempo" Style="{StaticResource LabelStyle}"/>
+              </StackLayout>
+              <Label Style="{StaticResource LabelStyleDescription}" Text="Defina com quantos dias um percurso se torna antigo" />
+            </StackLayout>
+          </Frame>
+		      -->
+		    </StackLayout>
+    	</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

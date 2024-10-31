@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Radar.Pages.ModoAudioPage">
+	<ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="LabelStyle" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+        <Setter Property="TextColor" Value="#757575" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="Margin" Value="20,0,0,0" />
+        <Setter Property="FontFamily" Value="Roboto-Condensed" />
+      </Style>
+      <Style x:Key="LabelStyleDescription" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+        <Setter Property="TextColor" Value="#757575" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="20,0,0,0" />
+        <Setter Property="FontFamily" Value="Roboto-Condensed" />
+      </Style>
+      <Style x:Key="StyleStack" TargetType="StackLayout">
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="BackgroundColor" Value="#ffffff" />
+        <Setter Property="Orientation" Value="Vertical" />
+      </Style>
+      <Style x:Key="StyleSwitch" TargetType="Switch">
+        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+        <Setter Property="Margin" Value="20,0,20,0" />
+      </Style>
+      <Style x:Key="StyleFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="#b2dfdb" />
+        <Setter Property="Margin" Value="10,5,10,5" />
+      </Style>
+    </ResourceDictionary>
+	</ContentPage.Resources>
+  <ContentPage.Content>
+		
+	<ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+	    <StackLayout Style="{StaticResource StyleStack}" >
+				
+        <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout.GestureRecognizers>
+               <TapGestureRecognizer Tapped="canalAudioTapped"/>
+             </StackLayout.GestureRecognizers>
+			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	        <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">             
+              <Label Text="Canal de Áudio" Style="{StaticResource LabelStyle}"/>
+            </StackLayout>
+            <Label Style="{StaticResource LabelStyleDescription}" Text="Define se o alerta de radares será feito através do canal"  />
+            <Label Style="{StaticResource LabelStyleDescription}" Text="de música ou através do auto-falante do dispositivo"  />
+          </StackLayout>
+        </Frame>
+				
+        <Frame Style="{StaticResource StyleFrame}">
+		  <StackLayout.GestureRecognizers>
+             <TapGestureRecognizer Tapped="alturaVolumeTapped"/>
+          </StackLayout.GestureRecognizers>
+          <StackLayout Orientation="Horizontal">
+            <Label Text="Altura Volume" Style="{StaticResource LabelStyle}"/>
+          </StackLayout>
+        </Frame>
+				
+        <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	        <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">             
+               <Label Text="Som na Caixa" Style="{StaticResource LabelStyle}"/>
+              <Switch Style="{StaticResource StyleSwitch}" x:Name="somCaixa" Toggled="somCaixaToggled"/>
+            </StackLayout>
+            <Label Style="{StaticResource LabelStyleDescription}" Text="Envia o som também para o alto falante do dispositivo"  />
+          </StackLayout>
+        </Frame>
+				
+        <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="somAlertaTapped"/>
+            </StackLayout.GestureRecognizers>
+          <StackLayout Orientation="Horizontal">
+            <Label Text="Som do Alerta" Style="{StaticResource LabelStyle}"/>
+          </StackLayout>
+        </Frame>
+	      
+	    </StackLayout>
+	</ScrollView>
+  </ContentPage.Content>
+</ContentPage>

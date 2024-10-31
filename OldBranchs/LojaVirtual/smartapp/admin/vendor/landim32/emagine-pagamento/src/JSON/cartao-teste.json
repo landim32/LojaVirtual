@@ -1,0 +1,92 @@
+[
+  {
+    "bandeira": "visa",
+    "numero": "4929390935138904",
+    "cvv": "629"
+  },
+  {
+    "bandeira": "visa",
+    "numero": "4716627214567833",
+    "cvv": "677"
+  },
+  {
+    "bandeira": "visa",
+    "numero": "4929642932968745",
+    "cvv": "234"
+  },
+  {
+    "bandeira": "mastercard",
+    "numero": "5305159611253381",
+    "cvv": "701"
+  },
+  {
+    "bandeira": "mastercard",
+    "numero": "5445333399338737",
+    "cvv": "520"
+  },
+  {
+    "bandeira": "mastercard",
+    "numero": "5179238840093470",
+    "cvv": "531"
+  },
+  {
+    "bandeira": "diners",
+    "numero": "30167807165031",
+    "cvv": "272"
+  },
+  {
+    "bandeira": "diners",
+    "numero": "30039370730733",
+    "cvv": "989"
+  },
+  {
+    "bandeira": "diners",
+    "numero": "30001371644818",
+    "cvv": "482"
+  },
+  {
+    "bandeira": "amex",
+    "numero": "342718831412733",
+    "cvv": "9116"
+  },
+  {
+    "bandeira": "amex",
+    "numero": "371372840815348",
+    "cvv": "3569"
+  },
+  {
+    "bandeira": "amex",
+    "numero": "340450732615865",
+    "cvv": "1893"
+  },
+  {
+    "bandeira": "hipercard",
+    "numero": "6062824793366639",
+    "cvv": "455"
+  },
+  {
+    "bandeira": "hipercard",
+    "numero": "6062824512102588",
+    "cvv": "924"
+  },
+  {
+    "bandeira": "hipercard",
+    "numero": "6062823018450665",
+    "cvv": "581"
+  },
+  {
+    "bandeira": "elo",
+    "numero": "6363683110055937",
+    "cvv": "379"
+  },
+  {
+    "bandeira": "elo",
+    "numero": "6363685823563941",
+    "cvv": "451"
+  },
+  {
+    "bandeira": "elo",
+    "numero": "6363689888799010",
+    "cvv": "147"
+  }
+]

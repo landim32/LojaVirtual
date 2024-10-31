@@ -1,0 +1,52 @@
+{
+    "name": "UsuarioGrupo",
+    "label": "Grupos de Usu\u00e1rios",
+    "namespace": "EmagineAuth",
+    "table": "usuario_grupo",
+    "url": "login",
+    "menu_primary": "Usu\u00e1rios",
+    "menu_enabled": false,
+    "fields": [
+        {
+            "name": "IdUsuario",
+            "label": "Usu\u00e1rio",
+            "fieldname": "id_usuario",
+            "fieldtype": "n1",
+            "tabletype": "int(11)",
+            "null": true,
+            "key": "PRI",
+            "default": null,
+            "extra": "",
+            "n1namespace": "EmagineAuth",
+            "n1classname": "Usuario",
+            "n1key": "Id",
+            "n1name": "Nome",
+            "enabled": true,
+            "list_enabled": true,
+            "info_enabled": true,
+            "externo": true,
+            "options": []
+        },
+        {
+            "name": "IdGrupo",
+            "label": "Grupo",
+            "fieldname": "id_grupo",
+            "fieldtype": "n1",
+            "tabletype": "int(11)",
+            "null": true,
+            "key": "PRI",
+            "default": null,
+            "extra": "",
+            "n1namespace": "EmagineAuth",
+            "n1classname": "Grupo",
+            "n1key": "Id",
+            "n1name": "Nome",
+            "enabled": true,
+            "list_enabled": true,
+            "info_enabled": true,
+            "externo": false,
+            "options": []
+        }
+    ],
+    "relationships": []
+}

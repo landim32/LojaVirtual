@@ -1,0 +1,52 @@
+{
+    "name": "Permissao",
+    "label": "Permiss\u00f5es",
+    "namespace": "EmagineAuth",
+    "table": "permissao",
+    "url": "login",
+    "menu_primary": "Usu\u00e1rios",
+    "menu_enabled": true,
+    "fields": [
+        {
+            "name": "Slug",
+            "label": "Slug",
+            "fieldname": "slug",
+            "fieldtype": "string",
+            "tabletype": "varchar(60)",
+            "null": true,
+            "key": "PRI",
+            "default": null,
+            "extra": "",
+            "n1namespace": "",
+            "n1classname": "",
+            "n1key": "",
+            "n1name": "",
+            "enabled": true,
+            "list_enabled": true,
+            "info_enabled": true,
+            "externo": false,
+            "options": []
+        },
+        {
+            "name": "Nome",
+            "label": "Nome",
+            "fieldname": "nome",
+            "fieldtype": "string",
+            "tabletype": "varchar(120)",
+            "null": true,
+            "key": "",
+            "default": null,
+            "extra": "",
+            "n1namespace": "",
+            "n1classname": "",
+            "n1key": "",
+            "n1name": "",
+            "enabled": true,
+            "list_enabled": true,
+            "info_enabled": true,
+            "externo": false,
+            "options": []
+        }
+    ],
+    "relationships": []
+}

@@ -1,0 +1,45 @@
+header {
+  position: fixed;
+  width: 100%;
+  background-color: @body-bg;
+  height: 130px;
+  top: 0px;
+  z-index: 9999;
+  #usuario {
+    margin-bottom: 5px;
+  }
+  #carrinho {
+    .icone {
+      position: relative;
+      float: left;
+      margin-right: 15px;
+      color: @gray-dark;
+      a {
+        color: @gray-dark;
+      }
+      .badge {
+        position: absolute;
+        top: 2px;
+        right: -7px;
+        z-index: auto;
+      }
+    }
+  }
+}
+div.content {
+  margin-top: 130px;
+}
+@media(max-width: @screen-md-min) {
+  header {
+    height: 160px;
+    #carrinho {
+      font-size: 70%;
+    }
+    #usuario {
+      font-size: 70%; //ceil((@font-size-base * 0.7));
+    }
+  }
+  div.content {
+    margin-top: 160px;
+  }
+}

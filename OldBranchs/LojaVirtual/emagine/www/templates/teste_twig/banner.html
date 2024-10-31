@@ -1,0 +1,24 @@
+{# banner.html #}
+{% if pecas|length > 0 %}
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        {% for peca in pecas %}
+            {% if loop.index0 == 0 %}
+                <li data-target="#myCarousel" data-slide-to="{{loop.index0}}" class="active"></li>
+            {% else %}
+                <li data-target="#myCarousel" data-slide-to="{{loop.index0}}"></li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+        {% for peca in pecas %}
+            <div class="{% if loop.index0 == 0 %}item active{% else %}item{% endif %}">
+                <a href="#">
+                    <img src="{{peca.imagem_url}}" alt="{{peca.nome}}"
+                         style="width:{{peca.largura}}px;height:{{peca.altura}}px; margin: 0 auto;" />
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

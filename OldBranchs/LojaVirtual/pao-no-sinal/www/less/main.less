@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+@login-path       : "less";
+@boostrap-path    : "vendor/components/bootstrap/less";
+@fontawesome-path : "vendor/components/font-awesome/less";
+@tagsinput-path   : "node_modules/bootstrap-tagsinput/dist";
+@noty-path        : "node_modules/noty/lib";
+@multiselect-path : "node_modules/bootstrap-multiselect/dist/less";
+
+@import "@{boostrap-path}/variables.less";
+
+@thumbnail-bg     : #ffffff;
+@body-bg          : #f8f8f8;
+@nprogress-color  : #2edd2f;
+@brand-primary    : #a19800;
+
+@font-family-sans-serif : 'Open Sans', sans-serif;
+@font-family-base       : @font-family-sans-serif;
+
+@import "@{boostrap-path}/mixins.less";
+
+// Reset and dependencies
+@import "@{boostrap-path}/normalize.less";
+@import "@{boostrap-path}/print.less";
+//@import "@{boostrap-path}/glyphicons.less";
+
+@import "@{fontawesome-path}/variables.less";
+
+@fa-font-path     : "../vendor/components/font-awesome/fonts";
+
+@import "@{fontawesome-path}/mixins.less";
+@import "@{fontawesome-path}/path.less";
+@import "@{fontawesome-path}/core.less";
+@import "@{fontawesome-path}/larger.less";
+@import "@{fontawesome-path}/fixed-width.less";
+@import "@{fontawesome-path}/list.less";
+@import "@{fontawesome-path}/bordered-pulled.less";
+@import "@{fontawesome-path}/animated.less";
+@import "@{fontawesome-path}/rotated-flipped.less";
+@import "@{fontawesome-path}/stacked.less";
+@import "@{fontawesome-path}/icons.less";
+@import "@{fontawesome-path}/screen-reader.less";
+
+// Core CSS
+@import "@{boostrap-path}/scaffolding.less";
+@import "@{boostrap-path}/type.less";
+@import "@{boostrap-path}/code.less";
+@import "@{boostrap-path}/grid.less";
+@import "@{boostrap-path}/tables.less";
+@import "@{boostrap-path}/forms.less";
+@import "@{boostrap-path}/buttons.less";
+
+// Components
+@import "@{boostrap-path}/component-animations.less";
+@import "@{boostrap-path}/dropdowns.less";
+@import "@{boostrap-path}/button-groups.less";
+@import "@{boostrap-path}/input-groups.less";
+@import "@{boostrap-path}/navs.less";
+@import "@{boostrap-path}/navbar.less";
+@import "@{boostrap-path}/breadcrumbs.less";
+@import "@{boostrap-path}/pagination.less";
+@import "@{boostrap-path}/pager.less";
+@import "@{boostrap-path}/labels.less";
+@import "@{boostrap-path}/badges.less";
+@import "@{boostrap-path}/jumbotron.less";
+@import "@{boostrap-path}/thumbnails.less";
+@import "@{boostrap-path}/alerts.less";
+@import "@{boostrap-path}/progress-bars.less";
+@import "@{boostrap-path}/media.less";
+@import "@{boostrap-path}/list-group.less";
+@import "@{boostrap-path}/panels.less";
+@import "@{boostrap-path}/responsive-embed.less";
+@import "@{boostrap-path}/wells.less";
+@import "@{boostrap-path}/close.less";
+
+// Components w/ JavaScript
+@import "@{boostrap-path}/modals.less";
+@import "@{boostrap-path}/tooltip.less";
+@import "@{boostrap-path}/popovers.less";
+@import "@{boostrap-path}/carousel.less";
+
+// Utility classes
+@import "@{boostrap-path}/utilities.less";
+@import "@{boostrap-path}/responsive-utilities.less";
+
+@import "tricks.less";
+@import "@{login-path}/login.less";
+@import "@{login-path}/perfil.less";
+@import "@{multiselect-path}/bootstrap-multiselect.less";
+@import "nprogress.less";
+@import "custom.less";

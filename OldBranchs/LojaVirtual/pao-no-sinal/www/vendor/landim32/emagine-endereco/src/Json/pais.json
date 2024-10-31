@@ -1,0 +1,52 @@
+{
+    "name": "Pais",
+    "label": "Pa\u00edses",
+    "namespace": "Emagine\Endereco",
+    "table": "pais",
+    "url": "localidade",
+    "menu_primary": "EmagineCRUD",
+    "menu_enabled": false,
+    "fields": [
+        {
+            "name": "IdPais",
+            "label": "Id",
+            "fieldname": "id_pais",
+            "fieldtype": "int",
+            "tabletype": "int(11)",
+            "null": true,
+            "key": "PRI",
+            "default": null,
+            "extra": "auto_increment",
+            "n1namespace": "",
+            "n1classname": "",
+            "n1key": "",
+            "n1name": "",
+            "enabled": true,
+            "list_enabled": false,
+            "info_enabled": false,
+            "externo": false,
+            "options": []
+        },
+        {
+            "name": "Nome",
+            "label": "Nome",
+            "fieldname": "nome",
+            "fieldtype": "string",
+            "tabletype": "varchar(60)",
+            "null": true,
+            "key": "",
+            "default": null,
+            "extra": "",
+            "n1namespace": "",
+            "n1classname": "",
+            "n1key": "",
+            "n1name": "",
+            "enabled": true,
+            "list_enabled": true,
+            "info_enabled": true,
+            "externo": false,
+            "options": []
+        }
+    ],
+    "relationships": []
+}

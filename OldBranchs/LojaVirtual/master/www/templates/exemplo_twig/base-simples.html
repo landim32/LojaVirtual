@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Rodrigo Landim">
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="{{ base_url }}/favicon.ico">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="{{ base_url }}/favicon.ico">
+    <title>{{ title }}</title>
+    {{ css|raw }}
+</head>
+<body>
+{% block content %}{% endblock %}
+{{ javascript|raw }}
+</body>
+</html>

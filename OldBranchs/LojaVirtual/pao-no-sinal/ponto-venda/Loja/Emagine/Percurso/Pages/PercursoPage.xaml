@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Radar.Pages.PercursoPage"
+             Title="Meus Percursos">
+  <StackLayout Orientation="Vertical" VerticalOptions="Fill">
+    <ListView x:Name="percursoListView" ItemTapped="abrirPercurso" RowHeight="190" VerticalOptions="StartAndExpand">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell >
+    
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+   <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="30,30,30,40" VerticalOptions="EndAndExpand" >
+		<StackLayout.GestureRecognizers>
+           <TapGestureRecognizer Tapped="gravarPercurso"/>
+        </StackLayout.GestureRecognizers>
+	        <Image Source="Play" WidthRequest="60" HorizontalOptions="Start" VerticalOptions="Center" x:Name="icoPlay"/>
+			<StackLayout Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="Center" x:Name="stackDescricaoGravando" >
+			 <Label Text="Gravar Percurso!" x:Name="gravarLabel" Font="Bold,24" FontFamily="Roboto-Condensed" BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center"/>		
+			 <Label Text="Toque aqui para gravar percurso" x:Name="infoLabel" FontSize="18"  FontFamily="Roboto-Condensed" HorizontalOptions="Start" VerticalOptions="Center"/>		
+			</StackLayout>
+ 	</StackLayout>
+			
+	
+		
+  </StackLayout>
+</ContentPage>

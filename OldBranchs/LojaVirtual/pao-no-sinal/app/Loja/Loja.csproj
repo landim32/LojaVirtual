@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Emagine\Ads\**" />
+    <Compile Remove="Emagine\Audio\**" />
+    <Compile Remove="Emagine\Frete\**" />
+    <Compile Remove="Emagine\GPS\**" />
+    <Compile Remove="Emagine\IO\**" />
+    <Compile Remove="Emagine\Mapa\**" />
+    <Compile Remove="Emagine\Percurso\**" />
+    <Compile Remove="Emagine\Preferencia\**" />
+    <Compile Remove="Emagine\Radar\**" />
+    <Compile Remove="Emagine\Veiculo\**" />
+    <EmbeddedResource Remove="Emagine\Ads\**" />
+    <EmbeddedResource Remove="Emagine\Audio\**" />
+    <EmbeddedResource Remove="Emagine\Frete\**" />
+    <EmbeddedResource Remove="Emagine\IO\**" />
+    <EmbeddedResource Remove="Emagine\Mapa\**" />
+    <EmbeddedResource Remove="Emagine\Percurso\**" />
+    <EmbeddedResource Remove="Emagine\Preferencia\**" />
+    <EmbeddedResource Remove="Emagine\Radar\**" />
+    <EmbeddedResource Remove="Emagine\Veiculo\**" />
+    <None Remove="Emagine\Ads\**" />
+    <None Remove="Emagine\Audio\**" />
+    <None Remove="Emagine\Frete\**" />
+    <None Remove="Emagine\IO\**" />
+    <None Remove="Emagine\Mapa\**" />
+    <None Remove="Emagine\Percurso\**" />
+    <None Remove="Emagine\Preferencia\**" />
+    <None Remove="Emagine\Radar\**" />
+    <None Remove="Emagine\Veiculo\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Emagine\Base\IBLL\ISQLite.cs" />
+    <Compile Remove="Emagine\Base\IBLL\IThread.cs" />
+    <Compile Remove="Emagine\Endereco\Controls\EnderecoMapaForm.cs" />
+    <Compile Remove="Emagine\GPS\Utils\GPSUtilsOld.cs" />
+    <Compile Remove="Emagine\GPS\Utils\GPSUtilsVeryOld.cs" />
+    <Compile Remove="Emagine\Pagamento\Pages\SelecionaMetodoPagamento.cs" />
+    <Compile Remove="Emagine\Pedido\Utils\MapaUtils.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Emagine\GPS\BLL\GPSBLL.cs" />
+    <Compile Include="Emagine\GPS\Model\GPSLocalInfo.cs" />
+    <Compile Include="Emagine\GPS\Utils\GPSUtils.cs" />
+    <Compile Include="Emagine\Mapa\Controls\CustomMap.cs" />
+    <Compile Include="Emagine\Mapa\Controls\MapTapEventArgs.cs" />
+    <Compile Include="Emagine\Mapa\Model\LocalInfo.cs" />
+    <Compile Include="Emagine\Mapa\Model\MapaRotaInfo.cs" />
+    <Compile Include="Emagine\Mapa\Pages\MapaAcompanhaPage.cs" />
+    <Compile Include="Emagine\Mapa\Utils\MapaUtils.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Plugin.Share" Version="7.1.1" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.0.4" />
+    <PackageReference Include="Xam.FormsPlugin.Iconize" Version="1.0.10" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.2.0" />
+    <PackageReference Include="Xam.Plugin.Iconize" Version="1.0.10" />
+    <PackageReference Include="Xam.Plugin.Media" Version="3.1.3" />
+    <PackageReference Include="Xam.Plugins.Notifier" Version="2.1.0" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="2.5.1.444934" />
+    <PackageReference Include="Xfx.Controls" Version="1.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
+      <DependentUpon>*.xaml</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="MainPage.xaml.cs">
+      <DependentUpon>*.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

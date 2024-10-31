@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="8" android:versionName="0.5.2b" package="br.com.emagine.digital" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<!--uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /-->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<!--uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /-->
+	<application android:icon="@drawable/icon" android:label="IMarket Supermercados Delivery">
+		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCYqp1ZAiX0M8Lqth1kFYRh6wju0Y4vAm8" />
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="br.com.emagine.digital.fileprovider" android:exported="false" android:grantUriPermissions="true">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
+			<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCYqp1ZAiX0M8Lqth1kFYRh6wju0Y4vAm8" />
+		</provider>
+	</application>
+</manifest>

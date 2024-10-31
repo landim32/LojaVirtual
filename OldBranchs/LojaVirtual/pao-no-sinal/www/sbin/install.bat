@@ -1,0 +1,15 @@
+composer require components/font-awesome
+composer require components/jquery
+composer require components/bootstrap
+composer require slim/slim
+#composer require slim/twig-view
+composer require slim/php-view
+composer require mmerian/phpcrawl
+composer require monolog/monolog
+npm install noty
+npm install bootstrap-tagsinput
+npm install nprogress-npm
+npm install datatables.net
+npm install datatables.net-bs
+composer require badcow/lorem-ipsum
+npm install cropit

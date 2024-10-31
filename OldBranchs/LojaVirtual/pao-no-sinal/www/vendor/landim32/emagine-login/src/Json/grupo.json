@@ -1,0 +1,57 @@
+{
+    "name": "Grupo",
+    "label": "Grupos",
+    "namespace": "EmagineAuth",
+    "table": "grupo",
+    "url": "login",
+    "menu_primary": "Usu\u00e1rios",
+    "menu_enabled": true,
+    "fields": [
+        {
+            "name": "IdGrupo",
+            "label": "Id",
+            "fieldname": "id_grupo",
+            "fieldtype": "int",
+            "tabletype": "int(11)",
+            "null": false,
+            "key": "PRI",
+            "default": null,
+            "extra": "auto_increment",
+            "n1namespace": "",
+            "n1classname": "",
+            "n1key": "",
+            "n1name": "",
+            "enabled": true,
+            "list_enabled": false,
+            "info_enabled": false,
+            "externo": false,
+            "options": []
+        },
+        {
+            "name": "Nome",
+            "label": "Nome",
+            "fieldname": "nome",
+            "fieldtype": "string",
+            "tabletype": "varchar(60)",
+            "null": true,
+            "key": "",
+            "default": null,
+            "extra": "",
+            "n1namespace": "",
+            "n1classname": "",
+            "n1key": "",
+            "n1name": "",
+            "enabled": true,
+            "list_enabled": true,
+            "info_enabled": true,
+            "externo": false,
+            "options": []
+        }
+    ],
+    "relationships": [
+        {
+            "tablename": "grupo_permissao",
+            "fieldname": "id_grupo"
+        }
+    ]
+}

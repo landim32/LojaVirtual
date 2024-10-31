@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Radar.ModoGeralPage">
+<ContentPage.Resources>
+  <ResourceDictionary>
+    <Style x:Key="LabelStyle" TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="26" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="LabelStyleDescription" TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="LabelStyleSubTitle" TargetType="Label">
+      <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      <Setter Property="TextColor" Value="#757575" />
+      <Setter Property="FontSize" Value="28" />
+      <Setter Property="Margin" Value="20,0,0,0" />
+      <Setter Property="FontFamily" Value="Roboto-Condensed" />
+    </Style>
+    <Style x:Key="StyleStack" TargetType="StackLayout">
+      <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+      <Setter Property="BackgroundColor" Value="#ffffff" />
+      <Setter Property="Orientation" Value="Vertical" />
+    </Style>
+    <Style x:Key="StyleSwitch" TargetType="Switch">
+      <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+      <Setter Property="Margin" Value="20,0,20,0" />
+    </Style>
+    <Style x:Key="StyleFrame" TargetType="Frame">
+
+      <Setter Property="BackgroundColor" Value="#b2dfdb" />
+      <Setter Property="Margin" Value="10,5,10,5" />
+    </Style>
+  </ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+	<ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+		<StackLayout Style="{StaticResource StyleStack}" >
+				
+      <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout.GestureRecognizers>
+              <TapGestureRecognizer Tapped="desativarGPSTapped"/>
+            </StackLayout.GestureRecognizers>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="COMPORTAMENTO" Style="{StaticResource LabelStyleSubTitle}"/>
+        </StackLayout>
+		<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	      <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">             
+            <Label Text="Ao destativar o GPS"  Style="{StaticResource LabelStyle}" />
+          </StackLayout>
+          <Label Style="{StaticResource LabelStyleDescription}" Text="Define a ação a ser executada quando o GPS for desativado"  />
+          <Label Style="{StaticResource LabelStyleDescription}"  Text=""  />
+          <Label Style="{StaticResource LabelStyleSubTitle}"  Text="ATUALIZAÇÃO" />
+        </StackLayout>
+       </Frame>
+				
+      <Frame Style="{StaticResource StyleFrame}">
+ 		<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	      <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">             
+            <Label Text="Verificar ao Iniciar" Style="{StaticResource LabelStyle}"/>
+            <Switch Margin="55,0,0,0" Style="{StaticResource StyleSwitch}" x:Name="verificarIniciar" Toggled="verificarIniciarToggled"/>
+          </StackLayout>
+          <Label Style="{StaticResource LabelStyleDescription}" Text="Lembrar sobre a atualização da Base de Dados" />
+          <Label Style="{StaticResource LabelStyleDescription}" Text="de Radar ao iniciar o aplicativo"  />
+        </StackLayout>
+      </Frame>
+
+      <Frame Style="{StaticResource StyleFrame}">
+			<StackLayout.GestureRecognizers>
+              <TapGestureRecognizer Tapped="intervaloVerificacaoTapped"/>
+            </StackLayout.GestureRecognizers>
+		<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	      <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+            <Label Text="Intervalo de Verificação" Style="{StaticResource LabelStyle}" />
+          </StackLayout>
+        </StackLayout>
+      </Frame>
+				
+      <Frame Style="{StaticResource StyleFrame}">
+		<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	      <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+            <Label Text="Última Verificação" Style="{StaticResource LabelStyle}"/>
+          </StackLayout>
+          <Label Style="{StaticResource LabelStyleDescription}"  Text="31/10/2016 17:01:45"  />
+        </StackLayout>
+      </Frame>
+
+      <Frame Style="{StaticResource StyleFrame}">
+		<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	      <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                         
+           <Label Text="Última Atualização" Style="{StaticResource LabelStyle}"/>
+          </StackLayout>
+          <Label Style="{StaticResource LabelStyleDescription}"  Text="01/11/2016 08:31:23"  />
+        </StackLayout>
+      </Frame>
+	    </StackLayout>
+    </ScrollView>
+	</ContentPage.Content>
+</ContentPage>

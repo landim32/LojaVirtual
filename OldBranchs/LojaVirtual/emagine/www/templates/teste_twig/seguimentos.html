@@ -1,0 +1,78 @@
+{% extends "base-simples.html" %}
+{% block conteudo %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+            <a href="{{base_url}}">
+                <img src="{{tema_url}}/images/logo.png"
+                    alt="{{titulo}}" class="img-responsive pull-left"
+                    style="max-height: 120px; margin: 5px 10px 5px 0px;" />
+            </a>
+            <h1 style="margin-bottom: 1px">
+                Faça suas compras de
+            </h1>
+            <h4 style="margin-top: 1px">
+                supermercado no conforto da sua casa.
+            </h4>
+        </div>
+    </div>
+    {% use "banner.html" %}
+    <form id="raioForm" method="POST" class="form-horizontal margin-top-25px">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <div class="form-group form-group-lg">
+                    <div class="input-group input-group-lg">
+                        <input type="number" class="form-control" id="raio" name="raio" value="{{raio}}" placeholder="Raio de busca (ex: 100km)" maxlength="4" />
+                        <span class="input-group-addon">Km</span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row margin-top-25px">
+        <div class="col-md-8 col-md-offset-2">
+            {% if seguimentos|length > 0 %}
+            <div class="row">
+                <?php foreach ($seguimentos as $seguimento) : ?>
+                <?php
+                    if (!is_null($urlSeguimento)){
+                        $url = sprintf($urlSeguimento, $seguimento->getSlug());
+                    }
+                    else {
+                        $url = $app->getBaseUrl() . "/s/" . $seguimento->getSlug();
+                    }
+                    ?>
+                    <div class="col-md-3 text-center">
+                        <a href="<?php echo $url; ?>" class="btn btn-primary btn-xl btn-circle">
+                            <img src="<?php echo $seguimento->getIconeUrl(35, 35); ?>"
+                                 style="width: 35px; height: 35px; margin: 5px 0px;"
+                                 alt="<?php echo $seguimento->getNome(); ?>">
+                        </a><br />
+                        <a href="<?php echo $url; ?>"><?php echo $seguimento->getNome(); ?></a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            {% else %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-warning"></i> Nenhum seguimento encontrado dentro do raio de {{raio}}Km.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<?php if (!is_null($endereco)) : ?>
+<div class="container margin-top-30px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+            <i class="fa fa-map-marker"></i>
+            <span class="completo">{{endereco.endereco_completo}}</span>
+            <a href="{{base_url}}/endereco/seleciona"><small>(mudar)</small></a>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+{% endblock %}

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Radar.ModoAlertaPage">
+	  <ContentPage.Resources>
+	    <ResourceDictionary>
+	      <Style x:Key="LabelStyle" TargetType="Label">
+	        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+	        <Setter Property="TextColor" Value="#757575" />
+	        <Setter Property="FontSize" Value="22" />
+	        <Setter Property="Margin" Value="20,0,0,0" />
+	        <Setter Property="FontFamily" Value="Roboto-Condensed" />
+	      </Style>
+	      <Style x:Key="LabelStyleDescription" TargetType="Label">
+	        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+	        <Setter Property="TextColor" Value="#757575" />
+	        <Setter Property="FontSize" Value="14" />
+	        <Setter Property="Margin" Value="20,0,0,0" />
+	        <Setter Property="FontFamily" Value="Roboto-Condensed" />
+	      </Style>
+	      <Style x:Key="StyleStack" TargetType="StackLayout">
+	        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+	        <Setter Property="BackgroundColor" Value="#ffffff" />
+	        <Setter Property="Orientation" Value="Vertical" />
+	      </Style>
+	      <Style x:Key="StyleSwitch" TargetType="Switch">
+	        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+	        <Setter Property="Margin" Value="0,0,20,0" />
+	      </Style>
+	      <Style x:Key="StyleFrame" TargetType="Frame">
+	        
+	        <Setter Property="BackgroundColor" Value="#b2dfdb" />
+	        <Setter Property="Margin" Value="10,5,10,5" />
+	      </Style>
+	    </ResourceDictionary>
+	  </ContentPage.Resources>
+		<ContentPage.Content>
+			<ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+			    <StackLayout Orientation="Vertical" Style="{StaticResource StyleStack}">
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <Label Text="Radar Móvel" Style="{StaticResource LabelStyle}"/>
+	              <Switch Style="{StaticResource StyleSwitch}" x:Name="radarMovel" Toggled="radarMovelToggled"/>
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <Label Text="Pedágio" Style="{StaticResource LabelStyle}"/>
+	              <Switch Style="{StaticResource StyleSwitch}" x:Name="pedagio" Toggled="pedagioToggled"/>
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <Label Text="Polícia Rodoviária" Style="{StaticResource LabelStyle}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
+	              <Switch  Style="{StaticResource StyleSwitch}" x:Name="policiaRodoviaria" Toggled="policiaRodoviariaToggled"/>
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+	            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <Label Text="Lombada" Style="{StaticResource LabelStyle}"/>
+	              <Switch Style="{StaticResource StyleSwitch}" x:Name="lombada" Toggled="lombadaToggled"/>
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+				      <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	                <Label Text="Alerta Inteligente" Style="{StaticResource LabelStyle}"/>
+	                <Switch Style="{StaticResource StyleSwitch}" x:Name="alertaInteligente" Toggled="alertaInteligenteToggled"/>
+	              </StackLayout>
+	              <Label Text="Só emitir alerta caso a velocidade atual esteja próxima da velocidade limite" Style="{StaticResource LabelStyleDescription}" />
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+	 			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	    		            <Label Text="Beep de Aviso" Style="{StaticResource LabelStyle}"/>
+			            <Switch Style="{StaticResource StyleSwitch}" x:Name="beepAviso" Toggled="beepAvisoToggled"/>
+			          </StackLayout>
+			         <Label Text="Emitir som ao passar por um radar" Style="{StaticResource LabelStyleDescription}" />
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+	            <StackLayout Orientation="Horizontal" Spacing="60" >
+	              <Label  Text="Vibrar ao emitir Alerta" Style="{StaticResource LabelStyle}"  AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All" />
+	              <Switch  Style="{StaticResource StyleSwitch}" x:Name="vibrarAlerta" Toggled="vibrarAlertaToggled"/>
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+					<StackLayout.GestureRecognizers>
+	                  <TapGestureRecognizer Tapped="tempoDuracaoTapped"/>
+	                </StackLayout.GestureRecognizers>
+	 			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	                
+	                <Label Text="Tempo de Duração" Style="{StaticResource LabelStyle}" />
+	              </StackLayout>
+	              <Label Text="Defina por quanto tempo o dispositivo deverá vibrar" Style="{StaticResource LabelStyleDescription}" />
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+				    <StackLayout.GestureRecognizers>
+	                  <TapGestureRecognizer Tapped="tempoAlertaTapped"/>
+	                </StackLayout.GestureRecognizers>
+				<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">	                   
+	                <Label  Text="Tempo para o Alerta" Style="{StaticResource LabelStyle}"/>
+	              </StackLayout>
+	              <Label Text="Defina com quanto tempo de antencedência o alerta deve ser emitido" Style="{StaticResource LabelStyleDescription}" />
+	            </StackLayout>
+	          </Frame>
+				
+	          <Frame Style="{StaticResource StyleFrame}">
+				      <StackLayout.GestureRecognizers>
+	              <TapGestureRecognizer Tapped="distanciaAlertaTapped"/>
+	            </StackLayout.GestureRecognizers>
+	 			      <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">                
+	                <Label Text="Distância para o Alerta" Style="{StaticResource LabelStyle}" />
+	              </StackLayout>
+	              <Label Text="Defina com que distância o alerta deve ser emitido" Style="{StaticResource LabelStyleDescription}" />
+	            </StackLayout>
+	          </Frame>
+					
+	          <Frame Style="{StaticResource StyleFrame}">
+	 			<StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	              <StackLayout Orientation="Horizontal" Spacing="60" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+	                  <Label  FontSize="20" Text="Sobreposição Visual" Style="{StaticResource LabelStyle}"  AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All" />
+	                <Switch   Style="{StaticResource StyleSwitch}" x:Name="sobreposicaoVisual" Toggled="sobreposicaoVisualToggled"/>
+	              </StackLayout>
+	              <Label Text="Exibir alertas visuais quando o App estiver funcionando em segundo plano" Style="{StaticResource LabelStyleDescription}" />
+	            </StackLayout>
+	          </Frame>
+					
+			    </StackLayout>
+	    	</ScrollView>
+		</ContentPage.Content>
+	</ContentPage>

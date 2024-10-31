@@ -1,0 +1,8 @@
+{
+  "name": "landim32/easydb",
+  "description": "Easy-to-use database abstraction",
+  "require": {
+    "php": "^5.3.3 || ^7.0",
+    "another-vendor/package": "1.*"
+  }
+}
